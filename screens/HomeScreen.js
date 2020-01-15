@@ -12,9 +12,10 @@ import { Icon, Content, Form, Item, Input, Button,Footer   } from 'native-base';
 
 import { AeroText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  const {navigate} = props.navigation;
   return (
-    <View style={styles.container}>
+    <Content style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
@@ -37,18 +38,18 @@ export default function HomeScreen() {
           </Item>
           <Button block style={{borderRadius:10, alignItems:'center',backgroundColor:'#F75400'}}><AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Login </AeroText></Button>
           <View style={{alignItems:'center', marginTop:15}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate('User')}>
               <AeroText style={{color:'black'}}>Não possui uma conta?</AeroText>
             </TouchableOpacity>
           </View>
           </Form>
       </Content>
       <Footer style={{alignItems:'center', backgroundColor: '#F75400', border:0, height: 150, justifyContent:'flex-end', borderBottomStartRadius:100, borderTopStartRadius:500, width: 300, left: 65}}>
-        <View style={{ alignItems:'center', justifyContent:'center', height: 150,width: 280, borderBottomStartRadius:100, borderTopStartRadius:500,}}>
+        {/* <View style={{ alignItems:'center', justifyContent:'center', height: 150,width: 280, borderBottomStartRadius:100, borderTopStartRadius:500,}}> */}
           <AeroText style={{color:'#ffff', left: 30}}>O nosso objetivo é que até 2022 nós sejamos usados por 80% dos jogadores de tênis do Brasil</AeroText>
-        </View>
+        {/* </View> */}
       </Footer>
-    </View>
+    </Content>
     
   );
 }
@@ -65,7 +66,8 @@ const styles = StyleSheet.create({
   },
   content:{
     padding:40,
-    marginBottom: 60
+    paddingTop:80,
+    marginBottom: 30
   },
   title1:{
     fontSize: 40,
