@@ -2,18 +2,17 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from '../screens/HomeScreen'
-import TipoDeConta from '../screens/TipoDeConta'
+
+import UserDataScreen from '../screens/User/Register/UserDataScreen'
 
 
 const AppNavigator = createStackNavigator({
-  // Home: {
-  //   screen: HomeScreen,
-  // },
-
-  Conta: {
-    screen: TipoDeConta,
+  Home: {
+    screen: HomeScreen,
+  },
+  User:{
+    screen: UserDataScreen
   }
-
 });
 
 export default createAppContainer(AppNavigator);
