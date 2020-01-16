@@ -12,8 +12,8 @@ import { Icon, Content, Form, Item, Input, Button } from 'native-base';
 
 import { AeroText } from '../components/StyledText';
 
-export default function TipoConta(props) {
-    const {navigate} = props.navigation;
+export default function NivelAtletaProf(props) {
+    const { navigate } = props.navigation;
     return (
         <View style={styles.container}>
             <View
@@ -28,33 +28,25 @@ export default function TipoConta(props) {
                     </AeroText>
                     <View style={styles.caixa} >
                         <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}>
-                            Tipo de Conta
+                            Qual nível de atleta você ensina?
                         </AeroText>
                     </View>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivel')}>
-                        <Image
-                            source={
-                                require('../assets/images/imgPraticante.png')
-                            }
-                            style={styles.modeloimg2}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivelProf')}>     
-                        <Image
-                            source={
-                                require('../assets/images/imgProfessor.png')
-                            }
-                            style={styles.modeloimg3}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivel')}>
-                        <Image
-                            source={
-                                require('../assets/images/imgClube.png')
-                            }
-                            style={[styles.modeloimg3, {paddingBottom: 0}]}
-                        />
-                    </TouchableOpacity>
+                    <View style={{marginTop: 95}}>
+
+                        <View style={styles.niveis} >
+                            <AeroText style={styles.nivelText} >Especial Pro</AeroText>
+                        </View>
+                        <View style={styles.niveis} >
+                            <AeroText style={styles.nivelText} >Especial</AeroText>
+                        </View>
+                        <View style={styles.niveis} >
+                            <AeroText style={styles.nivelText} >Inter A</AeroText>
+                        </View>
+                    </View>
+                    <Content />
+                    <Button block style={styles.bottom} onPress={() => navigate('userData')}>
+                        <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>
+                    </Button>
                 </View>
             </View>
         </View>
@@ -62,7 +54,7 @@ export default function TipoConta(props) {
     );
 }
 
-TipoConta.navigationOptions = {
+NivelAtletaProf.navigationOptions = {
     headerShown: false
 }
 
@@ -134,5 +126,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 5
+    },
+    niveis: {
+        marginTop: 15,
+        width: 200,
+        height: 35,
+        backgroundColor: '#EBF0EE',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    nivelText: {
+        fontSize: 18,
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: '#696B6A',
+    },
+    bottom: {
+        marginTop: 25,
+        width: 300,
+        height: 40,
+        padding: 7,
+        backgroundColor: '#f75400',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    bottomText: {
+        color: 'white',
+        fontSize: 18,
     }
 });
