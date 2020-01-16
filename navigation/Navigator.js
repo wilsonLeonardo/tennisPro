@@ -7,29 +7,32 @@ import TipoConta from '../screens/TipoDeConta'
 import NivelTenis from '../screens/NivelDeTennis'
 import NivelAtletaProf from '../screens/NivelAtletaProf'
 import ClubDataScreen from '../screens/Club/Register/ClubDataScreen'
-import c from '../screens/Teacher/Register/TeacherDataScreen'
+import ClubDiponibilidade from '../screens/Club/Register/ClubDiponibilidade'
 import TeacherDataScreen from '../screens/Teacher/Register/TeacherDataScreen';
 
 const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen,
   },
-  Type:{
+  Type: {
     screen: TipoConta
   },
-  userNivel:{
+  userNivel: {
     screen: NivelTenis
   },
-  userNivelProf:{
+  userNivelProf: {
     screen: NivelAtletaProf
   },
-  userData:{
+  userData: {
     screen: UserDataScreen
   },
-  clubeData:{
+  clubeDispo: {
+    screen: ClubDiponibilidade
+  },
+  clubeData: {
     screen: ClubDataScreen
   },
-  teacherData:{
+  teacherData: {
     screen: TeacherDataScreen
   }
 
