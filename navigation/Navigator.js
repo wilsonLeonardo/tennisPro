@@ -6,6 +6,7 @@ import UserDataScreen from '../screens/User/Register/UserDataScreen'
 import TipoConta from '../screens/TipoDeConta'
 import NivelTenis from '../screens/NivelDeTennis'
 import NivelAtletaProf from '../screens/NivelAtletaProf'
+import ClubDataScreen from '../screens/Club/Register/ClubDataScreen'
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -22,6 +23,9 @@ const AppNavigator = createStackNavigator({
   },
   userData:{
     screen: UserDataScreen
+  },
+  clubeData:{
+    screen: ClubDataScreen
   }
 
 });

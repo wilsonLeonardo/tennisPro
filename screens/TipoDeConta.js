@@ -47,7 +47,7 @@ export default function TipoConta(props) {
                             style={styles.modeloimg3}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivel')}>
+                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('clubeData')}>
                         <Image
                             source={
                                 require('../assets/images/imgClube.png')
