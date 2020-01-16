@@ -14,27 +14,27 @@ const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen,
   },
-  Type:{
+  Type: {
     screen: TipoConta
   },
-  userNivel:{
+  userNivel: {
     screen: NivelTenis
   },
-  userNivelProf:{
+  userNivelProf: {
     screen: NivelAtletaProf
   },
-  userData:{
+  userData: {
     screen: UserDataScreen
   },
-      clubeDispo:{
-        screen: ClubDiponibilidade
-      },
-  clubeData:{
+  clubeDispo: {
+    screen: ClubDiponibilidade
+  },
+  clubeData: {
     screen: ClubDataScreen
   },
-  teacherData:{
+  teacherData: {
     screen: TeacherDataScreen
-  },
+  }
 
 });
 
