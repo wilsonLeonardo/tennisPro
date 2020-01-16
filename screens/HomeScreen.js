@@ -38,7 +38,7 @@ export default function HomeScreen(props) {
           </Item>
           <Button block style={{borderRadius:10, alignItems:'center',backgroundColor:'#F75400'}}><AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Login </AeroText></Button>
           <View style={{alignItems:'center', marginTop:15}}>
-            <TouchableOpacity onPress={() => navigate('User')}>
+            <TouchableOpacity onPress={() => navigate('Type')}>
               <AeroText style={{color:'black'}}>Não possui uma conta?</AeroText>
             </TouchableOpacity>
           </View>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 25,
   },
   welcomeImage: {
     width: 70,

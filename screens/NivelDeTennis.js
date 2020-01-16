@@ -12,10 +12,11 @@ import { Icon, Content, Form, Item, Input, Button } from 'native-base';
 
 import { AeroText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function NivelTenis(props) {
+    const {navigate} = props.navigation;
     return (
         <View style={styles.container}>
-            <ScrollView
+            <View
                 style={styles.container}
                 contentContainerStyle={styles.contentContainer}>
                 <View style={styles.welcomeContainer}>
@@ -30,38 +31,39 @@ export default function HomeScreen() {
                             Qual seu nível de tênis?
                         </AeroText>
                     </View>
-
+                    <Content/>
                     <View style={styles.niveis} >
-                        <AeroText style={styles.nivelText} >Especial Pro</AeroText>
+                         <AeroText style={styles.nivelText} >Especial Pro</AeroText>
                     </View>
-                    <View style={styles.niveis} >
-                        <AeroText style={styles.nivelText} >Especial</AeroText>
+                     <View style={styles.niveis} >
+                         <AeroText style={styles.nivelText} >Especial</AeroText>
                     </View>
-                    <View style={styles.niveis} >
-                        <AeroText style={styles.nivelText} >Inter A</AeroText>
-                    </View>
-                    <View style={styles.niveis} >
-                        <AeroText style={styles.nivelText} >Inter B</AeroText>
-                    </View>
-                    <View style={styles.niveis} >
-                        <AeroText style={styles.nivelText} >Inter C</AeroText>
-                    </View>
-                    <View style={styles.niveis} >
-                        <AeroText style={styles.nivelText} >Principiante</AeroText>
-                    </View>
-                    <View style={styles.niveis} >
-                        <AeroText style={styles.nivelText} >Iniciante</AeroText>
-                    </View>
-                    <View style={styles.bottom} >
-                        <AeroText style={styles.bottomText} >Próximo</AeroText>
-                    </View>
+                     <View style={styles.niveis} >
+                         <AeroText style={styles.nivelText} >Inter A</AeroText>
+                     </View>
+                     <View style={styles.niveis} >
+                         <AeroText style={styles.nivelText} >Inter B</AeroText>
+                     </View>
+                     <View style={styles.niveis} >
+                         <AeroText style={styles.nivelText} >Inter C</AeroText>
+                     </View>
+                     <View style={styles.niveis} >
+                         <AeroText style={styles.nivelText} >Principiante</AeroText>
+                     </View>
+                     <View style={styles.niveis} >
+                         <AeroText style={styles.nivelText} >Iniciante</AeroText>
+                     </View>
+                     <Button block style={styles.bottom} onPress={() => navigate('userData')}>
+                         <AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Proxímo </AeroText>
+                    </Button>
                 </View>
-            </ScrollView>
+            </View>
         </View>
+
     );
 }
 
-HomeScreen.navigationOptions = {
+NivelTenis.navigationOptions = {
     headerShown: false
 }
 
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        padding: 15
     },
     content: {
         padding: 20,
@@ -96,19 +99,45 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20,
     },
+    welcomeImage: {
+        width: 70,
+        height: 60,
+        resizeMode: 'contain',
+        marginTop: 3,
+        marginLeft: -10,
+    },
+    modeloimg2: {
+        width: 250,
+        height: 150,
+        resizeMode: 'contain',
+        marginTop: 10,
+        borderRadius: 10
+    },
+    modeloimg3: {
+        width: 250,
+        height: 150,
+        resizeMode: 'contain',
+        marginTop: -10,
+        borderRadius: 10,
+    },
+    pergunta: {
+        borderRadius: 10,
+        alignItems: 'center',
+        backgroundColor: '#F75400'
+    },
     caixa: {
         marginTop: 30,
-        marginVertical: 15,
         width: 300,
         height: 50,
         padding: 7,
         backgroundColor: '#f75400',
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        elevation: 5
     },
     niveis: {
-        marginTop: 10,
+        marginTop: 15,
         width: 200,
         height: 35,
         backgroundColor: '#EBF0EE',
@@ -124,13 +153,13 @@ const styles = StyleSheet.create({
     },
     bottom: {
         marginTop: 25,
-        width: 250,
+        width: 300,
         height: 40,
         padding: 7,
         backgroundColor: '#f75400',
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     bottomText: {
         color: 'white',

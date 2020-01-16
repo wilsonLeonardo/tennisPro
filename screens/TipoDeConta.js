@@ -12,10 +12,11 @@ import { Icon, Content, Form, Item, Input, Button } from 'native-base';
 
 import { AeroText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function TipoConta(props) {
+    const {navigate} = props.navigation;
     return (
         <View style={styles.container}>
-            <ScrollView
+            <View
                 style={styles.container}
                 contentContainerStyle={styles.contentContainer}>
                 <View style={styles.welcomeContainer}>
@@ -30,46 +31,38 @@ export default function HomeScreen() {
                             Tipo de Conta
                         </AeroText>
                     </View>
-                    <Image
-                        source={
-                            require('../assets/images/imgPraticante.png')
-                        }
-                        style={styles.modeloimg2}
-                    />
-                    <Image
-                        source={
-                            require('../assets/images/imgProfessor.png')
-                        }
-                        style={styles.modeloimg3}
-                    />
-                    <Image
-                        source={
-                            require('../assets/images/imgClube.png')
-                        }
-                        style={styles.modeloimg3}
-                    />
+                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivel')}>
+                        <Image
+                            source={
+                                require('../assets/images/imgPraticante.png')
+                            }
+                            style={styles.modeloimg2}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivel')}>     
+                        <Image
+                            source={
+                                require('../assets/images/imgProfessor.png')
+                            }
+                            style={styles.modeloimg3}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivel')}>
+                        <Image
+                            source={
+                                require('../assets/images/imgClube.png')
+                            }
+                            style={[styles.modeloimg3, {paddingBottom: 0}]}
+                        />
+                    </TouchableOpacity>
                 </View>
-            </ScrollView>
-            {/* <Content style={styles.content}>
-          <Form>
-          <Item regular style={[styles.item,{marginBottom: 15 }]}>
-            <Input placeholder='Login' />
-            <Icon name='person' style={{color:'#F75400'}}/>
-          </Item>
-          <Item regular style={[styles.item, {marginBottom: 15}]}>
-            <Input textContentType='password' placeholder='Senha' />
-            <Icon name='key' style={{color:'#F75400'}} />
-          </Item>
-          <Button block style={{borderRadius:10, alignItems:'center',backgroundColor:'#F75400'}}><AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Login </AeroText></Button>
-          </Form>
-          
-      </Content> */}
+            </View>
         </View>
 
     );
 }
 
-HomeScreen.navigationOptions = {
+TipoConta.navigationOptions = {
     headerShown: false
 }
 
@@ -78,6 +71,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        padding: 15
     },
     content: {
         padding: 20,
@@ -116,7 +110,7 @@ const styles = StyleSheet.create({
         height: 150,
         resizeMode: 'contain',
         marginTop: 10,
-        borderRadius: 10,
+        borderRadius: 10
     },
     modeloimg3: {
         width: 250,
@@ -138,6 +132,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f75400',
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        elevation: 5
     }
 });
