@@ -44,7 +44,7 @@ export default function NivelAtletaProf(props) {
                         </View>
                     </View>
                     <Content />
-                    <Button block style={styles.bottom} onPress={() => navigate('userData')}>
+                    <Button block style={styles.bottom} onPress={() => navigate('teacherData')}>
                         <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>
                     </Button>
                 </View>
