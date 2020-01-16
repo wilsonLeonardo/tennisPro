@@ -41,7 +41,7 @@ export default function ClubDataScreen(props) {
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                                 <Input placeholder='Telefone' />
-                                <Icon name='phone' style={{ color: '#F75400' }} />
+                                <Icon name='ios-call' style={{ color: '#F75400' }} />
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                                 <Input placeholder='Email' />
@@ -51,7 +51,12 @@ export default function ClubDataScreen(props) {
                                 <Input secureTextEntry={true} placeholder='Senha' />
                                 <Icon name='key' style={{ color: '#F75400' }} />
                             </Item>
-                            <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
+                            <Button
+                                block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}
+                                onPress={() => navigate('clubDispo')}
+                            >
+                                <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText>
+                            </Button>
                         </Form>
                     </Content>
                 </View>
