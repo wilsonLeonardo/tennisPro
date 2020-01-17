@@ -39,7 +39,7 @@ export default function TipoConta(props) {
                             style={styles.modeloimg2}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivelProf')}>     
+                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('teacherData')}>     
                         <Image
                             source={
                                 require('../assets/images/imgProfessor.png')

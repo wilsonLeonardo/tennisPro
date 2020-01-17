@@ -52,12 +52,12 @@ export default function ClubDisponibilidade(props) {
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                                 <Input placeholder='Preço do Aluguel' />
-                                <Icon name='dollar-sign' style={{ color: '#F75400' }} />
+                                <Icon name='dollar' style={{ color: '#F75400' }} />
                             </Item>
 
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                                 <Input placeholder='Preço da Mensalidade' />
-                                <Icon name='dollar-sign' style={{ color: '#F75400' }} />
+                                <Icon name='md-dollar' style={{ color: '#F75400' }} />
                             </Item>
                             <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
                         </Form>
