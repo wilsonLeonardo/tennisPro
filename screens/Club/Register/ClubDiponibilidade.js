@@ -47,17 +47,17 @@ export default function ClubDisponibilidade(props) {
                     <Content style={styles.content}>
                         <Form>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input placeholder='Nº de Quadras' />
+                                <Input placeholder='Nº de Quadras' style={styles.Input}/>
                                 <Icon name='tennisball' style={{ color: '#F75400' }} />
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input placeholder='Preço do Aluguel' />
-                                <Icon name='dollar' style={{ color: '#F75400' }} />
+                                <Input placeholder='Preço do Aluguel' style={styles.Input}/>
+                                <Icon name='logo-usd' style={{ color: '#F75400' }} />
                             </Item>
 
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input placeholder='Preço da Mensalidade' />
-                                <Icon name='md-dollar' style={{ color: '#F75400' }} />
+                                <Input placeholder='Preço da Mensalidade' style={styles.Input}/>
+                                <Icon name='logo-usd' style={{ color: '#F75400' }} />
                             </Item>
                             <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
                         </Form>
@@ -84,9 +84,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     content: {
-        padding: 20,
-        paddingTop: 15,
-        marginBottom: 30
+        padding: 18,
     },
     caixa: {
         justifyContent: 'center',
@@ -103,4 +101,8 @@ const styles = StyleSheet.create({
         marginTop: -20,
         marginBottom: 25,
     },
+    Input:{
+        fontSize: 15, 
+        fontFamily:'Aero'
+    }
 });

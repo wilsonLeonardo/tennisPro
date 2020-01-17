@@ -45,19 +45,19 @@ export default function TeacherDataScreen(props) {
           <Content style={styles.content}>
             <Form>
               <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                <Input placeholder='Cep' />
+                <Input placeholder='Cep' style={styles.Input} />
                 <Icon name='locate' style={{ color: '#F75400' }} />
               </Item>
               <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                <Input placeholder='Nome' />
+                <Input placeholder='Nome' style={styles.Input} />
                 <Icon name='person' style={{ color: '#F75400' }} />
               </Item>
               <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                <Input placeholder='Email' />
+                <Input placeholder='Email' style={styles.Input} />
                 <Icon name='mail' style={{ color: '#F75400' }} />
               </Item>
               <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                <Input secureTextEntry={true} placeholder='Senha' />
+                <Input secureTextEntry={true}  style={styles.Input} placeholder='Senha' />
                 <Icon name='key' style={{ color: '#F75400' }} />
               </Item>
               <Button
@@ -105,5 +105,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 30,
+  },
+  Input:{
+    fontSize: 15, 
+    fontFamily:'Aero'
   }
 });

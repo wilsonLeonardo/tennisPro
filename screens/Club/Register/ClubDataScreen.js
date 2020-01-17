@@ -27,28 +27,28 @@ export default function ClubDataScreen(props) {
                     <View style={styles.caixa} >
                         <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}>
                             Preencha seus dados
-          </AeroText>
+                        </AeroText>
                     </View>
                     <Content style={styles.content}>
                         <Form>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input placeholder='Cep' />
+                                <Input placeholder='Cep' style={styles.Input}/>
                                 <Icon name='locate' style={{ color: '#F75400' }} />
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input placeholder='Nome' />
+                                <Input placeholder='Nome' style={styles.Input}/>
                                 <Icon name='person' style={{ color: '#F75400' }} />
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input placeholder='Telefone' />
+                                <Input placeholder='Telefone'style={styles.Input}/>
                                 <Icon name='call' style={{ color: '#F75400' }} />
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input placeholder='Email' />
+                                <Input placeholder='Email' style={styles.Input}/>
                                 <Icon name='mail' style={{ color: '#F75400' }} />
                             </Item>
                             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                                <Input secureTextEntry={true} placeholder='Senha' />
+                                <Input secureTextEntry={true} placeholder='Senha' style={styles.Input}/>
                                 <Icon name='key' style={{ color: '#F75400' }} />
                             </Item>
                             <Button
@@ -81,9 +81,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     content: {
-        padding: 20,
-        paddingTop: 40,
-        marginBottom: 30
+        padding: 20
     },
     caixa: {
         marginTop: 10,
@@ -120,4 +118,8 @@ const styles = StyleSheet.create({
         marginTop: -20,
         marginBottom: 25,
     },
+    Input:{
+        fontSize: 15, 
+        fontFamily:'Aero'
+      }
 });

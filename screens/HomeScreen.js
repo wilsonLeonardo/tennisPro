@@ -29,11 +29,11 @@ export default function HomeScreen(props) {
       <Content style={styles.content}>
           <Form>
           <Item regular style={[styles.item,{marginBottom: 15, backgroundColor:'#f7f7f7' }]}>
-            <Input placeholder='Login'/>
+            <Input placeholder='Login' style={styles.Input}/>
             <Icon name='person' style={{color:'#F75400'}}/>
           </Item>
           <Item regular style={[styles.item, {marginBottom: 15, backgroundColor:'#f7f7f7'}]}>
-            <Input secureTextEntry={true} placeholder='Senha' />
+            <Input secureTextEntry={true} placeholder='Senha' style={styles.Input}/>
             <Icon name='key' style={{color:'#F75400'}} />
           </Item>
           <Button block style={{borderRadius:10, alignItems:'center',backgroundColor:'#F75400'}}><AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Login </AeroText></Button>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   content:{
     padding:40,
     paddingTop:80,
-    marginBottom: 30
+    marginBottom: 25
   },
   title1:{
     fontSize: 40,
@@ -96,5 +96,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginTop: 3,
     marginLeft: -10,
+  },
+  Input:{
+    fontSize: 15, 
+    fontFamily:'Aero'
   }
 });
