@@ -36,7 +36,8 @@ export default function UserDataScreen(props) {
               <Input secureTextEntry={true} placeholder='Senha' style={styles.Input}/>
               <Icon name='key' style={{color:'#F75400'}} />
             </Item>
-            <Button block style={{borderRadius:10, alignItems:'center',backgroundColor:'#F75400', marginTop:20, elevation: 5}}><AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Próximo </AeroText></Button>
+            <Button onPress={() => navigate('Plans')}
+             block style={{borderRadius:10, alignItems:'center',backgroundColor:'#F75400', marginTop:20, elevation: 5}}><AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Próximo </AeroText></Button>
             </Form>
       </Content>      
     </KeyboardAvoidingView>

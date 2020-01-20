@@ -9,6 +9,7 @@ import NivelAtletaProf from '../screens/NivelAtletaProf'
 import ClubDataScreen from '../screens/Club/Register/ClubDataScreen'
 import ClubDiponibilidade from '../screens/Club/Register/ClubDiponibilidade'
 import TeacherDataScreen from '../screens/Teacher/Register/TeacherDataScreen';
+import UserPlans from '../screens/User/Register/UserPlans'
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -35,7 +36,9 @@ const AppNavigator = createStackNavigator({
   clubeDispo: {
     screen: ClubDiponibilidade
   },
-
+  Plans:{
+    screen:UserPlans
+  }
 });
 
 export default createAppContainer(AppNavigator);
