@@ -27,7 +27,7 @@ export default function NivelAtletaProf(props) {
                         />
                     </AeroText>
                     <View style={styles.caixa} >
-                        <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}>
+                        <AeroText style={{ fontSize: 17, alignItems: 'center', color: '#fff' }}>
                             Qual nível de atleta você ensina?
                         </AeroText>
                     </View>

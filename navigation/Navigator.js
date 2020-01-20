@@ -26,15 +26,15 @@ const AppNavigator = createStackNavigator({
   userData: {
     screen: UserDataScreen
   },
-  clubeDispo: {
-    screen: ClubDiponibilidade
-  },
   clubeData: {
     screen: ClubDataScreen
   },
   teacherData: {
     screen: TeacherDataScreen
-  }
+  },
+  clubeDispo: {
+    screen: ClubDiponibilidade
+  },
 
 });
 
