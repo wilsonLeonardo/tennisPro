@@ -4,6 +4,36 @@ import {AeroText} from './StyledText'
 
 export function TabsTennis(props) {
     const {navegar} = props;
+  if(props.done == "Yes"){
+    return (
+      <View style={styles.container}>
+        <View style={styles.tab}>
+          <TouchableOpacity onPress={() => navegar('userNivel')}>
+            <View style={[styles.item, {backgroundColor:'#F75400'}]}></View>
+            <View style={{alignItems:'center', paddingTop: 10}}>
+              <AeroText style={{ color:'#F75400'}}>Nivel de</AeroText>
+              <AeroText style={{ color:'#F75400'}}>Experiência</AeroText>
+            </View>
+          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navegar('userData')}>
+            <View style={[styles.item, {backgroundColor:'#F75400'}]}></View>
+            <View style={{alignItems:'center', paddingTop: 10}}>
+              <AeroText style={ {color: '#F75400'}}>Preencher</AeroText>
+              <AeroText style={ {color: '#F75400'}}>Dados</AeroText>
+            </View>
+        </TouchableOpacity>
+        <View>
+          <View style={[styles.item,{backgroundColor:'#cfcfcf'}]}></View>
+           <View style={{alignItems:'center',  paddingTop: 10}}>
+              <AeroText style={{color: '#a3a3a3'}}>Planos e</AeroText>
+              <AeroText style={{color: '#a3a3a3'}}>Cupons</AeroText>
+            </View>
+        </View>
+        </View>
+      </View>
+    )
+  }else{
+
   return (
     <View style={styles.container}>
         <View style={styles.tab}>
@@ -15,23 +45,23 @@ export function TabsTennis(props) {
             </View>
           </TouchableOpacity>
         <View>
-        <View style={[styles.item,{backgroundColor:'#cfcfcf'}]}></View>
+            <View style={[styles.item,{backgroundColor:'#cfcfcf'}]}></View>
             <View style={{alignItems:'center', paddingTop: 10}}>
-              <AeroText style={{color: '#a3a3a3'}}>Preencher</AeroText>
-              <AeroText style={{color: '#a3a3a3'}}>Dados</AeroText>
+              <AeroText style={{color:'#a3a3a3'}}>Preencher</AeroText>
+              <AeroText style={{color:'#a3a3a3'}}>Dados</AeroText>
             </View>
         </View>
-
-        <TouchableOpacity>
-        <View style={[styles.item,{backgroundColor:'#cfcfcf'}]}></View>
+        <View>
+          <View style={[styles.item,{backgroundColor:'#cfcfcf'}]}></View>
            <View style={{alignItems:'center',  paddingTop: 10}}>
               <AeroText style={{color: '#c4c4c4'}}>Planos e</AeroText>
               <AeroText style={{color: '#c4c4c4'}}>Cupons</AeroText>
             </View>
-        </TouchableOpacity>
+        </View>
         </View>
       </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({

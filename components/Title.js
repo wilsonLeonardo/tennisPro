@@ -9,7 +9,7 @@ export function TitleTennis(props) {
         <View style={styles.caixa} >
             {props.Icon == 'Check' ? <Icon.CheckIcon/> : props.Icon == 'Person' ? <Icon.PersonIcon/> :
              props.Icon == 'Ball' ? <Icon.Ball2Icon/> : props.Icon == 'Star' ? <Icon.StarIcon/> : null}
-            <AeroText style={[{ fontSize: 18, left:10, alignItems: 'center', color: '#f75400' },props.style]}>
+            <AeroText style={[{ fontSize: 23, left:10, alignItems: 'center', color: '#f75400' },props.style]}>
                 {`${props.placeholder}`}
             </AeroText>
         </View>
