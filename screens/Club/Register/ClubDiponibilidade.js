@@ -4,49 +4,31 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    Text
+    KeyboardAvoidingView
 } from 'react-native';
-import { Form, Button, Item, Input, Header, Content, Icon } from 'native-base';
+import { Form, Button, Item, Input, Header, Content,Container, Icon } from 'native-base';
 
 import { AeroText } from '../../../components/StyledText';
+import {HeaderTennis} from '../../../components/Header'
+import {TitleTennis} from '../../../components/Title'
 
 export default function ClubDisponibilidade(props) {
     const { navigate } = props.navigation;
     return (
-        <Content style={{ backgroundColor: "#ffff" }}>
-            <Header style={{ elevation: 0, backgroundColor: '#ffff' }} />
-            <View style={styles.welcomeContainer}>
-
-                <Image
-                    source={require('../../../assets/images/buraco.png')}
-                    style={{
-                        resizeMode: 'contain',
-                        marginTop: 3,
-                        marginLeft: -10,
-                        width: 400,
-                        height: 150
-                    }}
-                />
-            </View>
-            <View style={styles.container}
-                contentContainerStyle={styles.contentContainer}>
-                <View tyle={styles.welcomeContainer}>
-                    <View style={styles.caixa} >
-                        <AeroText style={{ fontSize: 30, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
-                            Quase tudo pronto....
-          </AeroText>
-                    </View>
-                    <View style={styles.caixa} >
-                        <Text style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
+        <KeyboardAvoidingView style={styles.container}  behavior="padding" enabled keyboardVerticalOffset={0}>
+            <HeaderTennis/>
+            <TitleTennis placeholder="Quase tudo pronto..." style={{fontSize:25}}/>
+            <View style={styles.caixa} >
+                        <AeroText style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
                             Por último, nos informe as
-                        </Text>
-                        <Text style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
+                        </AeroText>
+                        <AeroText style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
                             mensalidades e preços
-                        </Text>
-                    </View>
-                    <Content style={styles.content}>
-                        <Form>
-                            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
+                        </AeroText>
+            </View>
+            <Content style={styles.content}>
+                <Form style={{paddingTop:40}}>
+                <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                                 <Input placeholder='Nº de Quadras' style={styles.Input}/>
                                 <Icon name='tennisball' style={{ color: '#F75400' }} />
                             </Item>
@@ -60,12 +42,9 @@ export default function ClubDisponibilidade(props) {
                                 <Icon name='logo-usd' style={{ color: '#F75400' }} />
                             </Item>
                             <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
-                        </Form>
-                    </Content>
-                </View>
-            </View>
-
-        </Content>
+                </Form>
+            </Content>      
+        </KeyboardAvoidingView>
     );
 }
 
@@ -76,33 +55,25 @@ ClubDisponibilidade.navigationOptions = {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
+      flex: 1,
+      backgroundColor:"#ffff" 
     },
-    item: {
-        elevation: 2,
-        borderRadius: 10
+    item:{
+      elevation:2,
+      borderRadius:10
     },
-    content: {
-        padding: 18,
+    content:{
+      paddingTop:0,
+      padding:50,
+      paddingBottom:230
+    },
+  Input:{
+      fontSize: 15, 
+      fontFamily:'Aero'
     },
     caixa: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20,
-
+        paddingTop:10
     },
-    contentContainer: {
-        paddingTop: 30,
-    },
-    welcomeContainer: {
-        flex: 2,
-        alignItems: 'center',
-        marginTop: -20,
-        marginBottom: 25,
-    },
-    Input:{
-        fontSize: 15, 
-        fontFamily:'Aero'
-    }
-});
+  });
