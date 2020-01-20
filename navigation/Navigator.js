@@ -10,6 +10,7 @@ import ClubDataScreen from '../screens/Club/Register/ClubDataScreen'
 import ClubDiponibilidade from '../screens/Club/Register/ClubDiponibilidade'
 import TeacherDataScreen from '../screens/Teacher/Register/TeacherDataScreen';
 import TeacherDiponibilidade from '../screens/Teacher/Register/TeacherDiponibilidade';
+import UserDisponibilidade from '../screens/User/Register/UserDisponibilidade'
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -38,6 +39,9 @@ const AppNavigator = createStackNavigator({
   },
   teacherDispo:{
     screen: TeacherDiponibilidade
+  },
+  userDispo:{
+    screen: UserDisponibilidade
   }
 
 });
