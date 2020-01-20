@@ -7,49 +7,46 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ImageBackground
 } from 'react-native';
-import { Icon, Content, Form, Item, Input, Button,Footer   } from 'native-base';
+import { Icon, Content, Form, Item, Input, Button,Footer, Container   } from 'native-base';
 
 import { AeroText } from '../components/StyledText';
+import { HeaderTennis } from '../components/HomeHeader'
+import {PersonFullIcon, KeyIcon} from '../components/Icon/Icon' 
 
 export default function HomeScreen(props) {
   const {navigate} = props.navigation;
   return (
-    <Content style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-        <AeroText style={styles.title1}>Tennis<AeroText style={styles.title2}>Pro</AeroText><Image
-            source={require('../assets/images/Logo.png')}
-            style={styles.welcomeImage}
-        /></AeroText>
-          </View>
-      </ScrollView>
+    <Container style={styles.container}>
+    <ImageBackground source={require('../assets/images/background.jpg')} style={{resizeMode:'contain', flex:3, width: null, height: null}}>
+      <HeaderTennis/>
       <Content style={styles.content}>
           <Form>
           <Item regular style={[styles.item,{marginBottom: 15, backgroundColor:'#f7f7f7' }]}>
             <Input placeholder='Login' style={styles.Input}/>
-            <Icon name='person' style={{color:'#F75400'}}/>
+            <PersonFullIcon style={{width:22, height:26, left:-10}} />
           </Item>
           <Item regular style={[styles.item, {marginBottom: 15, backgroundColor:'#f7f7f7'}]}>
             <Input secureTextEntry={true} placeholder='Senha' style={styles.Input}/>
-            <Icon name='key' style={{color:'#F75400'}} />
+            <KeyIcon style={{width:22, height:12, left:-10}} />
           </Item>
           <Button block style={{borderRadius:10, alignItems:'center',backgroundColor:'#F75400'}}><AeroText style={{fontSize:18, alignItems:'center', color:'#fff'}}> Login </AeroText></Button>
           <View style={{alignItems:'center', marginTop:15}}>
             <TouchableOpacity onPress={() => navigate('Type')}>
-              <AeroText style={{color:'black'}}>Não possui uma conta?</AeroText>
+              <AeroText style={{color:'#fff'}}>Não possui uma conta?</AeroText>
             </TouchableOpacity>
           </View>
           </Form>
       </Content>
-      <Footer style={{alignItems:'center', backgroundColor: '#F75400', border:0, height: 150, justifyContent:'flex-end', borderBottomStartRadius:100, borderTopStartRadius:500, width: 300, left: 65}}>
-        {/* <View style={{ alignItems:'center', justifyContent:'center', height: 150,width: 280, borderBottomStartRadius:100, borderTopStartRadius:500,}}> */}
-          <AeroText style={{color:'#ffff', left: 30}}>O nosso objetivo é que até 2022 nós sejamos usados por 80% dos jogadores de tênis do Brasil</AeroText>
-        {/* </View> */}
-      </Footer>
-    </Content>
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <AeroText style={{color:'#fff'}}>O nosso objetivo é que até 2022</AeroText>
+      <AeroText style={{color:'#fff'}}>nós sejamos usados por 80%</AeroText>
+      <AeroText style={{color:'#fff'}}>dos jogadores de tênis do Brasil</AeroText>
+      </View>
+
+    </ImageBackground>
+    </Container>
     
   );
 }
@@ -62,20 +59,11 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   content:{
+    flex:1,
     padding:40,
-    paddingTop:80,
     marginBottom: 25
-  },
-  title1:{
-    fontSize: 40,
-    color:'#F75400'
-  },
-  title2:{
-    fontSize: 40,
-    color:'#606062'
   },
   item:{
     elevation:2,
