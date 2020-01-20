@@ -4,104 +4,87 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    Text
+    KeyboardAvoidingView
 } from 'react-native';
-import { Form, Button, Item, Input, Header, Content, Icon } from 'native-base';
+import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'native-base';
 
 import { AeroText } from '../../../components/StyledText';
+import { HeaderTennis } from '../../../components/Header'
+import { TitleTennis } from '../../../components/Title'
 
-export default function TeacherDiponibilidade(props) {
+export default function TeacherDisponibilidade(props) {
     const { navigate } = props.navigation;
     return (
-        <Content style={{ backgroundColor: "#ffff" }}>
-            <Header style={{ elevation: 0, backgroundColor: '#ffff' }} />
-            <View style={styles.welcomeContainer}>
-
-                <Image
-                    source={require('../../../assets/images/buraco.png')}
-                    style={{
-                        resizeMode: 'contain',
-                        marginTop: 3,
-                        marginLeft: -10,
-                        width: 400,
-                        height: 150
-                    }}
-                />
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled keyboardVerticalOffset={0}>
+            <HeaderTennis />
+            <TitleTennis placeholder="Quase tudo pronto..." style={{ fontSize: 25 }} />
+            <View style={styles.caixa} >
+                <AeroText style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
+                    Por último, nos informe sua
+                </AeroText>
+                <AeroText style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
+                    disponibilidade e preço
+                </AeroText>
             </View>
-            <View style={styles.container}
-                contentContainerStyle={styles.contentContainer}>
-                <View tyle={styles.welcomeContainer}>
-                    <View style={styles.caixa} >
-                        <AeroText style={{ fontSize: 30, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
-                            Quase tudo pronto....
-          </AeroText>
-                    </View>
-                    <View style={styles.caixa} >
-                        <Text style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
-                            Por último, nos informe sua
-                        </Text>
-                        <Text style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
-                            disponibilidade e preço
-                        </Text>
-                    </View>
-                    <Content style={[styles.content, { flex: 1 }]}>
-                        <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around" }}>
+            <Content style={styles.content}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop:40 }}>
 
-                            <Button style={styles.bottomDiasDaSemana}>
-                                <AeroText style={styles.fontDiasDaSemana} >Seg</AeroText>
-                            </Button>
-                            <Button style={styles.bottomDiasDaSemana}>
-                                <AeroText style={styles.fontDiasDaSemana} >Ter</AeroText>
-                            </Button>
-                            <Button style={styles.bottomDiasDaSemana}>
-                                <AeroText style={styles.fontDiasDaSemana} >Qua</AeroText>
-                            </Button>
-                            <Button style={styles.bottomDiasDaSemana}>
-                                <AeroText style={styles.fontDiasDaSemana} >Qui</AeroText>
-                            </Button>
-                            <Button style={styles.bottomDiasDaSemana}>
-                                <AeroText style={styles.fontDiasDaSemana} >Sex</AeroText>
-                            </Button>
-                            <Button style={styles.bottomDiasDaSemana}>
-                                <AeroText style={styles.fontDiasDaSemana} >Sab</AeroText>
-                            </Button>
-                            <Button style={styles.bottomDiasDaSemana}>
-                                <AeroText style={styles.fontDiasDaSemana} >Dom</AeroText>
-                            </Button>
+                    <Button style={styles.bottomDiasDaSemana}>
+                        <AeroText style={styles.fontDiasDaSemana} >Seg</AeroText>
+                    </Button>
+                    <Button style={styles.bottomDiasDaSemana}>
+                        <AeroText style={styles.fontDiasDaSemana} >Ter</AeroText>
+                    </Button>
+                    <Button style={styles.bottomDiasDaSemana}>
+                        <AeroText style={styles.fontDiasDaSemana} >Qua</AeroText>
+                    </Button>
+                    <Button style={styles.bottomDiasDaSemana}>
+                        <AeroText style={styles.fontDiasDaSemana} >Qui</AeroText>
+                    </Button>
+                    <Button style={styles.bottomDiasDaSemana}>
+                        <AeroText style={styles.fontDiasDaSemana} >Sex</AeroText>
+                    </Button>
+                    <Button style={styles.bottomDiasDaSemana}>
+                        <AeroText style={styles.fontDiasDaSemana} >Sab</AeroText>
+                    </Button>
+                    <Button style={styles.bottomDiasDaSemana}>
+                        <AeroText style={styles.fontDiasDaSemana} >Dom</AeroText>
+                    </Button>
 
-                        </View>
-                        <Form style={{ flexDirection: 'row', marginTop: 30 }}>
-                            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex:1 }]}>
-                                <Input style={styles.Input} placeholder='Entrada' />
-                            </Item>
-                            <View style={{ justifyContent: "center", height: 40, width: 35 }}>
-                                <AeroText style={{}}> até</AeroText>
-                            </View>
-                            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex:1 }]}>
-                                <Input style={styles.Input} placeholder='Saída' />
-                            </Item>
-                        </Form>
-                        <Form style={{ flexDirection: 'row', justifyContent: "center"}}>
-                            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex:1 }]}>
-                                <Input style={styles.Input} placeholder='Preço mínimo' />
-                            </Item>
-                            <View style={{ justifyContent: "center", height: 40, width: 35 }}>
-                                <AeroText > até</AeroText>
-                            </View>
-                            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex:1 }]}>
-                                <Input style={styles.Input} placeholder='Preço máximo' />
-                            </Item>
-                        </Form>
-                    </Content>
-                    <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
                 </View>
-            </View>
-
-        </Content>
+                <Form style={{ flexDirection: 'row', paddingTop:40 }}>
+                    <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                        <Input style={styles.Input} placeholder='Entrada' />
+                    </Item>
+                    <View style={{ justifyContent: "center", height: 40, width: 35 }}>
+                        <AeroText style={{}}> até</AeroText>
+                    </View>
+                    <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                        <Input style={styles.Input} placeholder='Saída' />
+                    </Item>
+                </Form>
+                <Form style={{ flexDirection: 'row', justifyContent: "center" }}>
+                    <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                        <Input style={styles.Input} placeholder='Preço mínimo' />
+                    </Item>
+                    <View style={{ justifyContent: "center", height: 40, width: 35 }}>
+                        <AeroText > até</AeroText>
+                    </View>
+                    <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                        <Input style={styles.Input} placeholder='Preço máximo' />
+                    </Item>
+                </Form>
+                <Form style={{paddingTop:20}}>
+                    <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}>
+                        <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText>
+                    </Button>
+                </Form>
+            </Content>
+        </KeyboardAvoidingView>
     );
 }
 
-TeacherDiponibilidade.navigationOptions = {
+TeacherDisponibilidade.navigationOptions = {
     headerShown: false
 }
 
@@ -109,33 +92,25 @@ TeacherDiponibilidade.navigationOptions = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        backgroundColor: "#ffff"
     },
     item: {
         elevation: 2,
-        borderRadius: 10,
-        height: 40
+        borderRadius: 10
     },
     content: {
-        padding: 10,
-        paddingTop: 15,
-        marginBottom: 20,
-        height: 180
+        paddingTop: 0,
+        padding: 50,
+        paddingBottom: 230
+    },
+    Input: {
+        fontSize: 15,
+        fontFamily: 'Aero'
     },
     caixa: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20,
-
-    },
-    contentContainer: {
-        paddingTop: 30,
-    },
-    welcomeContainer: {
-        flex: 2,
-        alignItems: 'center',
-        marginTop: -20,
-        marginBottom: 25,
+        paddingTop: 10
     },
     bottomDiasDaSemana: {
         borderRadius: 10,
@@ -145,12 +120,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f7f7f7'
     },
     fontDiasDaSemana: {
-        fontSize: 13, 
-        fontFamily:'Aero'
+        fontSize: 10,
+        fontFamily: 'Aero'
 
     },
-    Input:{
-        fontSize: 13, 
-        fontFamily:'Aero'
-      }
 });

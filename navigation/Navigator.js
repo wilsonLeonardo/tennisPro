@@ -40,7 +40,7 @@ const AppNavigator = createStackNavigator({
   },
   Plans:{
     screen:UserPlans
-  }
+  },
   teacherDispo:{
     screen: TeacherDiponibilidade
   },
