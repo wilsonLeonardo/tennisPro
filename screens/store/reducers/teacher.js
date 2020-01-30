@@ -13,19 +13,20 @@ const inicialState = {
         especialPro:null,
         especial: null,
         interA:null
+    },
+    diasDaSemana: {
+        seg: null,
+        ter: null,
+        qua: null,
+        qui: null,
+        sex: null,
+        sab: null,
+        dom: null
     }
 }
 
 const reducer = (state = inicialState, action) => {
     switch (action.type) {
-        case TEACHER_ADD_DADOS:
-            return {
-                ...state,
-                cep: action.payload.cep,
-                clube: action.payload.clube,
-                email: action.payload.email,
-                senha: action.payload.senha
-            }
         case TEACHER_ADD_NIVEL:
             return{
                 ...state,
@@ -35,6 +36,14 @@ const reducer = (state = inicialState, action) => {
                     interA: action.payload.interA
                 }
             }
+        case TEACHER_ADD_DADOS:
+            return {
+                ...state,
+                cep: action.payload.cep,
+                clube: action.payload.clube,
+                email: action.payload.email,
+                senha: action.payload.senha
+            }
         case TEACHER_ADD_DISPO:
             return {
                 ...state,
@@ -42,6 +51,15 @@ const reducer = (state = inicialState, action) => {
                 saida: action.payload.saida,
                 p_min: action.payload.p_min,
                 p_max: action.payload.p_max,
+                diasDaSemana: {
+                    seg: action.payload.seg,
+                    ter: action.payload.ter,
+                    qua: action.payload.qua,
+                    qui: action.payload.qui,
+                    sex: action.payload.sex,
+                    sab: action.payload.sab,
+                    dom: action.payload.dom
+                }
                 
             }
         default:

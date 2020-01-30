@@ -19,11 +19,11 @@ class UserDisponibilidade extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            entrada: '',
-            saida: '',
             diasDaSemana: {
                 seg: false, ter: false, qua: false, qui: false, sex: false, sab: false, dom: false
-            }
+            },
+            entrada: '',
+            saida: ''
         }
     }
     onAddDispo = () => {

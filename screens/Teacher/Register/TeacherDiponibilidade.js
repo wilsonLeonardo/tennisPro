@@ -1,4 +1,4 @@
-import React, {Component}from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { addDisponibilidade } from '../../store/actions/teacher'
 import {
@@ -15,10 +15,12 @@ import { HeaderTennis } from '../../../components/Header'
 import { TitleTennis } from '../../../components/Title'
 
 class TeacherDisponibilidade extends Component {
-
     constructor(props) {
         super(props)
         this.state = {
+            diasDaSemana: {
+                seg: false, ter: false, qua: false, qui: false, sex: false, sab: false, dom: false
+            },
             entrada: '',
             saida: '',
             p_min: '',
@@ -46,25 +48,25 @@ class TeacherDisponibilidade extends Component {
                 <Content style={styles.content}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
 
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(seg) => { this.setState({ seg: true }) }} value={this.state.diasDaSemana.seg}>
                             <AeroText style={styles.fontDiasDaSemana} >Seg</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(ter) => { this.setState({ ter: true }) }} value={this.state.diasDaSemana.ter}>
                             <AeroText style={styles.fontDiasDaSemana} >Ter</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(qua) => { this.setState({ qua: true }) }} value={this.state.diasDaSemana.qua}>
                             <AeroText style={styles.fontDiasDaSemana} >Qua</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(qui) => { this.setState({ qui: true }) }} value={this.state.diasDaSemana.qui}>
                             <AeroText style={styles.fontDiasDaSemana} >Qui</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(sex) => { this.setState({ sex: true }) }} value={this.state.diasDaSemana.sex}>
                             <AeroText style={styles.fontDiasDaSemana} >Sex</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(sab) => { this.setState({ sab: true }) }} value={this.state.diasDaSemana.sab}>
                             <AeroText style={styles.fontDiasDaSemana} >Sab</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(dom) => { this.setState({ dom: true }) }} value={this.state.diasDaSemana.dom}>
                             <AeroText style={styles.fontDiasDaSemana} >Dom</AeroText>
                         </Button>
 
@@ -73,10 +75,10 @@ class TeacherDisponibilidade extends Component {
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
-                                placeholder='Entrada' 
-                                onChangeText={(entrada)=>this.setState({entrada})}
+                                placeholder='Entrada'
+                                onChangeText={(entrada) => this.setState({ entrada })}
                                 value={this.state.entrada}
-                                />
+                            />
                         </Item>
                         <View style={{ justifyContent: "center", height: 40, width: 35 }}>
                             <AeroText style={{}}> até</AeroText>
@@ -84,20 +86,20 @@ class TeacherDisponibilidade extends Component {
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
-                                placeholder='Saída' 
-                                onChangeText={(saida)=>this.setState({saida})}
+                                placeholder='Saída'
+                                onChangeText={(saida) => this.setState({ saida })}
                                 value={this.state.saida}
-                                />
+                            />
                         </Item>
                     </Form>
                     <Form style={{ flexDirection: 'row', justifyContent: "center" }}>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
-                                placeholder='Preço mínimo' 
-                                onChangeText={(p_min)=>this.setState({p_min})}
+                                placeholder='Preço mínimo'
+                                onChangeText={(p_min) => this.setState({ p_min })}
                                 value={this.state.p_min}
-                                />
+                            />
                         </Item>
                         <View style={{ justifyContent: "center", height: 40, width: 35 }}>
                             <AeroText > até</AeroText>
@@ -105,10 +107,10 @@ class TeacherDisponibilidade extends Component {
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
-                                placeholder='Preço máximo' 
-                                onChangeText={(p_max)=>this.setState({p_max})}
+                                placeholder='Preço máximo'
+                                onChangeText={(p_max) => this.setState({ p_max })}
                                 value={this.state.p_max}
-                                />
+                            />
                         </Item>
                     </Form>
                     <Form style={{ paddingTop: 20 }}>
