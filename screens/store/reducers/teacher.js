@@ -8,7 +8,12 @@ const inicialState = {
     entrada: null,
     saida: null,
     p_min: null,
-    p_max: null
+    p_max: null,
+    niveis:{
+        especialPro:null,
+        especial: null,
+        interA:null
+    }
 }
 
 const reducer = (state = inicialState, action) => {
@@ -23,7 +28,12 @@ const reducer = (state = inicialState, action) => {
             }
         case TEACHER_ADD_NIVEL:
             return{
-                ...state
+                ...state,
+                niveis:{
+                    especialPro: action.payload.especialPro,
+                    especial: action.payload.especial,
+                    interA: action.payload.interA
+                }
             }
         case TEACHER_ADD_DISPO:
             return {
@@ -31,7 +41,8 @@ const reducer = (state = inicialState, action) => {
                 entrada: action.payload.entrada,
                 saida: action.payload.saida,
                 p_min: action.payload.p_min,
-                p_max: action.payload.p_max
+                p_max: action.payload.p_max,
+                
             }
         default:
             return state

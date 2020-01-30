@@ -1,4 +1,4 @@
-import { USER_ADD_DADOS, USER_ADD_NIVEL, USER_ADD_DISPO } from './actionTypes'
+import { USER_ADD_DADOS, USER_ADD_NIVEL, USER_ADD_DISPO, USER_ADD_PLANS } from './actionTypes'
 
 export const addDados = user => {
     return {
@@ -10,6 +10,13 @@ export const addDados = user => {
 export const addNivel = user => {
     return {
         type: USER_ADD_NIVEL,
+        payload: user
+    }
+}
+
+export const addPlans = user => {
+    return {
+        type: USER_ADD_PLANS,
         payload: user
     }
 }

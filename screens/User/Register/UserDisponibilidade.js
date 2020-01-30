@@ -21,8 +21,9 @@ class UserDisponibilidade extends Component {
         this.state = {
             entrada: '',
             saida: '',
-            p_min: '',
-            p_max: ''
+            diasDaSemana: {
+                seg: false, ter: false, qua: false, qui: false, sex: false, sab: false, dom: false
+            }
         }
     }
     onAddDispo = () => {
@@ -46,25 +47,25 @@ class UserDisponibilidade extends Component {
                 <Content style={styles.content}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
 
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(seg) => { this.setState({ seg: true }) }} value={this.state.diasDaSemana.seg}>
                             <AeroText style={styles.fontDiasDaSemana} >Seg</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(ter) => { this.setState({ ter: true }) }} value={this.state.diasDaSemana.ter}>
                             <AeroText style={styles.fontDiasDaSemana} >Ter</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
-                            <AeroText style={styles.fontDiasDaSemana} >Qua</AeroText>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(qua) => { this.setState({ qua: true }) }} value={this.state.diasDaSemana.qua}>
+                            <AeroText style={styles.fontDiasDaSemana}  >Qua</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(qui) => { this.setState({ qui: true }) }} value={this.state.diasDaSemana.qui}>
                             <AeroText style={styles.fontDiasDaSemana} >Qui</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(sex) => { this.setState({ sex: true }) }} value={this.state.diasDaSemana.sex}>
                             <AeroText style={styles.fontDiasDaSemana} >Sex</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(sab) => { this.setState({ sab: true }) }} value={this.state.diasDaSemana.sab}>
                             <AeroText style={styles.fontDiasDaSemana} >Sab</AeroText>
                         </Button>
-                        <Button style={styles.bottomDiasDaSemana}>
+                        <Button style={styles.bottomDiasDaSemana} onPress={(dom) => { this.setState({ dom: true }) }} value={this.state.diasDaSemana.dom}>
                             <AeroText style={styles.fontDiasDaSemana} >Dom</AeroText>
                         </Button>
 
@@ -85,7 +86,7 @@ class UserDisponibilidade extends Component {
                             <Input
                                 style={styles.Input}
                                 placeholder='Saída'
-                                onChangeText={(saida)=>this.setState({saida})}
+                                onChangeText={(saida) => this.setState({ saida })}
                                 value={this.state.saida}
                             />
                         </Item>
