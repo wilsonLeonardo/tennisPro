@@ -4,8 +4,10 @@ import { StyleSheet } from 'react-native';
 import { Container, Text } from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
+import { Provider } from 'react-redux'
 
 import AppNavigator from './navigation/Navigator'
+import storeConfig from './screens/store/storeConfig'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -26,12 +28,15 @@ export default class App extends React.Component {
   }
 
   render() {
+    const store = storeConfig()
     if (!this.state.isReady) {
       return <AppLoading />;
     }
 
     return (
-      <AppNavigator/>
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
     );
   }
 }
