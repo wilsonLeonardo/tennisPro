@@ -31,7 +31,11 @@ export default function HomeScreen(props) {
               <Input secureTextEntry={true} placeholder='Senha' style={styles.Input} />
               <KeyIcon style={{ width: 22, height: 12, left: -10 }} />
             </Item>
-            <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400' }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Login </AeroText></Button>
+            <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400' }} onPress={() => navigate('homeUser')}>
+              <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}>
+                Login
+              </AeroText>
+            </Button>
             <View style={{ alignItems: 'center', marginTop: 15 }}>
               <TouchableOpacity onPress={() => navigate('Type')}>
                 <AeroText style={{ color: '#fff' }}>Não possui uma conta?</AeroText>
