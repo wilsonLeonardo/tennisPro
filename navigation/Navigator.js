@@ -37,7 +37,10 @@ const AppNavigator = createStackNavigator({
     screen: TeacherDataScreen
   },
   clubeDispo: {
-    screen: ClubDiponibilidade
+    screen: ClubDiponibilidade,
+    navigationOptions:{
+      headerShown: false
+    }
   },
   Plans:{
     screen:UserPlans

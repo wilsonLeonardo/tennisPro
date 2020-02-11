@@ -101,7 +101,7 @@ class UserPlans extends Component {
                     <View style={styles.title}>
                         <View style={styles.caixa} >
                             <PlusIcon />
-                            <AeroText style={[{ fontSize: 18, left: 10, alignItems: 'center', color: '#f75400' }, props.style]}>
+                            <AeroText style={[{ fontSize: 18, left: 10, alignItems: 'center', color: '#f75400' }, this.props.style]}>
                                 Adicionar cupom
                     </AeroText>
                         </View>

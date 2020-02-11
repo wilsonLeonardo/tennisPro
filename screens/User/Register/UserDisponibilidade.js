@@ -5,7 +5,9 @@ import {
     Image,
     StyleSheet,
     View,
+    Text,
     TouchableOpacity,
+    TouchableHighlight,
     KeyboardAvoidingView
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'native-base';
@@ -29,6 +31,12 @@ class UserDisponibilidade extends Component {
     onAddDispo = () => {
         this.props.addDisponibilidade({ ...this.state })
     }
+    // onHideUnderlay() {
+    //     )
+    // }
+    // onShowUnderlay() {
+    //     this.setState({ diasDaSemana:{seg: true}  })
+    // }
 
     render() {
         const { navigate } = this.props.navigation;
@@ -46,28 +54,41 @@ class UserDisponibilidade extends Component {
                 </View>
                 <Content style={styles.content}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
-
-                        <Button style={styles.bottomDiasDaSemana} onPress={(seg) => { this.setState({ seg: true }) }} value={this.state.diasDaSemana.seg}>
+                        <TouchableHighlight style={this.state.diasDaSemana.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                         onPress={this.state.diasDaSemana.seg ? () => this.setState({diasDaSemana:{seg:false}}) : () => this.setState({diasDaSemana:{seg:true}})  } 
+                         value={this.state.diasDaSemana.seg}>
                             <AeroText style={styles.fontDiasDaSemana} >Seg</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(ter) => { this.setState({ ter: true }) }} value={this.state.diasDaSemana.ter}>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.diasDaSemana.ter ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.diasDaSemana.ter ? () => this.setState({diasDaSemana:{ter:false}}) : () => this.setState({diasDaSemana:{ter:true}})  } 
+                         value={this.state.diasDaSemana.ter}>
                             <AeroText style={styles.fontDiasDaSemana} >Ter</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(qua) => { this.setState({ qua: true }) }} value={this.state.diasDaSemana.qua}>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.diasDaSemana.qua ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.diasDaSemana.qua ? () => this.setState({diasDaSemana:{qua:false}}) : () => this.setState({diasDaSemana:{qua:true}})  } 
+                        value={this.state.diasDaSemana.qua}>
                             <AeroText style={styles.fontDiasDaSemana}  >Qua</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(qui) => { this.setState({ qui: true }) }} value={this.state.diasDaSemana.qui}>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.diasDaSemana.qui ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                        onPress={this.state.diasDaSemana.qui ? () => this.setState({diasDaSemana:{qui:false}}) : () => this.setState({diasDaSemana:{qui:true}})  } 
+                        value={this.state.diasDaSemana.qui}>
                             <AeroText style={styles.fontDiasDaSemana} >Qui</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(sex) => { this.setState({ sex: true }) }} value={this.state.diasDaSemana.sex}>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.diasDaSemana.sex ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                        onPress={this.state.diasDaSemana.sex ? () => this.setState({diasDaSemana:{sex:false}}) : () => this.setState({diasDaSemana:{sex:true}})  } 
+                        value={this.state.diasDaSemana.sex}>
                             <AeroText style={styles.fontDiasDaSemana} >Sex</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(sab) => { this.setState({ sab: true }) }} value={this.state.diasDaSemana.sab}>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.diasDaSemana.sab ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                        onPress={this.state.diasDaSemana.sab ? () => this.setState({diasDaSemana:{sab:false}}) : () => this.setState({diasDaSemana:{sab:true}})  } 
+                        value={this.state.diasDaSemana.sab}>
                             <AeroText style={styles.fontDiasDaSemana} >Sab</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(dom) => { this.setState({ dom: true }) }} value={this.state.diasDaSemana.dom}>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.diasDaSemana.dom ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.diasDaSemana.dom ? () => this.setState({diasDaSemana:{dom:false}}) : () => this.setState({diasDaSemana:{dom:true}})  } 
+                             value={this.state.diasDaSemana.dom}>
                             <AeroText style={styles.fontDiasDaSemana} >Dom</AeroText>
-                        </Button>
+                        </TouchableHighlight>
 
                     </View>
                     <Form style={{ flexDirection: 'row', paddingTop: 40 }}>
@@ -92,7 +113,7 @@ class UserDisponibilidade extends Component {
                         </Item>
                     </Form>
                     <Form style={{ paddingTop: 20 }}>
-                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}>
+                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }} onPress={() => console.warn(this.state.diasDaSemana)}>
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText>
                         </Button>
                     </Form>
@@ -140,13 +161,45 @@ const styles = StyleSheet.create({
     bottomDiasDaSemana: {
         borderRadius: 10,
         justifyContent: 'center',
+        alignItems:'center',
         width: 30,
         height: 30,
         backgroundColor: '#f7f7f7'
+    },
+    bottomDiasDaSemanaPress: {
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems:'center',
+        width: 30,
+        height: 30,
+        backgroundColor: '#F75400'
     },
     fontDiasDaSemana: {
         fontSize: 10,
         fontFamily: 'Aero'
 
     },
+    welcome: {
+        fontSize: 20,
+        textAlign: "center",
+        margin: 10,
+        color: "#000066"
+    },
+    welcomePress: {
+        fontSize: 20,
+        textAlign: "center",
+        margin: 10,
+        color: "#ffffff"
+    },
+    button: {
+        borderColor: "#000066",
+        borderWidth: 1,
+        borderRadius: 10
+    },
+    buttonPress: {
+        borderColor: "#000066",
+        backgroundColor: "#000066",
+        borderWidth: 1,
+        borderRadius: 10
+    }
 });
