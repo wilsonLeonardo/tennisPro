@@ -11,7 +11,7 @@ import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } f
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 
-class Conflitos extends Component {
+class Jogos extends Component {
     render() {
         return (
             <Container style={styles.container}>
@@ -80,11 +80,11 @@ class Conflitos extends Component {
     }
 }
 
-Conflitos.navigationOptions = {
+Jogos.navigationOptions = {
     headerShown: false
 }
 
-export default Conflitos
+export default Jogos
 const styles = StyleSheet.create({
     container: {
         flex: 1,

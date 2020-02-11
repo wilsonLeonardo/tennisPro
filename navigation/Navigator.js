@@ -4,8 +4,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from '../screens/HomeScreen'
 import UserDataScreen from '../screens/User/Register/UserDataScreen'
 import TipoConta from '../screens/TipoDeConta'
-import NivelTenis from '../screens/NivelDeTennis'
-import NivelAtletaProf from '../screens/NivelAtletaProf'
+import NivelTenis from '../screens/User/Register/NivelDeTennis'
+import NivelAtletaProf from '../screens/Teacher/Register/NivelAtletaProf'
 import ClubDataScreen from '../screens/Club/Register/ClubDataScreen'
 import ClubDiponibilidade from '../screens/Club/Register/ClubDiponibilidade'
 import TeacherDataScreen from '../screens/Teacher/Register/TeacherDataScreen';

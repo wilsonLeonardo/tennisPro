@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addNivel } from './store/actions/teacher'
+import { addNivel } from '../../store/actions/teacher'
 import {
     StyleSheet,
     View,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    TouchableHighlight
 } from 'react-native';
 import { Button } from 'native-base';
 
-import { AeroText } from '../components/StyledText';
-import { HeaderTennis } from '../components/Header'
-import { TitleTennis } from '../components/Title'
+import { AeroText } from '../../../components/StyledText';
+import { HeaderTennis } from '../../../components/Header'
+import { TitleTennis } from '../../../components/Title'
 
 class NivelAtletaProf extends Component {
 
@@ -35,15 +36,29 @@ class NivelAtletaProf extends Component {
                 <HeaderTennis />
                 <TitleTennis placeholder='Qual nível de atleta você ensina?' Icon="Ball" />
                 <View style={styles.content}>
-                    <Button style={styles.niveis} onPress={(especialPro) => this.setState({ especialPro: true })} value={this.state.niveis.especialPro}>
-                        <AeroText style={styles.nivelText}  >Especial Pro</AeroText>
-                    </Button>
-                    <Button style={styles.niveis} onPress={(especial) => this.setState({ especial: true })} value={this.state.niveis.especial}>
-                        <AeroText style={styles.nivelText} >Especial</AeroText>
-                    </Button>
-                    <Button style={styles.niveis} onPress={(interA) => this.setState({ interA: true })} value={this.state.niveis.interA}>
-                        <AeroText style={styles.nivelText} >Inter A</AeroText>
-                    </Button>
+                    <TouchableHighlight
+                        style={this.state.niveis.especialPro ? styles.bottomNiveisPress : styles.bottomNiveis}
+                        onPress={this.state.niveis.especialPro ? () => this.setState({ niveis: { especialPro: false } }) : () => this.setState({ niveis: { especialPro: true } })}
+                        value={this.state.niveis.especialPro}
+                    >
+                        <AeroText style={this.state.niveis.especialPro ? styles.nivelTextPress : styles.nivelText}  >Especial Pro</AeroText>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight
+                        style={this.state.niveis.especial ? styles.bottomNiveisPress : styles.bottomNiveis}
+                        onPress={this.state.niveis.especial ? () => this.setState({ niveis: { especial: false } }) : () => this.setState({ niveis: { especial: true } })}
+                        value={this.state.niveis.especial}
+                    >
+                        <AeroText style={this.state.niveis.especial ? styles.nivelTextPress : styles.nivelText} >Especial</AeroText>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight
+                        style={this.state.niveis.interA ? styles.bottomNiveisPress : styles.bottomNiveis}
+                        onPress={this.state.niveis.interA ? () => this.setState({ niveis: { interA: false } }) : () => this.setState({ niveis: { interA: true } })}
+                        value={this.state.niveis.interA}
+                    >
+                        <AeroText style={this.state.niveis.interA ? styles.nivelTextPress : styles.nivelText} >Inter A</AeroText>
+                    </TouchableHighlight>
                     <View style={styles.viewButton}>
                         <Button block style={styles.button} onPress={() => navigate('teacherData')}>
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>
@@ -80,11 +95,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
     },
-    niveis: {
+    bottomNiveis: {
         marginTop: 15,
         width: 200,
         height: 35,
         backgroundColor: '#EBF0EE',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    bottomNiveisPress: {
+        marginTop: 15,
+        width: 200,
+        height: 35,
+        backgroundColor: '#F75400',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -94,6 +118,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontWeight: 'bold',
         color: '#696B6A',
+    },
+    nivelTextPress: {
+        fontSize: 18,
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: 'white',
     },
     viewButton: {
         paddingTop: 120,
