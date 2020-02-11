@@ -21,15 +21,13 @@ const inicialState = {
         gold: null,
         silver: null
     },
-    diasDaSemana: {
-        seg: null,
-        ter: null,
-        qua: null,
-        qui: null,
-        sex: null,
-        sab: null,
-        dom: null
-    }
+    seg: null,
+    ter: null,
+    qua: null,
+    qui: null,
+    sex: null,
+    sab: null,
+    dom: null
 }
 
 const reducer = (state = inicialState, action) => {
@@ -56,7 +54,7 @@ const reducer = (state = inicialState, action) => {
                 senha: action.payload.senha
             }
         case USER_ADD_PLANS:
-            return{
+            return {
                 ...state,
                 plans: {
                     bronze: action.payload.bronze,
@@ -70,15 +68,13 @@ const reducer = (state = inicialState, action) => {
                 ...state,
                 entrada: action.payload.entrada,
                 saida: action.payload.saida,
-                diasDaSemana: {
-                    seg: action.payload.seg,
-                    ter: action.payload.ter,
-                    qua: action.payload.qua,
-                    qui: action.payload.qui,
-                    sex: action.payload.sex,
-                    sab: action.payload.sab,
-                    dom: action.payload.dom
-                }
+                seg: action.payload.seg,
+                ter: action.payload.ter,
+                qua: action.payload.qua,
+                qui: action.payload.qui,
+                sex: action.payload.sex,
+                sab: action.payload.sab,
+                dom: action.payload.dom
             }
         default:
             return state

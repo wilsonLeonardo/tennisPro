@@ -17,28 +17,23 @@ class Professores extends Component {
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-          <View style={{ flexDirection: 'row', paddingBottom: 20 }}>
+          <View style={{ flexDirection: 'row' }}>
             <Icon
               name='arrowleft'
               type='AntDesign'
-              style={{paddingRight: 20, marginRight:30,color: 'white' }}
+              style={{ paddingRight: 20, color: 'white' }}
             />
-            <Button style={styles.button} >
-              <Icon
-                name='filter-variant'
-                type='MaterialCommunityIcons'
-                style={{ color: '#F75400' }}
-              />
-              <AeroText style={styles.textButton} >Filtro</AeroText>
-            </Button>
+            <AeroText style={{fontSize: 20, color: 'white'}}>Professores</AeroText>
           </View>
-          <Item style={styles.item}>
-            <SearchIcon style={styles.iconSeach} />
-            <Input style={styles.Input}>Pesquise por nomes</Input>
-          </Item>
-
+          <Button style={styles.button} >
+            <Icon
+              name='settings'
+              type='Octicons'
+              style={{ color: '#F75400' }}
+            />
+          </Button>
         </ImageBackground>
-        <Content style={styles.content}>
+        <View style={styles.content}>
           <ScrollView style={{ marginVertical: 10 }}>
             <Button style={styles.buttonList}>
               <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
@@ -76,14 +71,10 @@ class Professores extends Component {
               </View>
             </Button>
           </ScrollView>
-        </Content>
+        </View>
       </Container>
     )
   }
-}
-
-Professores.navigationOptions = {
-  headerShown: false
 }
 
 export default Professores
@@ -93,24 +84,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffff",
   },
   content: {
-    padding: 50,
+    padding: 20,
+    alignItems: "center"
   },
   header: {
+    flexDirection: 'row',
     alignItems: 'center',
     height: 200,
     justifyContent: 'space-between',
     paddingTop: 40,
     padding: 10,
-    paddingBottom: 130,
+    paddingBottom: 115
   },
   button: {
-    marginLeft: 160,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: "flex-start",
+    alignSelf: 'flex-end',
+    justifyContent: "center",
+    marginRight: 20,
     backgroundColor: "#ffff",
-    width: 125,
+    width: 55,
     borderRadius: 100,
   },
   textButton: {

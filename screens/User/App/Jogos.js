@@ -16,11 +16,14 @@ class Jogos extends Component {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <Icon
-                        name='arrowleft'
-                        type='AntDesign'
-                        style={{ alignSelf: 'flex-start', color: 'white' }}
-                    />
+                    <View style={{ flexDirection: 'row' }}>
+                        <Icon
+                            name='arrowleft'
+                            type='AntDesign'
+                            style={{paddingRight: 20, alignSelf: 'flex-start', color: 'white' }}
+                        />
+                        <AeroText style={{ fontSize: 20, color: 'white' }}>Jogos</AeroText>
+                    </View>
                     <Button style={styles.button} >
                         <Icon
                             name='settings'
@@ -29,7 +32,7 @@ class Jogos extends Component {
                         />
                     </Button>
                 </ImageBackground>
-                <Content style={styles.content}>
+                <View style={styles.content}>
                     <ScrollView style={{ marginVertical: 10 }}>
                         <Button style={styles.buttonList}>
                             <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
@@ -74,15 +77,12 @@ class Jogos extends Component {
                             <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginHorizontal: 10 }} />
                         </Button>
                     </ScrollView>
-                </Content>
+                </View>
             </Container>
         )
     }
 }
 
-Jogos.navigationOptions = {
-    headerShown: false
-}
 
 export default Jogos
 const styles = StyleSheet.create({
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffff",
     },
     content: {
-        padding: 40,
+        padding: 20,
+        alignItems: "center"
     },
     header: {
         flexDirection: 'row',

@@ -39,7 +39,7 @@ class Campeonatos extends Component {
                         <Input style={styles.Input}>Pesquise por nomes</Input>
                     </Item>
                 </ImageBackground>
-                <Content style={styles.content}>
+                <View style={styles.content}>
                     <ScrollView style={{ marginVertical: 10 }}>
                         <Button style={styles.buttonList}>
                             <View style={{flex: 1, justifyContent: 'space-between', flexWrap:'wrap' }}>
@@ -69,7 +69,7 @@ class Campeonatos extends Component {
                         </Button>
 
                     </ScrollView>
-                </Content>
+                </View>
             </Container>
         )
     }
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffff",
     },
     content: {
-        padding: 40,
+        padding: 20,
+        alignItems: "center"
     },
     header: {
         alignItems: 'center',

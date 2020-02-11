@@ -25,12 +25,10 @@ class Ranking extends Component {
                     />
                     <View style={{ alignSelf: "center", width: 100, height: 100, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
-                <Content style={styles.content}>
+                <View style={styles.content}>
                     <ScrollView style={{ marginVertical: 10 }}>
-                        <View style={{ flex: 1, flexDirection: "row" }}>
-
+                        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
                             <View style={{}}>
-
                                 <Button style={styles.buttonList}>
                                     <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FCB900', justifyContent: "center" }} >
                                         <Icon
@@ -56,7 +54,6 @@ class Ranking extends Component {
                             </View>
 
                             <View>
-
                                 <Button style={styles.buttonList}>
                                     <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#545250', justifyContent: "center" }} >
                                         <Icon
@@ -84,17 +81,12 @@ class Ranking extends Component {
                         {/* TIPO DE RANKING */}
                         <View>
                             <AeroText>Tipo de Ranking</AeroText>
-                            
                         </View>
                     </ScrollView>
-                </Content>
+                </View>
             </Container>
         )
     }
-}
-
-Ranking.navigationOptions = {
-    headerShown: false
 }
 
 export default Ranking
@@ -105,7 +97,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffff",
     },
     content: {
-        padding: 40,
+        padding: 10,
+    alignItems: "center"
     },
     header: {
         alignItems: 'flex-start',

@@ -52,7 +52,10 @@ const AppNavigator = createStackNavigator({
     screen: UserDisponibilidade
   },
   homeUser:{
-    screen: DrawerNavigator
+    screen: DrawerNavigator,
+    navigationOptions:{
+      headerShown: false
+    }
   },
 });
 

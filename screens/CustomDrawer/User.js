@@ -26,10 +26,10 @@ function CustomDrawer({ ...props }) {
                     <AeroText style={styles.email}>douglashenrique@gmail.com</AeroText>
                 </View>
             </ImageBackground>
-            <View>
+            <ScrollView>
                 <DrawerNavigatorItems {...props} />
 
-            </View>
+            </ScrollView>
 
             
 

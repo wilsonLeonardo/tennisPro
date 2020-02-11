@@ -26,28 +26,29 @@ class Estatisticas extends Component {
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-
-          <Icon
-            name='arrowleft'
-            type='AntDesign'
-            style={{ marginTop: 50, marginLeft: 10, alignSelf: 'flex-start', color: 'white' }}
-          >
-            <AeroText>Estatísticas</AeroText>
-          </Icon>
           <View style={{ flexDirection: 'row' }}>
-            <Button style={styles.button} >
-              <AeroText style={styles.textButton} >Ano</AeroText>
-            </Button>
-            <Button style={styles.button} >
-              <AeroText style={styles.textButton} >Mês</AeroText>
-            </Button>
-            <Button style={styles.button} >
-              <AeroText style={styles.textButton} >Semana</AeroText>
-            </Button>
+            <Icon
+              name='arrowleft'
+              type='AntDesign'
+              style={{ paddingRight: 20, color: 'white' }}
+            >
+            </Icon>
+            <AeroText style={{ fontSize: 20, color: 'white' }}>Estatísticas</AeroText>
           </View>
+            <View style={{ flexDirection: 'row', paddingTop: 80 }}>
+              <Button style={styles.button} >
+                <AeroText style={styles.textButton} >Ano</AeroText>
+              </Button>
+              <Button style={styles.button} >
+                <AeroText style={styles.textButton} >Mês</AeroText>
+              </Button>
+              <Button style={styles.button} >
+                <AeroText style={styles.textButton} >Semana</AeroText>
+              </Button>
+            </View>
         </ImageBackground>
 
-        <Content style={styles.content}>
+        <View style={styles.content}>
           <View>
             <LineChart
               data={{
@@ -111,14 +112,10 @@ class Estatisticas extends Component {
               hideLegend={false}
             />
           </View>
-        </Content>
+        </View>
       </Container>
     )
   }
-}
-
-Estatisticas.navigationOptions = {
-  headerShown: false
 }
 
 export default Estatisticas
@@ -126,12 +123,15 @@ export default Estatisticas
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffff",
+    backgroundColor: "#ffff"
   },
   content: {
-    padding: 10,
+    padding: 20,
+    alignItems: "center"
   },
   header: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
     alignItems: 'center',
     height: 200,
     justifyContent: 'space-between',
