@@ -22,6 +22,16 @@ import {
 } from "react-native-chart-kit";
 
 class Estatisticas extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      type: {
+        ano: false,
+        mes: false,
+        semana: false
+      }
+    }
+  }
   render() {
     return (
       <Container style={styles.container}>
@@ -30,89 +40,103 @@ class Estatisticas extends Component {
             <Icon
               name='arrowleft'
               type='AntDesign'
-              style={{ paddingRight: 20, color: 'white' }}
+              style={{ color: 'white' }}
             >
+              <AeroText style={{ fontSize: 22, color: 'white' }}>  Estatísticas</AeroText>
             </Icon>
-            <AeroText style={{ fontSize: 20, color: 'white' }}>Estatísticas</AeroText>
           </View>
-            <View style={{ flexDirection: 'row', paddingTop: 80 }}>
-              <Button style={styles.button} >
-                <AeroText style={styles.textButton} >Ano</AeroText>
-              </Button>
-              <Button style={styles.button} >
-                <AeroText style={styles.textButton} >Mês</AeroText>
-              </Button>
-              <Button style={styles.button} >
-                <AeroText style={styles.textButton} >Semana</AeroText>
-              </Button>
-            </View>
         </ImageBackground>
+        <ScrollView>
 
-        <View style={styles.content}>
-          <View>
-            <LineChart
-              data={{
-                labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-                datasets: [
-                  {
-                    data: [
-                      5,
-                      10,
-                      15,
-                      20,
-                      25,
-                      30
-                    ]
-                  }
-                ]
-              }}
-              width={Dimensions.get("window").width}
-              height={220}
-              chartConfig={{
-                backgroundGradientFrom: "white",
-                backgroundGradientTo: "white",
-                decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(247, 84, 0, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(128, 129, 130, ${opacity})`,
-                strokeWidth: "10",
-                stroke: "#F75400",
-                propsForDots: {
-                  r: "0"
-                }
-              }}
-              style={{
-                marginVertical: 8,
-                borderRadius: 16
-              }}
-            />
-            <ProgressChart
-
-              data={{
-                data: [0.73]
-              }}
-              width={Dimensions.get("window").width}
-              height={220}
-              chartConfig={{
-                backgroundGradientFrom: "white",
-                backgroundGradientTo: "white",
-                decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 0) => `rgba(247, 84, 0, ${opacity})`,
-                labelColor: (opacity = 0) => `rgba(128, 129, 130, ${opacity})`,
-
-                propsForDots: {
-                  r: "3",
-                  strokeWidth: "20",
-                  stroke: "#F75400",
-                }
-              }}
-              style={{
-                marginVertical: 8,
-                borderRadius: 16
-              }}
-              hideLegend={false}
-            />
+          <View style={{ flexDirection: 'row', flex: 1, paddingBottom: 20, justifyContent: "space-around" }}>
+            <Button
+              style={this.state.type.ano ? styles.buttonPress : styles.button}
+              onPress={this.state.type.ano ? () => this.setState({ type: { ano: false } }) : () => this.setState({ type: { ano: true } })}
+              value={this.state.type.ano}
+            >
+              <AeroText style={this.state.type.ano ? styles.textButtonPress : styles.textButton} >Ano</AeroText>
+            </Button>
+            <Button
+              style={this.state.type.mes ? styles.buttonPress : styles.button}
+              onPress={this.state.type.mes ? () => this.setState({ type: { mes: false } }) : () => this.setState({ type: { mes: true } })}
+              value={this.state.type.mes}
+            >
+              <AeroText style={this.state.type.mes ? styles.textButtonPress : styles.textButton} >Mês</AeroText>
+            </Button>
+            <Button
+              style={this.state.type.semana ? styles.buttonPress : styles.button}
+              onPress={this.state.type.semana ? () => this.setState({ type: { semana: false } }) : () => this.setState({ type: { semana: true } })}
+              value={this.state.type.semana}
+            >
+              <AeroText style={this.state.type.semana ? styles.textButtonPress : styles.textButton} >Semana</AeroText>
+            </Button>
           </View>
-        </View>
+          <View style={styles.content}>
+            <View>
+              <LineChart
+                data={{
+                  labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                  datasets: [
+                    {
+                      data: [
+                        5,
+                        10,
+                        15,
+                        20,
+                        25,
+                        30
+                      ]
+                    }
+                  ]
+                }}
+                width={Dimensions.get("window").width}
+                height={220}
+                chartConfig={{
+                  backgroundGradientFrom: "white",
+                  backgroundGradientTo: "white",
+                  decimalPlaces: 2, // optional, defaults to 2dp
+                  color: (opacity = 1) => `rgba(247, 84, 0, ${opacity})`,
+                  labelColor: (opacity = 1) => `rgba(128, 129, 130, ${opacity})`,
+                  strokeWidth: "10",
+                  stroke: "#F75400",
+                  propsForDots: {
+                    r: "0"
+                  }
+                }}
+                style={{
+                  marginVertical: 8,
+                  borderRadius: 16
+                }}
+              />
+              <ProgressChart
+
+                data={{
+                  data: [0.73]
+                }}
+                width={Dimensions.get("window").width}
+                height={220}
+                chartConfig={{
+                  backgroundGradientFrom: "white",
+                  backgroundGradientTo: "white",
+                  decimalPlaces: 2, // optional, defaults to 2dp
+                  color: (opacity = 0) => `rgba(247, 84, 0, ${opacity})`,
+                  labelColor: (opacity = 0) => `rgba(128, 129, 130, ${opacity})`,
+
+                  propsForDots: {
+                    r: "3",
+                    strokeWidth: "20",
+                    stroke: "#F75400",
+                  }
+                }}
+                style={{
+                  marginVertical: 8,
+                  borderRadius: 16
+                }}
+                hideLegend={false}
+              />
+            </View>
+          </View>
+        </ScrollView>
       </Container>
     )
   }
@@ -134,55 +158,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 200,
-    justifyContent: 'space-between',
-    borderBottomStartRadius: 10,
-    borderBottomEndRadius: 30,
+    paddingTop: 40,
+    padding: 20,
   },
   button: {
     flexDirection: 'column',
     alignSelf: 'flex-end',
-    alignItems: 'center',
-    marginRight: 20,
-    backgroundColor: "#ffff",
+    justifyContent: 'center',
+    backgroundColor: "#E2E2E2",
+    width: 100,
+    borderRadius: 100,
+  },
+  buttonPress: {
+    flexDirection: 'column',
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    backgroundColor: "#F75400",
     width: 100,
     borderRadius: 100,
   },
   textButton: {
-    marginTop: 7,
-    color: '#F75400'
+    color: 'gray'
   },
-  buttonList: {
-    marginVertical: 8,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    flexWrap: 'wrap',
-    width: 300,
-    height: 70,
-    backgroundColor: "#ffff",
-    borderWidth: 2,
-    borderRightWidth: 4,
-    borderRadius: 8,
-    borderColor: '#ddd',
-    borderBottomWidth: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 2,
-    shadowRadius: 9,
+  textButtonPress: {
+    color: 'white'
   },
-  item: {
-    backgroundColor: 'red',
-    flexDirection: 'row',
-    backgroundColor: "#ffff",
-    height: 50,
-    width: 300,
-    elevation: 2,
-    borderRadius: 10
-  },
-  iconSeach: {
-    margin: 10
-  },
-  Input: {
-    fontSize: 17,
-    fontFamily: 'Aero',
-  }
 });

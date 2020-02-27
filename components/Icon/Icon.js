@@ -18,6 +18,12 @@ import starIcon from '../../assets/icons/star.png';
 import ball1Icon from '../../assets/icons/tennisBall.png';
 import ball2Icon from '../../assets/icons/tennisBall2.png';
 import tickerIcon from '../../assets/icons/ticket.png';
+import chatIcon from '../../assets/icons/chat.png'
+import menuIcon from '../../assets/icons/menu.png'
+import starWhiteIcon from '../../assets/icons/starWhite.png'
+import doneIcon from '../../assets/icons/done.png'
+import trophyIcon from '../../assets/icons/trophy.png'
+import closeSVGIcon from '../../assets/icons/close.svg'
 
 export const TickerIcon = ({ style }) => (
     <Image
@@ -129,5 +135,41 @@ export const CloseIcon = ({ style, type }) => (
     <Image
         style={[{width: 20, height: 20}, style ? style : {}]}
         source={closeIcon}
+    />
+);
+export const ChatIcon = ({ style}) => (
+    <Image
+        style={[{width: 20, height: 20}, style ? style : {}]}
+        source={chatIcon}
+    />
+);
+export const MenuIcon = ({ style}) => (
+    <Image
+        style={[{width: 20, height: 20}, style ? style : {}]}
+        source={menuIcon}
+    />
+);
+export const StarWhiteIcon = ({ style}) => (
+    <Image
+        style={[{width: 20, height: 20}, style ? style : {}]}
+        source={starWhiteIcon}
+    />
+);
+export const DoneIcon = ({ style}) => (
+    <Image
+        style={[{width: 20, height: 20}, style ? style : {}]}
+        source={doneIcon}
+    />
+);
+export const TrophyIcon = ({ style}) => (
+    <Image
+        style={[{width: 20, height: 20}, style ? style : {}]}
+        source={trophyIcon}
+    />
+);
+export const CloseSVGIcon = ({ style}) => (
+    <Image
+        style={[{width: 20, height: 20}, style ? style : {}]}
+        source={closeSVGIcon}
     />
 );

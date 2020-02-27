@@ -9,7 +9,7 @@ import Estatisticas from '../screens/User/App/Estatisticas'
 import Campeonatos from '../screens/User/App/Campeonatos'
 import Home from '../screens/User/App/Home'
 import Mensagens from '../screens/User/App/Mensagens'
-import Perfil from '../screens/User/App/Perfil'
+import Conta from '../screens/User/App/Conta'
 
 import CustomDrawer from '../screens/CustomDrawer/User'
 
@@ -17,6 +17,10 @@ const DrawerNavigator = createDrawerNavigator({
     Home: {
         screen: () => <Home />,
         navigationOptions: { title: 'Home' }
+    },
+    Mensagens: {
+        screen: () => <Mensagens />,
+        navigationOptions: { title: 'Chat' }
     },
     Jogos: {
         screen: () => <Jogos />,
@@ -38,13 +42,9 @@ const DrawerNavigator = createDrawerNavigator({
         screen: () => <Professores />,
         navigationOptions: { title: 'Professores' }
     },
-    Mensagens: {
-        screen: () => <Mensagens />,
-        navigationOptions: { title: 'Chat' }
-    },
     Perfil: {
-        screen: () => <Perfil />,
-        navigationOptions: { title: 'Perfil' }
+        screen: () => <Conta />,
+        navigationOptions: { title: 'Conta' }
     },
 }, {
     initialRouteName: "Home",

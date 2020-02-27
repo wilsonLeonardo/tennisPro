@@ -4,16 +4,27 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Modal,
+    Alert
 } from 'react-native';
-import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
+import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer, Picker } from 'native-base';
 
 import { AeroText } from '../../../components/StyledText';
-import { HeaderTennis } from '../../../components/HomeHeader'
-import { SearchIcon, KeyIcon } from '../../../components/Icon/Icon'
 import { ScrollView } from 'react-native-gesture-handler';
+import { TrophyIcon, DoneIcon, StarWhiteIcon, CloseIcon, CloseSVGIcon } from '../../../components/Icon/Icon';
+import { Divider } from 'react-native-elements';
 
 class Ranking extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            language: {
+                itemValue: '',
+                itemIndex: ''
+            }
+        }
+    }
     render() {
         return (
             <Container style={styles.container}>
@@ -22,31 +33,28 @@ class Ranking extends Component {
                         name='arrowleft'
                         type='AntDesign'
                         style={{ color: 'white' }}
-                    />
+                    >
+                        <AeroText style={{ fontSize: 22, color: 'white' }}>  Ranking</AeroText>
+                    </Icon>
                     <View style={{ alignSelf: "center", width: 100, height: 100, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
                 <View style={styles.content}>
                     <ScrollView style={{ marginVertical: 10 }}>
-                        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-                            <View style={{}}>
+                        <View style={{ alignSelf: 'center' }}>
+                            <AeroText style={{ color: 'gold', fontSize: 25 }}>Especial Pro</AeroText>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+                            <View>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FCB900', justifyContent: "center" }} >
-                                        <Icon
-                                            name='check'
-                                            type='FontAwesome'
-                                            style={{ color: 'white', width: 60 }}
-                                        />
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FCB900', justifyContent: "center", alignItems: "center" }} >
+                                        <DoneIcon />
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#FCB900' }}>12</AeroText>
                                     <AeroText style={{ fontSize: 9, color: '#FCB900' }}>VITÓRIAS</AeroText>
                                 </Button>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FF9800', justifyContent: "center" }} >
-                                        <Icon
-                                            name='trophy'
-                                            type='FontAwesome'
-                                            style={{ color: 'white', width: 60 }}
-                                        />
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FF9800', justifyContent: "center", alignItems: 'center' }} >
+                                        <TrophyIcon />
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#FF9800' }}>2.7</AeroText>
                                     <AeroText style={{ fontSize: 9, color: '#FF9800' }}>PONTOS</AeroText>
@@ -55,32 +63,61 @@ class Ranking extends Component {
 
                             <View>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#545250', justifyContent: "center" }} >
-                                        <Icon
-                                            name='close'
-                                            type='FontAwesome'
-                                            style={{ color: 'white', width: 60 }}
-                                        />
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#F75400', justifyContent: "center", alignItems: 'center' }} >
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#545250' }}>10</AeroText>
                                     <AeroText style={{ marginHorizontal: 5, fontSize: 9, color: '#545250' }}>DERROTAS</AeroText>
                                 </Button>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#F75400', justifyContent: "center" }} >
-                                        <Icon
-                                            name='star'
-                                            type='FontAwesome'
-                                            style={{ color: 'white', width: 60 }}
-                                        />
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#F75400', justifyContent: "center", alignItems: 'center' }} >
+                                        <StarWhiteIcon />
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#F75400' }}>5º</AeroText>
                                     <AeroText style={{ fontSize: 9, color: '#F75400' }}>POSIÇÃO</AeroText>
                                 </Button>
                             </View>
                         </View>
-                        {/* TIPO DE RANKING */}
-                        <View>
-                            <AeroText>Tipo de Ranking</AeroText>
+                        <View style={{ paddingTop: 30 }}>
+                            <AeroText style={{ color: '#F75400' }}>Tipo de Ranking</AeroText>
+
+                            <Picker
+                                selectedValue={this.state.language}
+                                style={{ flex: 1, height: 50 }}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({ language: itemValue })
+                                }>
+                                <Picker.Item label="Geral" value="geral" />
+                                <Picker.Item label="Especial Pro" value="especialPro" />
+                                <Picker.Item label="Especial" value="especial" />
+                                <Picker.Item label="inter A" value="a" />
+                                <Picker.Item label="inter B" value="b" />
+                                <Picker.Item label="inter C" value="c" />
+                                <Picker.Item label="Principiante" value="principiante" />
+                                <Picker.Item label="Iniciante" value="iniciante" />
+                            </Picker>
+                            <Divider />
+                        </View>
+                        <View style={{ flex: 1, backgroundColor: 're' }}>
+
+                            <View style={styles.rankStatus}>
+                                <View style={{ backgroundColor: '#F75400', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                    <StarWhiteIcon style={{ height: 10, width: 10 }} />
+                                </View>
+                                <AeroText style={{ color: '#F75400' }}>5º</AeroText>
+                                <AeroText style={{ color: 'gray', paddingHorizontal: 10 }}>Especial Pro</AeroText>
+                                <View style={{ backgroundColor: '#FCB900', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                    <DoneIcon style={{ height: 10, width: 10 }} />
+                                </View>
+                                <AeroText style={{ color: '#FCB900' }}>12</AeroText>
+                                <View style={{ backgroundColor: '#545250', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                    <DoneIcon style={{ height: 10, width: 10 }} />
+                                </View>
+                                <AeroText style={{ color: '#545250' }}>10</AeroText>
+                                <View style={{ backgroundColor: '#FF9800', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                    <TrophyIcon style={{ height: 10, width: 10 }} />
+                                </View>
+                                <AeroText style={{ color: '#FF9800' }}>2,7</AeroText>
+                            </View>
                         </View>
                     </ScrollView>
                 </View>
@@ -98,16 +135,13 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 10,
-    alignItems: "center"
+        alignItems: "center"
     },
     header: {
-        alignItems: 'flex-start',
         height: 200,
         justifyContent: 'space-between',
         paddingTop: 40,
-        padding: 10,
-        paddingBottom: 115
-
+        padding: 20,
     },
     button: {
         alignSelf: 'flex-end',
@@ -123,11 +157,9 @@ const styles = StyleSheet.create({
     buttonList: {
         flex: 1,
         flexDirection: "row",
-        flexWrap: 'wrap',
         justifyContent: 'space-around',
         marginHorizontal: 10,
         marginVertical: 10,
-        width: 150,
         height: 60,
         backgroundColor: "#fff",
         borderWidth: 2,
@@ -155,6 +187,13 @@ const styles = StyleSheet.create({
     Input: {
         fontSize: 17,
         fontFamily: 'Aero',
+    },
+    rankStatus: {
+        flexDirection: 'row',
+        padding: 10,
+        borderRadius: 30,
+        height: 40,
+        justifyContent: 'space-between'
     },
 
 });

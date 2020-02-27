@@ -11,65 +11,129 @@ import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } f
 import { AeroText } from '../../../components/StyledText';
 import { SearchIcon } from '../../../components/Icon/Icon'
 import { ScrollView } from 'react-native-gesture-handler';
+import { SearchBar } from 'react-native-elements';
 
 class Mensagens extends Component {
+  state = {
+    search: '',
+  };
+
+  updateSearch = search => {
+    this.setState({ search });
+  };
   render() {
+    const { search } = this.state;
     return (
       <Container style={styles.container}>
-        <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-          <View style={{ alignSelf: 'flex-start', flexDirection: 'row', paddingBottom: 20 }}>
-            <Icon
-              name='arrowleft'
-              type='AntDesign'
-              style={{paddingRight: 20, color: 'white' }}
-            />
-            <AeroText style={{fontSize: 20, color: 'white'}}>Chat</AeroText>
+        <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={{}}>
+          <View style={styles.header}>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
+              <Icon
+                name='arrowleft'
+                type='AntDesign'
+                style={{ color: 'white' }}
+              >
+                <AeroText style={{ fontSize: 22, color: 'white' }}>   Chat</AeroText>
+              </Icon>
+            </View>
           </View>
-          <Item style={styles.item}>
-            <SearchIcon style={styles.iconSeach} />
-            <Input style={styles.Input}>Pesquise por nomes</Input>
-          </Item>
+          <View style={{ alignItems: "center" }}>
+            <SearchBar
+              containerStyle={{ backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent' }}
+              inputContainerStyle={styles.item}
+              inputStyle={styles.Input}
+              placeholder="Pesquise por nomes"
+              onChangeText={this.updateSearch}
+              value={search}
+            />
+          </View>
 
         </ImageBackground>
-        <View style={styles.content}>
-          <ScrollView>
+        <ScrollView>
+          <View style={styles.content}>
             <Button style={styles.buttonList}>
-              <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-              <View style={{}}>
-                <AeroText style={{ margin: 5 }}>Nome</AeroText>
-                <AeroText style={{ fontSize: 10, marginHorizontal: 5 }}>msg</AeroText>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
               </View>
             </Button>
             <Button style={styles.buttonList}>
-              <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-              <View style={{}}>
-                <AeroText style={{ margin: 5 }}>Nome</AeroText>
-                <AeroText style={{ fontSize: 10, marginHorizontal: 5 }}>msg</AeroText>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
               </View>
             </Button>
             <Button style={styles.buttonList}>
-              <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-              <View style={{}}>
-                <AeroText style={{ margin: 5 }}>Nome</AeroText>
-                <AeroText style={{ fontSize: 10, marginHorizontal: 5 }}>msg</AeroText>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
               </View>
             </Button>
             <Button style={styles.buttonList}>
-              <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-              <View style={{}}>
-                <AeroText style={{ margin: 5 }}>Nome</AeroText>
-                <AeroText style={{ fontSize: 10, marginHorizontal: 5 }}>msg</AeroText>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
               </View>
             </Button>
             <Button style={styles.buttonList}>
-              <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-              <View style={{}}>
-                <AeroText style={{ margin: 5 }}>Nome</AeroText>
-                <AeroText style={{ fontSize: 10, marginHorizontal: 5 }}>msg</AeroText>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
               </View>
             </Button>
-          </ScrollView>
-        </View >
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+
+          </View >
+        </ScrollView>
       </Container>
     )
   }
@@ -82,33 +146,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffff",
   },
   content: {
-    alignItems: 'center',
     padding: 20,
+    paddingHorizontal: 55
   },
   header: {
-    alignItems: 'center',
-    height: 200,
+    flexDirection: 'row',
+    height: 150,
     justifyContent: 'space-between',
     paddingTop: 40,
-    padding: 10,
-    paddingBottom: 130,
+    padding: 20
   },
-  button: {
-    marginLeft: 160,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: "flex-start",
-    backgroundColor: "#ffff",
-    width: 125,
-    borderRadius: 100,
+  bottom: {
+    borderRadius: 60,
+    backgroundColor: 'red',
+    height: 50,
+    width: 50,
+    marginHorizontal: 10
   },
   buttonList: {
-    marginVertical: 8,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    flexWrap: 'wrap',
-    width: 300,
+    flex: 1,
+    marginVertical: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
     height: 70,
     backgroundColor: "#ffff",
     borderWidth: 2,
@@ -122,11 +181,8 @@ const styles = StyleSheet.create({
     shadowRadius: 9,
   },
   item: {
-    marginTop: 20,
-    backgroundColor: 'red',
-    flexDirection: 'row',
     backgroundColor: "#ffff",
-    height: 50,
+    height: 40,
     width: 300,
     elevation: 2,
     borderRadius: 10
@@ -135,7 +191,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   Input: {
-    fontSize: 17,
+    fontSize: 15,
     fontFamily: 'Aero',
   },
 

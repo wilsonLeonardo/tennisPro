@@ -13,7 +13,16 @@ import { HeaderTennis } from '../../../components/HomeHeader'
 import { SearchIcon, KeyIcon } from '../../../components/Icon/Icon'
 import { ScrollView } from 'react-native-gesture-handler';
 
-class Perfil extends Component {
+class Conta extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            type: {
+                pessoal: false,
+                clube: false,
+            }
+        }
+    }
     render() {
         return (
             <Container style={styles.container}>
@@ -22,28 +31,21 @@ class Perfil extends Component {
                         <Icon
                             name='arrowleft'
                             type='AntDesign'
-                            style={{ paddingRight: 20,color: 'white' }}
+                            style={{ paddingRight: 20, color: 'white' }}
                         />
-                        <AeroText style={{ fontSize: 20, color: 'white' }}>Perfil</AeroText>
+                        <AeroText style={{ fontSize: 20, color: 'white' }}>Conta</AeroText>
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
                 <View style={styles.content}>
-                    <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-                        <Button style={styles.buttonList}>
-                            <AeroText style={{ fontSize: 18, color: '#607d8b' }}>Pessoal</AeroText>
-                        </Button>
-                        <Button style={styles.buttonList}>
-                            <AeroText style={{ fontSize: 18, color: '#607d8b' }}>Clube</AeroText>
-                        </Button>
-                    </View>
+                    
                 </View>
             </Container>
         )
     }
 }
 
-export default Perfil
+export default Conta
 
 const styles = StyleSheet.create({
     container: {
@@ -51,8 +53,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffff",
     },
     content: {
+        flex: 1,
         padding: 30,
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "space-between"
+
     },
     header: {
         alignItems: 'flex-start',
@@ -70,7 +75,12 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     textButton: {
-        color: '#F75400'
+        fontSize: 18,
+        color: '#607d8b'
+    },
+    textButtonPress: {
+        fontSize: 18,
+        color: 'white'
     },
     buttonList: {
         flex: 1,
@@ -82,6 +92,26 @@ const styles = StyleSheet.create({
         width: 60,
         height: 40,
         backgroundColor: "#EBF0EE",
+        borderWidth: 2,
+        borderRightWidth: 4,
+        borderRadius: 25,
+        borderColor: '#ddd',
+        borderBottomWidth: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 2,
+        shadowRadius: 9,
+    },
+    buttonListPress: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        marginHorizontal: 10,
+        marginVertical: 10,
+        width: 60,
+        height: 40,
+        backgroundColor: "#F75400",
         borderWidth: 2,
         borderRightWidth: 4,
         borderRadius: 25,
@@ -108,5 +138,10 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontFamily: 'Aero',
     },
+    bottom: {
+        flex: 1,
+        padding: 30,
+        alignItems: "flex-start"
+    }
 
 });

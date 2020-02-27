@@ -6,7 +6,6 @@ import {
     StyleSheet,
     ImageBackground
 } from 'react-native'
-import { Icon } from 'native-base'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
 import { ScrollView } from 'react-native-gesture-handler'

@@ -10,74 +10,51 @@ import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } f
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
+import { ChatIcon } from '../../../components/Icon/Icon';
 
 class Jogos extends Component {
     render() {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
                         <Icon
                             name='arrowleft'
                             type='AntDesign'
-                            style={{paddingRight: 20, alignSelf: 'flex-start', color: 'white' }}
-                        />
-                        <AeroText style={{ fontSize: 20, color: 'white' }}>Jogos</AeroText>
+                            style={{ color: 'white' }}
+                        >
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>  Jogos</AeroText>
+                        </Icon>
+                        <Button style={styles.button} >
+                            <Icon
+                                name='settings'
+                                type='Octicons'
+                                style={{ color: '#F75400' }}
+                            />
+                        </Button>
                     </View>
-                    <Button style={styles.button} >
-                        <Icon
-                            name='settings'
-                            type='Octicons'
-                            style={{ color: '#F75400' }}
-                        />
-                    </Button>
                 </ImageBackground>
-                <View style={styles.content}>
-                    <ScrollView style={{ marginVertical: 10 }}>
+                <ScrollView>
+                    <View style={styles.content}>
+
                         <Button style={styles.buttonList}>
-                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
+                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginLeft: -20 }} />
                             <AeroText style={{ padding: 10 }}>Nome</AeroText>
+
                             <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+
                             <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginHorizontal: 10 }} />
+                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} />
+                            <View style={{ alignItems: "flex-end", marginRight: -25 }}>
+
+                                <View style={{ position: "absolute", width: 40, height: 40, borderRadius: 50, backgroundColor: 'orange', justifyContent: "center", alignItems: "center" }}>
+                                    <ChatIcon />
+                                </View>
+                            </View>
                         </Button>
-                        <Button style={styles.buttonList}>
-                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginHorizontal: 10 }} />
-                        </Button>
-                        <Button style={styles.buttonList}>
-                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginHorizontal: 10 }} />
-                        </Button>
-                        <Button style={styles.buttonList}>
-                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginHorizontal: 10 }} />
-                        </Button>
-                        <Button style={styles.buttonList}>
-                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginHorizontal: 10 }} />
-                        </Button>
-                        <Button style={styles.buttonList}>
-                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginHorizontal: 10 }} />
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginHorizontal: 10 }} />
-                        </Button>
-                    </ScrollView>
-                </View>
+
+                    </View>
+                </ScrollView>
             </Container>
         )
     }
@@ -91,23 +68,19 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffff",
     },
     content: {
+        paddingTop: -20,
         padding: 20,
-        alignItems: "center"
+        paddingHorizontal: 40,
     },
     header: {
         flexDirection: 'row',
-        alignItems: 'center',
         height: 200,
         justifyContent: 'space-between',
         paddingTop: 40,
-        padding: 10,
-        paddingBottom: 115
-
+        padding: 20
     },
     button: {
-        alignSelf: 'flex-end',
         justifyContent: "center",
-        marginRight: 20,
         backgroundColor: "#ffff",
         width: 55,
         borderRadius: 100,
@@ -117,11 +90,9 @@ const styles = StyleSheet.create({
     },
     buttonList: {
         flex: 1,
+        justifyContent: "space-between",
         marginVertical: 20,
-        flexDirection: "column",
-        alignItems: "flex-start",
-        flexWrap: 'wrap',
-        width: 320,
+        flexDirection: "row",
         height: 70,
         backgroundColor: "#ffff",
         borderWidth: 2,
@@ -134,21 +105,4 @@ const styles = StyleSheet.create({
         shadowOpacity: 2,
         shadowRadius: 9,
     },
-    item: {
-        backgroundColor: 'red',
-        flexDirection: 'row',
-        backgroundColor: "#ffff",
-        height: 50,
-        width: 300,
-        elevation: 2,
-        borderRadius: 10
-    },
-    iconSeach: {
-        margin: 10
-    },
-    Input: {
-        fontSize: 17,
-        fontFamily: 'Aero',
-    },
-
 });
