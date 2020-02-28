@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addDisponibilidade } from '../../store/actions/club'
+import { addDisponibilidade } from '../../../store/clubRegister/actions'
 import {
     Image,
     StyleSheet,

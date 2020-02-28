@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addNivel } from '../../store/actions/user'
+import { addNivel } from '../../../store/userRegister/actions'
 import {
     StyleSheet,
     View,
@@ -28,11 +28,13 @@ class NivelTenis extends Component {
         }
     }
     onAddNivel = () => {
-        this.props.addNivel({ ...this.state })
+        const { navigate } = this.props.navigation;
+        const {niveis: nivel} = this.state;
+        this.props.onAddNivel({nivel});
+        navigate('userData')
     }
 
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <HeaderTennis />
@@ -89,7 +91,7 @@ class NivelTenis extends Component {
                     </TouchableHighlight>
 
                     <Form style={styles.viewButton} >
-                        <Button block style={styles.bottom} onPress={() => navigate('userData')}>
+                        <Button block style={styles.bottom} onPress={() => this.onAddNivel()}>
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>
                         </Button>
                     </Form>
@@ -106,7 +108,7 @@ NivelTenis.navigationOptions = {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAddNivel: user => dispatch(addNivel(user))
+        onAddNivel: nivel => dispatch(addNivel(nivel))
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addDados } from '../../store/actions/user'
+import { addDados } from '../../../store/userRegister/actions'
 import {
   StyleSheet,
   View,
@@ -25,10 +25,15 @@ class UserDataScreen extends Component {
     }
   }
   addDados = () => {
-    this.props.onAddDados({ ...this.state })
+    const { navigate } = this.props.navigation;
+    const {state: dados} = this
+    this.props.onAddDados(dados)
+    navigate('Plans')
   }
   render() {
     const { navigate } = this.props.navigation;
+    console.log(this.props);
+
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <Header style={{ elevation: 0, backgroundColor: '#ffff' }} />
@@ -73,7 +78,7 @@ class UserDataScreen extends Component {
               />
               <Icon name='key' style={{ color: '#F75400' }} />
             </Item>
-            <Button onPress={() => navigate('Plans')}
+            <Button onPress={() => this.addDados()}
               block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
           </Form>
         </Content>
@@ -88,11 +93,14 @@ UserDataScreen.navigationOptions = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddDados: teacher => dispatch(addDados(teacher))
+    onAddDados: data => dispatch(addDados(data))
   }
 }
+const mapStateToProps = state => ({
+  data: state.userRegister.data
+});
 
-export default connect(null, mapDispatchToProps)(UserDataScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(UserDataScreen)
 
 const styles = StyleSheet.create({
   container: {

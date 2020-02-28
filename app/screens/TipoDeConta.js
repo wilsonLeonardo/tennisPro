@@ -9,6 +9,7 @@ import {
     View,
 } from 'react-native';
 import { Container, Form, Item, Input, Button, Content } from 'native-base';
+import {connect} from "react-redux";
 
 import { AeroText } from '../components/StyledText';
 import { HeaderTennis } from '../components/Header'

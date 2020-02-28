@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addDados } from '../../store/actions/teacher'
+import { addDados } from '../../../store/teacherRegister/actions'
 import {
   StyleSheet,
   View,

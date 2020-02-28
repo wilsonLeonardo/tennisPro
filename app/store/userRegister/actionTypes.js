@@ -1,0 +1,4 @@
+export const USER_ADD_DADOS = 'USER_ADD_DADOS'
+export const USER_ADD_NIVEL = 'USER_ADD_NIVEL'
+export const USER_ADD_PLANS = 'USER_ADD_PLANS'
+export const USER_ADD_DISPO = 'USER_ADD_DISPO'

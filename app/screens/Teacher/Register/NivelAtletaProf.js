@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addNivel } from '../../store/actions/teacher'
+import { addNivel } from '../../../store/teacherRegister/actions'
 import {
     StyleSheet,
     View,

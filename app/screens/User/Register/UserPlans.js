@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addPlans } from '../../store/actions/user'
+import { addPlans } from '../../../store/userRegister/actions'
 import {
     StyleSheet,
     View,
@@ -27,20 +27,23 @@ class UserPlans extends Component {
         }
     }
     onAddPlans = () => {
-        this.props.addPlans({ ...this.state })
+        const { navigate } = this.props.navigation;
+        this.props.onAddPlans(this.state.plans)
+
+        navigate('userDispo')
     }
 
     render() {
         const { navigate } = this.props.navigation;
+        console.log(this.props);
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <Header style={{ elevation: 0, backgroundColor: '#ffff' }} />
                 <TabsTennis navegar={navigate} done="Yes" />
                 <TitleTennis placeholder='Escolha algum plano' Icon="Star" />
                 <Content style={styles.content}>
-                    <TouchableOpacity>
                         <Card >
-                            <CardItem button onPress={(bronze) => this.setState({ bronze: true })} value={this.state.plans.bronze} style={{ flexDirection: 'row' }}>
+                            <CardItem button onPress={(bronze) => this.setState({plans:{ bronze: true} })} value={this.state.plans.bronze} style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 1 }}>
                                     <AeroText style={{ borderBottomColor: 'gray', borderBottomWidth: 3, fontSize: 18 }}>Bronze</AeroText>
                                     <AeroText style={{ color: '#a3a3a3', fontSize: 13 }}>Mensal</AeroText>
@@ -50,10 +53,8 @@ class UserPlans extends Component {
                                 </View>
                             </CardItem>
                         </Card>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
                         <Card style={{ height: 100, justifyContent: 'center' }}>
-                            <CardItem button onPress={(gold) => this.setState({ gold: true })} value={this.state.plans.gold} style={{ flexDirection: 'row' }}>
+                            <CardItem button onPress={(gold) => this.setState({plans: {gold: true }})} value={this.state.plans.gold} style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 2 }}>
                                     <AeroText style={{ color: '#F75400', fontSize: 11 }}>Recomendado</AeroText>
                                     <View style={{ flexDirection: 'row', borderBottomColor: '#F75400', borderBottomWidth: 3, }}>
@@ -76,10 +77,8 @@ class UserPlans extends Component {
                                 </View>
                             </CardItem>
                         </Card>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
                         <Card >
-                            <CardItem button onPress={(silver) => this.setState({ silver: true })} value={this.state.plans.silver} >
+                            <CardItem button onPress={(silver) => this.setState({ plans:{silver: true} })} value={this.state.plans.silver} >
                                 <View style={{ flex: 1 }}>
                                     <AeroText style={{ borderBottomColor: 'gray', borderBottomWidth: 3, fontSize: 18 }}>Silver</AeroText>
                                     <AeroText style={{ color: '#a3a3a3', fontSize: 13 }}>Semestral</AeroText>
@@ -97,7 +96,6 @@ class UserPlans extends Component {
                                 </View>
                             </CardItem>
                         </Card>
-                    </TouchableOpacity>
                     <View style={styles.title}>
                         <View style={styles.caixa} >
                             <PlusIcon />
@@ -106,7 +104,7 @@ class UserPlans extends Component {
                     </AeroText>
                         </View>
                     </View>
-                    <Button onPress={() => navigate('userDispo')}
+                    <Button onPress={() => this.onAddPlans()}
                         block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
                 </Content>
             </KeyboardAvoidingView>
@@ -123,8 +121,11 @@ const mapDispatchToProps = (dispatch) => {
         onAddPlans: user => dispatch(addPlans(user))
     }
 }
+const mapStateToProps = state => ({
+    data: state.userRegister.data
+  });
 
-export default connect(null, mapDispatchToProps)(UserPlans)
+export default connect(mapStateToProps, mapDispatchToProps)(UserPlans)
 
 const styles = StyleSheet.create({
     container: {

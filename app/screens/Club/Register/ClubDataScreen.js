@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Connect, connect } from 'react-redux'
-import { addDados } from '../../store/actions/club'
+import { addDados } from '../../../store/clubRegister/actions'
 import {
     Image,
     StyleSheet,

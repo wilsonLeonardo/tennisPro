@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addDisponibilidade } from '../../store/actions/teacher'
+import { addDisponibilidade } from '../../../store/teacherRegister/actions'
 import {
     Image,
     StyleSheet,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addDisponibilidade } from '../../store/actions/user'
+import { addDisponibilidade } from '../../../store/userRegister/actions'
 import {
     Image,
     StyleSheet,
@@ -43,6 +43,7 @@ class UserDisponibilidade extends Component {
     // }
 
     render() {
+        console.log(this.props);
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled keyboardVerticalOffset={0}>
@@ -135,8 +136,11 @@ const mapDispatchToProps = (dispatch) => {
         onAddDispo: user => dispatch(addDisponibilidade(user))
     }
 }
+const mapStateToProps = state => ({
+    data: state.userRegister.data
+  });
 
-export default connect(null, mapDispatchToProps)(UserDisponibilidade)
+export default connect(mapStateToProps, mapDispatchToProps)(UserDisponibilidade)
 
 
 const styles = StyleSheet.create({

@@ -1,0 +1,2 @@
+export const CLUB_ADD_DADOS = 'CLUB_ADD_DADOS'
+export const CLUB_ADD_DISPO = 'CLUB_ADD_DISPO'
