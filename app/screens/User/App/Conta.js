@@ -6,12 +6,12 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView
 } from 'react-native';
-import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
+import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker } from 'native-base';
+import { Input, Divider } from 'react-native-elements';
 
 import { AeroText } from '../../../components/StyledText';
-import { HeaderTennis } from '../../../components/HomeHeader'
-import { SearchIcon, KeyIcon } from '../../../components/Icon/Icon'
 import { ScrollView } from 'react-native-gesture-handler';
+import IconSVG from '../../../components/Icon/IconSVG'
 
 class Conta extends Component {
     constructor(props) {
@@ -20,25 +20,72 @@ class Conta extends Component {
             type: {
                 pessoal: false,
                 clube: false,
+            },
+            language: {
+                itemValue: '',
+                itemIndex: ''
             }
         }
     }
+
     render() {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", width:'100%' }}>
                         <Icon
                             name='arrowleft'
                             type='AntDesign'
                             style={{ paddingRight: 20, color: 'white' }}
-                        />
-                        <AeroText style={{ fontSize: 20, color: 'white' }}>Conta</AeroText>
+                        >
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>  Conta</AeroText>
+                        </Icon>
+                        <Button style={styles.button} >
+                            <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
+                            <AeroText style={{ color: '#F75400', marginLeft:5 }} >Editar</AeroText>
+                        </Button>
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
+
                 <View style={styles.content}>
-                    
+                    <View style={{ flex: 1, justifyContent: "space-around" }}>
+                        <Input placeholder='Nome' rightIcon={<IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />} />
+
+                        <Input placeholder='Data de Nascimento' rightIcon={<IconSVG name="Date" height="20" width="20" fill="#ddd" />} />
+
+                        <Input placeholder='Email' rightIcon={<IconSVG name="Mail" height="20" width="20" fill="#ddd" />} />
+
+                        <Input placeholder='Senha' rightIcon={<IconSVG name="Key" height="20" width="20" fill="#ddd" />} />
+
+                        <View style={{ height: 40, paddingHorizontal: 10 }}>
+                            <Picker
+                                selectedValue={this.state.language}
+                                style={{ flex: 1, height: 50 }}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({ language: itemValue })
+                                }
+                            >
+                                <Picker.Item label="Português (Brasil)" value="portugues" />
+                                <Picker.Item label="Inglês" value="ingles" />
+                                <Picker.Item label="Espanhol" value="espanhol" />
+                            </Picker>
+                            <Divider style={{ backgroundColor: '#000' }} />
+                        </View>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
+                        <AeroText style={{ color: '#F75400', fontSize: 18 }}>Clubes</AeroText>
+                        <View style={{ backgroundColor: "#ddd", borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+                            <IconSVG name="Add" height="15" width="15" fill="#fff" />
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
+                        <AeroText style={{ color: "#808080" }}>Alphaville Esporte Clube</AeroText>
+                        <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+                            <IconSVG name="Remove" height="15" width="15" fill="#ddd" />
+                        </View>
+                    </View>
                 </View>
             </Container>
         )
@@ -50,14 +97,11 @@ export default Conta
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#ffff",
+        backgroundColor: "#fff",
     },
     content: {
         flex: 1,
         padding: 30,
-        alignItems: "center",
-        justifyContent: "space-between"
-
     },
     header: {
         alignItems: 'flex-start',
@@ -71,7 +115,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginRight: 20,
         backgroundColor: "#ffff",
-        width: 55,
+        width: 100,
         borderRadius: 100,
     },
     textButton: {

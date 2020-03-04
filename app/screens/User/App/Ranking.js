@@ -14,6 +14,7 @@ import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import { TrophyIcon, DoneIcon, StarWhiteIcon, CloseIcon, CloseSVGIcon } from '../../../components/Icon/Icon';
 import { Divider } from 'react-native-elements';
+import IconSVG from '../../../components/Icon/IconSVG';
 
 class Ranking extends Component {
     constructor(props) {
@@ -63,7 +64,8 @@ class Ranking extends Component {
 
                             <View>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#F75400', justifyContent: "center", alignItems: 'center' }} >
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: 'gray', justifyContent: "center", alignItems: 'center' }} >
+                                        <IconSVG name="Close" width="22" height="22" fill="white"/>
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#545250' }}>10</AeroText>
                                     <AeroText style={{ marginHorizontal: 5, fontSize: 9, color: '#545250' }}>DERROTAS</AeroText>
@@ -97,7 +99,7 @@ class Ranking extends Component {
                             </Picker>
                             <Divider />
                         </View>
-                        <View style={{ flex: 1, backgroundColor: 're' }}>
+                        <View style={{ flex: 1 }}>
 
                             <View style={styles.rankStatus}>
                                 <View style={{ backgroundColor: '#F75400', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
