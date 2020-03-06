@@ -6,8 +6,8 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView
 } from 'react-native';
-import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker } from 'native-base';
-import { Input, Divider } from 'react-native-elements';
+import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker, Input } from 'native-base';
+import {  Divider } from 'react-native-elements';
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -32,7 +32,7 @@ class Conta extends Component {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <View style={{ flexDirection: 'row', justifyContent: "space-between", width:'100%' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
                         <Icon
                             name='arrowleft'
                             type='AntDesign'
@@ -42,7 +42,7 @@ class Conta extends Component {
                         </Icon>
                         <Button style={styles.button} >
                             <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
-                            <AeroText style={{ color: '#F75400', marginLeft:5 }} >Editar</AeroText>
+                            <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
                         </Button>
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
@@ -50,14 +50,26 @@ class Conta extends Component {
 
                 <View style={styles.content}>
                     <View style={{ flex: 1, justifyContent: "space-around" }}>
-                        <Input placeholder='Nome' rightIcon={<IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />} />
+                        <Item >
+                            <Input placeholder='Nome' />
+                            <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
+                        </Item>
 
-                        <Input placeholder='Data de Nascimento' rightIcon={<IconSVG name="Date" height="20" width="20" fill="#ddd" />} />
+                        <Item >
+                            <Input placeholder='Data de Nascimento' />
+                            <IconSVG name="Date" height="20" width="20" fill="#ddd" />
+                        </Item>
 
-                        <Input placeholder='Email' rightIcon={<IconSVG name="Mail" height="20" width="20" fill="#ddd" />} />
+                        <Item >
+                            <Input placeholder='Email' />
+                            <IconSVG name="Mail" height="20" width="20" fill="#ddd" />
+                        </Item>
 
-                        <Input placeholder='Senha' rightIcon={<IconSVG name="Key" height="20" width="20" fill="#ddd" />} />
-
+                        <Item >
+                            <Input placeholder='Senha' />
+                            <IconSVG name="Key" height="20" width="20" fill="#ddd" />
+                        </Item>
+                        
                         <View style={{ height: 40, paddingHorizontal: 10 }}>
                             <Picker
                                 selectedValue={this.state.language}
@@ -70,7 +82,7 @@ class Conta extends Component {
                                 <Picker.Item label="Inglês" value="ingles" />
                                 <Picker.Item label="Espanhol" value="espanhol" />
                             </Picker>
-                            <Divider style={{ backgroundColor: '#000' }} />
+                            <Divider style={{ backgroundColor: '#ddd', height:1 }} />
                         </View>
                     </View>
 

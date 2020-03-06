@@ -41,21 +41,30 @@ class Ranking extends Component {
                 </ImageBackground>
                 <View style={styles.content}>
                     <ScrollView style={{ marginVertical: 10 }}>
-                        <View style={{ alignSelf: 'center' }}>
-                            <AeroText style={{ color: 'gold', fontSize: 25 }}>Especial Pro</AeroText>
+                        <View style={{ alignSelf: 'center', marginBottom: 15 }}>
+                            <View style={{ alignItems: 'center' }}>
+
+                                <IconSVG name='Star' height='15' width='15' fill='#FF9800' />
+                                <View style={{ flexDirection: 'row', width: 40, justifyContent: 'space-between' }}>
+                                    <IconSVG name='Star' height='15' width='15' fill='#FF9800' />
+                                    <IconSVG name='Star' height='15' width='15' fill='#FF9800' />
+                                </View>
+
+                            </View>
+                            <AeroText style={{ color: '#FF9800', fontSize: 25 }}>Especial Pro</AeroText>
                         </View>
                         <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
                             <View>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FCB900', justifyContent: "center", alignItems: "center" }} >
-                                        <DoneIcon />
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FCB900', justifyContent: "center", alignItems: "center", marginLeft: -10 }} >
+                                        <IconSVG name='Done' width='22' height='22' fill='white' />
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#FCB900' }}>12</AeroText>
                                     <AeroText style={{ fontSize: 9, color: '#FCB900' }}>VITÓRIAS</AeroText>
                                 </Button>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FF9800', justifyContent: "center", alignItems: 'center' }} >
-                                        <TrophyIcon />
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#FF9800', justifyContent: "center", alignItems: 'center', marginLeft: -10 }} >
+                                        <IconSVG name="Trophy" width='22' height='22' fill='white' />
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#FF9800' }}>2.7</AeroText>
                                     <AeroText style={{ fontSize: 9, color: '#FF9800' }}>PONTOS</AeroText>
@@ -64,15 +73,15 @@ class Ranking extends Component {
 
                             <View>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: 'gray', justifyContent: "center", alignItems: 'center' }} >
-                                        <IconSVG name="Close" width="22" height="22" fill="white"/>
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: 'gray', justifyContent: "center", alignItems: 'center', marginLeft: -10 }} >
+                                        <IconSVG name="Close" width="22" height="22" fill="white" />
                                     </View>
-                                    <AeroText style={{ fontSize: 18, color: '#545250' }}>10</AeroText>
-                                    <AeroText style={{ marginHorizontal: 5, fontSize: 9, color: '#545250' }}>DERROTAS</AeroText>
+                                    <AeroText style={{ fontSize: 18, color: 'gray' }}>10</AeroText>
+                                    <AeroText style={{ marginHorizontal: 5, fontSize: 9, color: 'gray' }}>DERROTAS</AeroText>
                                 </Button>
                                 <Button style={styles.buttonList}>
-                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#F75400', justifyContent: "center", alignItems: 'center' }} >
-                                        <StarWhiteIcon />
+                                    <View style={{ width: 50, height: 50, borderRadius: 25, backgroundColor: '#F75400', justifyContent: "center", alignItems: 'center', marginLeft: -10 }} >
+                                        <IconSVG name="Star" width='25' height='25' fill='white' />
                                     </View>
                                     <AeroText style={{ fontSize: 18, color: '#F75400' }}>5º</AeroText>
                                     <AeroText style={{ fontSize: 9, color: '#F75400' }}>POSIÇÃO</AeroText>
@@ -99,29 +108,45 @@ class Ranking extends Component {
                             </Picker>
                             <Divider />
                         </View>
-                        <View style={{ flex: 1 }}>
+                    </ScrollView>
 
-                            <View style={styles.rankStatus}>
+                </View>
+                <View style={{ paddingHorizontal: 10 }}>
+
+                    <Divider style={{height:2}}/>
+                    <View style={{ flex: 1 }}>
+
+                        <View style={styles.rankStatus}>
+                            <View style={{ flexDirection: 'row' }}>
                                 <View style={{ backgroundColor: '#F75400', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                    <StarWhiteIcon style={{ height: 10, width: 10 }} />
+                                    <IconSVG name="Star" width='10' height='10' fill='white' />
                                 </View>
-                                <AeroText style={{ color: '#F75400' }}>5º</AeroText>
-                                <AeroText style={{ color: 'gray', paddingHorizontal: 10 }}>Especial Pro</AeroText>
-                                <View style={{ backgroundColor: '#FCB900', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                    <DoneIcon style={{ height: 10, width: 10 }} />
+                                <AeroText style={{ color: '#F75400', paddingLeft: 2 }}>5º</AeroText>
+                            </View>
+                            <AeroText style={{ color: 'gray', paddingHorizontal: 10 }}>Nome</AeroText>
+                            <View style={{flexDirection:'row'}}>
+
+                                <View style={{ flexDirection: 'row', paddingRight: 5 }}>
+                                    <View style={{ backgroundColor: '#FCB900', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                        <IconSVG name="Done" width='11' height='11' fill='white' />
+                                    </View>
+                                    <AeroText style={{ color: '#FCB900', paddingLeft: 2 }}>12</AeroText>
                                 </View>
-                                <AeroText style={{ color: '#FCB900' }}>12</AeroText>
-                                <View style={{ backgroundColor: '#545250', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                    <DoneIcon style={{ height: 10, width: 10 }} />
+                                <View style={{ flexDirection: 'row', paddingRight: 5 }}>
+                                    <View style={{ backgroundColor: '#545250', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                        <IconSVG name="Close" width='10' height='10' fill='white' />
+                                    </View>
+                                    <AeroText style={{ color: '#545250', paddingLeft: 2 }}>10</AeroText>
                                 </View>
-                                <AeroText style={{ color: '#545250' }}>10</AeroText>
-                                <View style={{ backgroundColor: '#FF9800', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                    <TrophyIcon style={{ height: 10, width: 10 }} />
+                                <View style={{ flexDirection: 'row', paddingRight: 5, }}>
+                                    <View style={{ backgroundColor: '#FF9800', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                        <IconSVG name="Trophy" width='11' height='11' fill='white' />
+                                    </View>
+                                    <AeroText style={{ color: '#FF9800', paddingLeft: 2 }}>2,7</AeroText>
                                 </View>
-                                <AeroText style={{ color: '#FF9800' }}>2,7</AeroText>
                             </View>
                         </View>
-                    </ScrollView>
+                    </View>
                 </View>
             </Container>
         )
@@ -162,7 +187,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginHorizontal: 10,
         marginVertical: 10,
-        height: 60,
+        height: 55,
         backgroundColor: "#fff",
         borderWidth: 2,
         borderRightWidth: 4,

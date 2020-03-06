@@ -4,23 +4,19 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    KeyboardAvoidingView,
-    Dimensions
+    Dimensions,
+    Image
 } from 'react-native';
-import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer, Fab } from 'native-base';
+import { Button, Container, Fab } from 'native-base';
 import {
     LineChart,
-    BarChart,
-    PieChart,
     ProgressChart,
-    ContributionGraph,
-    StackedBarChart
 } from "react-native-chart-kit";
 
 import { AeroText } from '../../../components/StyledText';
-import { MenuIcon, ChatIcon, StarWhiteIcon, CheckIcon, DoneIcon, TrophyIcon, DollarIcon, LocationIcon, StarIcon } from '../../../components/Icon/Icon'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Divider } from 'react-native-elements';
+import IconSVG from '../../../components/Icon/IconSVG';
 
 class Home extends Component {
     constructor(props) {
@@ -29,13 +25,28 @@ class Home extends Component {
             active: false
         };
     }
+
+    /*    static navigationOptions = {
+           drawerIcon: ({tintColor}) => {
+               <Icon name='Menu' style={{fontSize:24, color:tintColor}} />
+           }
+       } */
+
     render() {
         return (
             <Container>
                 <View style={styles.header}>
-                    <MenuIcon />
+                    <TouchableOpacity
+                        onPress={
+                            () => this.props.navigation.openDrawer()
+                        }
+                    >
+                        <IconSVG name='Menu' height='22' width='22' fill='#F75400' />
 
-                    <View style={styles.imgUser} />
+                    </TouchableOpacity>
+                    <ImageBackground
+                        source={require('../../../assets/images/Conta.png')} style={styles.imgUser}
+                    />
                 </View>
                 <ScrollView>
                     <View style={styles.content}>
@@ -63,28 +74,31 @@ class Home extends Component {
                                 <View style={styles.rankStatus}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <View style={{ backgroundColor: '#F75400', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                            <StarWhiteIcon style={{ height: 10, width: 10 }} />
+                                            <IconSVG name="Star" width='10' height='10' fill='white' />
                                         </View>
                                         <AeroText style={{ color: '#F75400', paddingLeft: 2 }}>5º</AeroText>
                                     </View>
                                     <AeroText style={{ color: 'gray', paddingHorizontal: 10 }}>Especial Pro</AeroText>
-                                    <View style={{ flexDirection: 'row', paddingRight: 5 }}>
-                                        <View style={{ backgroundColor: '#FCB900', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                            <DoneIcon style={{ height: 10, width: 10 }} />
+                                    <View style={{flexDirection:"row"}}>
+
+                                        <View style={{ flexDirection: 'row', paddingRight: 5 }}>
+                                            <View style={{ backgroundColor: '#FCB900', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                                <IconSVG name="Done" width='11' height='11' fill='white' />
+                                            </View>
+                                            <AeroText style={{ color: '#FCB900', paddingLeft: 2 }}>12</AeroText>
                                         </View>
-                                        <AeroText style={{ color: '#FCB900', paddingLeft: 2 }}>12</AeroText>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', paddingRight: 5 }}>
-                                        <View style={{ backgroundColor: '#545250', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                            <DoneIcon style={{ height: 10, width: 10 }} />
+                                        <View style={{ flexDirection: 'row', paddingRight: 5 }}>
+                                            <View style={{ backgroundColor: '#545250', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                                <IconSVG name="Close" width='10' height='10' fill='white' />
+                                            </View>
+                                            <AeroText style={{ color: '#545250', paddingLeft: 2 }}>10</AeroText>
                                         </View>
-                                        <AeroText style={{ color: '#545250', paddingLeft: 2 }}>10</AeroText>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', paddingRight: 5, }}>
-                                        <View style={{ backgroundColor: '#FF9800', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                            <TrophyIcon style={{ height: 10, width: 10 }} />
+                                        <View style={{ flexDirection: 'row', paddingRight: 5, }}>
+                                            <View style={{ backgroundColor: '#FF9800', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                                <IconSVG name="Trophy" width='11' height='11' fill='white' />
+                                            </View>
+                                            <AeroText style={{ color: '#FF9800', paddingLeft: 2 }}>2,7</AeroText>
                                         </View>
-                                        <AeroText style={{ color: '#FF9800', paddingLeft: 2 }}>2,7</AeroText>
                                     </View>
                                 </View>
                             </View>
@@ -165,19 +179,21 @@ class Home extends Component {
                                     <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                    <DollarIcon style={{ height: 10, width: 10, marginRight: 7 }} />
                                     <View style={styles.priceView}>
-                                        <AeroText style={styles.price}>149,50</AeroText>
+                                        <View style={{ paddingRight: 5, justifyContent: "center", alignItems: 'center' }}>
+                                            <IconSVG name='Done' width='10' height='10' fill='white' />
+                                        </View>
+                                        <AeroText style={styles.price}>Inscritos</AeroText>
                                     </View>
                                 </View>
                             </View>
 
                             <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                <StarIcon style={{ width: 10, height: 10 }} />
-                                <AeroText style={{ fontSize: 8 }}>Especial Pro</AeroText>
-                                <LocationIcon style={{ width: 10, height: 10 }} />
-                                <AeroText style={{ fontSize: 8 }}>Avenida Raimundo</AeroText>
-                            </View>
+                                <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
+                                <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
+                            </View> 
                         </View>
                     </View>
                 </ScrollView>
@@ -190,7 +206,7 @@ class Home extends Component {
                         style={{ backgroundColor: '#F75400' }}
                         position="bottomRight"
                         onPress={() => this.setState({ active: !this.state.active })}>
-                        <ChatIcon style={{ width: 30, height: 30 }} />
+                        <IconSVG name='Chat' width='30' height='30' fill='white' />
                     </Fab>
                 </View>
             </Container >
@@ -214,16 +230,14 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        height: 100,
+        height: 120,
         justifyContent: 'space-between',
         paddingTop: 40,
         padding: 20
     },
     imgUser: {
-        borderRadius: 50,
-        width: 50,
-        height: 50,
-        backgroundColor: 'red'
+        width: 70,
+        height: 70,
     },
     button: {
         justifyContent: "center",
@@ -275,6 +289,7 @@ const styles = StyleSheet.create({
     },
     nameCampeonato: {
         fontSize: 13,
+        color: '#808080'
     },
     dollar: {
         color: '#F75400',
@@ -283,10 +298,12 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     priceView: {
-        backgroundColor: '#F75400',
+        flexDirection: 'row',
+        backgroundColor: 'green',
         borderRadius: 5,
         alignItems: 'center',
-        width: 45,
+        justifyContent: 'center',
+        width: 75,
         height: 17
     },
     price: {

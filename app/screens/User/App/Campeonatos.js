@@ -13,6 +13,7 @@ import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SearchIcon, DollarIcon, StarIcon, LocationIcon } from '../../../components/Icon/Icon'
 import { SearchBar, Divider } from 'react-native-elements';
+import IconSVG from '../../../components/Icon/IconSVG';
 
 class Campeonatos extends Component {
     constructor(props) {
@@ -83,7 +84,7 @@ class Campeonatos extends Component {
                                     <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                    <DollarIcon style={{ height: 10, width: 10, marginRight: 7 }} />
+                                    <IconSVG name='Money' width='15' height='15' fill='#F75400' />
                                     <View style={styles.priceView}>
                                         <AeroText style={styles.price}>149,50</AeroText>
                                     </View>
@@ -91,12 +92,13 @@ class Campeonatos extends Component {
                             </View>
 
                             <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                <StarIcon style={{ width: 10, height: 10 }} />
-                                <AeroText style={{ fontSize: 8 }}>Especial Pro</AeroText>
-                                <LocationIcon style={{ width: 10, height: 10 }} />
-                                <AeroText style={{ fontSize: 8 }}>Avenida Raimundo</AeroText>
+                                    <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                <AeroText style={{ fontSize: 8, color:'#808080' }}>Especial Pro</AeroText>
+                                <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                <AeroText style={{ fontSize: 8, color:'#808080' }}>Avenida Raimundo</AeroText>
                             </View>
                         </View>
+                       
                         <View style={{ marginTop: 22 }}>
                             <Modal
                                 animationType="slide"
@@ -252,6 +254,7 @@ const styles = StyleSheet.create({
     },
     buttonList: {
         paddingHorizontal: 10,
+        marginBottom: 20,
         justifyContent: "space-around",
         height: 110,
         backgroundColor: "#ffff",
@@ -277,6 +280,7 @@ const styles = StyleSheet.create({
     },
     nameCampeonato: {
         fontSize: 13,
+        color: '#808080'
     },
     dollar: {
         color: '#F75400',

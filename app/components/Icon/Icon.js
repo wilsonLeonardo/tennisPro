@@ -23,7 +23,6 @@ import menuIcon from '../../assets/icons/menu.png'
 import starWhiteIcon from '../../assets/icons/starWhite.png'
 import doneIcon from '../../assets/icons/done.png'
 import trophyIcon from '../../assets/icons/trophy.png'
-import closeSVGIcon from '../../assets/icons/close.svg'
 
 export const TickerIcon = ({ style }) => (
     <Image
@@ -165,11 +164,5 @@ export const TrophyIcon = ({ style}) => (
     <Image
         style={[{width: 20, height: 20}, style ? style : {}]}
         source={trophyIcon}
-    />
-);
-export const CloseSVGIcon = ({ style}) => (
-    <Image
-        style={[{width: 20, height: 20}, style ? style : {}]}
-        source={closeSVGIcon}
     />
 );
