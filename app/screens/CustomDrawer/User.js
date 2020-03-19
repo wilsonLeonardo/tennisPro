@@ -5,11 +5,13 @@ import {
     Image,
     StyleSheet,
     ImageBackground,
-    Button
+    Button,
+    TouchableOpacity
 } from 'react-native'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
 import { ScrollView } from 'react-native-gesture-handler'
+import IconSVG from '../../components/Icon/IconSVG'
 import {logout} from '../../service/AuthService'
 
 function CustomDrawer({ ...props }) {
@@ -20,7 +22,7 @@ function CustomDrawer({ ...props }) {
                 style={styles.imageBack}
             >
                 <View style={styles.image}></View>
-                
+
 
                 <View style={{ flex: 1 }}>
                     <AeroText style={styles.name}>Douglas Henrique</AeroText>
@@ -29,11 +31,14 @@ function CustomDrawer({ ...props }) {
             </ImageBackground>
             <ScrollView>
                 <DrawerNavigatorItems {...props} />
-            <Button title='Sair' onPress={() =>  logout().then(() => props.navigation.navigate("SignedOut"))}/>
             </ScrollView>
 
-            
-
+            <TouchableOpacity style={{ padding: 25 }} onPress={() => logout().then(() => props.navigation.navigate('SignedOut'))}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
+                    <AeroText style={{ color: '#F75400', fontSize: 20, paddingHorizontal: 10 }}>Sair</AeroText>
+                </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -53,10 +58,11 @@ const styles = StyleSheet.create({
     imageBack: {
         flexDirection: 'row',
         resizeMode: 'contain',
-        height: 150,
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     name: {
-        marginTop: 30,
         fontSize: 15,
         color: 'white',
     },

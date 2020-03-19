@@ -41,9 +41,10 @@ class Estatisticas extends Component {
               name='arrowleft'
               type='AntDesign'
               style={{ color: 'white' }}
+              onPress={() => this.props.navigation.goBack()}
             >
-              <AeroText style={{ fontSize: 22, color: 'white' }}>  Estatísticas</AeroText>
             </Icon>
+            <AeroText style={{ fontSize: 22, color: 'white', left:"20%" }}>  Estatísticas</AeroText>
           </View>
         </ImageBackground>
         <ScrollView>

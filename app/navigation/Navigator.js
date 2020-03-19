@@ -12,10 +12,9 @@ import TeacherDataScreen from '../screens/Teacher/Register/TeacherDataScreen';
 import UserPlans from '../screens/User/Register/UserPlans'
 import TeacherDiponibilidade from '../screens/Teacher/Register/TeacherDiponibilidade';
 import UserDisponibilidade from '../screens/User/Register/UserDisponibilidade'
-//import Home from '../screens/Teacher/App/Home'
 import DrawerNavigator from './DrawerNavigator'
-import HomeTeacher from '../screens/Teacher/App/Home';
-import HomeClub from '../screens/Club/App/Home';
+import DrawerTeacher from './DrawerTeacher'
+import DrawerClub from './DrawerClub'
 
 export const SignedOutRoutes = createAppContainer(createStackNavigator({
   Login: {
@@ -70,7 +69,7 @@ export const SignedInUserRoutes = createAppContainer(createStackNavigator({
 ));
 export const SignedInTeacherRoutes = createAppContainer(createStackNavigator({
   homeTeacher:{
-    screen: HomeTeacher,
+    screen: DrawerTeacher,
     navigationOptions:{
       headerShown: false
     }
@@ -79,7 +78,7 @@ export const SignedInTeacherRoutes = createAppContainer(createStackNavigator({
 ));
 export const SignedInClubRoutes = createAppContainer(createStackNavigator({
   homeTeacher:{
-    screen: HomeClub,
+    screen: DrawerClub,
     navigationOptions:{
       headerShown: false
     }

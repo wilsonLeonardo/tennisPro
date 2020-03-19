@@ -24,7 +24,6 @@ export default class App extends React.Component {
   componentDidMount() {
     isLogged()
       .then(res => {
-        console.log(res);
         this.setState({ signed: res, signLoaded: true })})
           getUser().then(user => {
             this.setState({ userProfile: user.profile }

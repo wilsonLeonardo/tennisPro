@@ -22,9 +22,10 @@ class Jogos extends Component {
                             name='arrowleft'
                             type='AntDesign'
                             style={{ color: 'white' }}
+                            onPress={() => this.props.navigation.goBack()}
                         >
-                            <AeroText style={{ fontSize: 22, color: 'white' }}>  Jogos</AeroText>
                         </Icon>
+                            <AeroText style={{ fontSize: 22, color: 'white', left:"-60%" }}>  Jogos</AeroText>
                         <Button style={styles.button} >
                             <Icon
                                 name='settings'

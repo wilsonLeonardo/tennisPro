@@ -42,6 +42,12 @@ class User extends Authenticatable implements JWTSubject
     public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
     }
+    public function setDeviceIdentifier($value){
+        $this->attributes['device_identifier'] = $value;
+    }
+    public function getDeviceIdentifier(){
+        return $this->attributes['device_identifier'];
+    }
     public function getJWTIdentifier()
     {
       return $this->getKey();

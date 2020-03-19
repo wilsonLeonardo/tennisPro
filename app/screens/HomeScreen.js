@@ -93,8 +93,10 @@ class HomeScreen extends React.Component {
                 if(data.user.profile == "USER")
                   this.props.navigation.navigate("SignedInUser");
                 else if(data.user.profile == "TEACHER")
-                this.props.navigation.navigate("SignedInTeacher");
-                
+                  this.props.navigation.navigate("SignedInTeacher");
+                else if(data.user.profile == "Club")
+                  this.props.navigation.navigate("SignedInClub");
+
                 this.props.dispatch(
                   notificationsActions.fetchNotifications(data.user.id)
                 );

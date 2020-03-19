@@ -10,7 +10,7 @@ export async function getAccessToken() {
 
     if (!user) return null;
 
-    return JSON.parse(user).accessToken;
+    return JSON.parse(user).access_token;
 }
 
 export async function getUser() {

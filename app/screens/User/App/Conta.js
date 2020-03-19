@@ -4,10 +4,11 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    TouchableHighlight
 } from 'react-native';
 import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker, Input } from 'native-base';
-import {  Divider } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -24,7 +25,16 @@ class Conta extends Component {
             language: {
                 itemValue: '',
                 itemIndex: ''
-            }
+            },
+            seg: false,
+            ter: false,
+            qua: false,
+            qui: false,
+            sex: false,
+            sab: false,
+            dom: false,
+            entrada: '',
+            saida: ''
         }
     }
 
@@ -37,9 +47,10 @@ class Conta extends Component {
                             name='arrowleft'
                             type='AntDesign'
                             style={{ paddingRight: 20, color: 'white' }}
+                            onPress={() => this.props.navigation.goBack()}
                         >
-                            <AeroText style={{ fontSize: 22, color: 'white' }}>  Conta</AeroText>
                         </Icon>
+                        <AeroText style={{ fontSize: 22, color: 'white', left:"-60%" }}>  Conta</AeroText>
                         <Button style={styles.button} >
                             <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
                             <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
@@ -47,58 +58,124 @@ class Conta extends Component {
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
+                <ScrollView style={{}}>
+                    <View style={styles.content}>
+                        <View style={{ justifyContent: "space-around", height: 450 }}>
+                            <Item >
+                                <Input placeholder='Nome' />
+                                <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
+                            </Item>
 
-                <View style={styles.content}>
-                    <View style={{ flex: 1, justifyContent: "space-around" }}>
-                        <Item >
-                            <Input placeholder='Nome' />
-                            <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
-                        </Item>
+                            <Item >
+                                <Input placeholder='Data de Nascimento' />
+                                <IconSVG name="Date" height="20" width="20" fill="#ddd" />
+                            </Item>
 
-                        <Item >
-                            <Input placeholder='Data de Nascimento' />
-                            <IconSVG name="Date" height="20" width="20" fill="#ddd" />
-                        </Item>
+                            <Item >
+                                <Input placeholder='Email' />
+                                <IconSVG name="Mail" height="20" width="20" fill="#ddd" />
+                            </Item>
 
-                        <Item >
-                            <Input placeholder='Email' />
-                            <IconSVG name="Mail" height="20" width="20" fill="#ddd" />
-                        </Item>
+                            <Item >
+                                <Input placeholder='Senha' />
+                                <IconSVG name="Key" height="20" width="20" fill="#ddd" />
+                            </Item>
 
-                        <Item >
-                            <Input placeholder='Senha' />
-                            <IconSVG name="Key" height="20" width="20" fill="#ddd" />
-                        </Item>
-                        
-                        <View style={{ height: 40, paddingHorizontal: 10 }}>
-                            <Picker
-                                selectedValue={this.state.language}
-                                style={{ flex: 1, height: 50 }}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    this.setState({ language: itemValue })
-                                }
-                            >
-                                <Picker.Item label="Português (Brasil)" value="portugues" />
-                                <Picker.Item label="Inglês" value="ingles" />
-                                <Picker.Item label="Espanhol" value="espanhol" />
-                            </Picker>
-                            <Divider style={{ backgroundColor: '#ddd', height:1 }} />
+                            <View style={{ height: 40, paddingHorizontal: 10 }}>
+                                <Picker
+                                    selectedValue={this.state.language}
+                                    style={{ flex: 1, height: 50 }}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        this.setState({ language: itemValue })
+                                    }
+                                >
+                                    <Picker.Item label="Português (Brasil)" value="portugues" />
+                                    <Picker.Item label="Inglês" value="ingles" />
+                                    <Picker.Item label="Espanhol" value="espanhol" />
+                                </Picker>
+                                <Divider style={{ backgroundColor: '#ddd', height: 1 }} />
+                            </View>
+                        </View>
+                        <View style={{ paddingVertical: 30 }}>
+
+                            <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
+                                <AeroText style={{ color: '#F75400', fontSize: 18 }}>Clubes</AeroText>
+                                <View style={styles.bottonAdd}>
+                                    <IconSVG name="Add" height="15" width="15" fill="#fff" />
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
+                                <AeroText style={{ color: "#808080" }}>Alphaville Esporte Clube</AeroText>
+                                <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                    <IconSVG name="Remove" height="15" width="15" fill="#ddd" />
+                                </View>
+                            </View>
+                        </View>
+
+                        <View>
+                            <AeroText style={{ color: '#F75400', fontSize: 18 }}>Disponibilidade</AeroText>
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
+                                <TouchableHighlight style={this.state.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                    onPress={this.state.seg ? () => this.setState({ seg: false }) : () => this.setState({ seg: true })}
+                                    value={this.state.seg}>
+                                    <AeroText style={this.state.seg ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Seg</AeroText>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={this.state.ter ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                    onPress={this.state.ter ? () => this.setState({ ter: false }) : () => this.setState({ ter: true })}
+                                    value={this.state.ter}>
+                                    <AeroText style={this.state.ter ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Ter</AeroText>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={this.state.qua ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                    onPress={this.state.qua ? () => this.setState({ qua: false }) : () => this.setState({ qua: true })}
+                                    value={this.state.qua}>
+                                    <AeroText style={this.state.qua ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana}  >Qua</AeroText>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={this.state.qui ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                    onPress={this.state.qui ? () => this.setState({ qui: false }) : () => this.setState({ qui: true })}
+                                    value={this.state.qui}>
+                                    <AeroText style={this.state.qui ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Qui</AeroText>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={this.state.sex ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                    onPress={this.state.sex ? () => this.setState({ sex: false }) : () => this.setState({ sex: true })}
+                                    value={this.state.sex}>
+                                    <AeroText style={this.state.sex ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sex</AeroText>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={this.state.sab ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                    onPress={this.state.sab ? () => this.setState({ sab: false }) : () => this.setState({ sab: true })}
+                                    value={this.state.sab}>
+                                    <AeroText style={this.state.sab ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sab</AeroText>
+                                </TouchableHighlight>
+                                <TouchableHighlight style={this.state.dom ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                    onPress={this.state.dom ? () => this.setState({ dom: false }) : () => this.setState({ dom: true })}
+                                    value={this.state.dom}>
+                                    <AeroText style={this.state.dom ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Dom</AeroText>
+                                </TouchableHighlight>
+                            </View>
+                            <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
+                                <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                                    <Input
+                                        style={styles.Input}
+                                        placeholder='Entrada'
+                                        onChangeText={(entrada) => this.setState({ entrada })}
+                                        value={this.state.entrada}
+                                    />
+                                </Item>
+                                <View style={{ width: 35 }}>
+                                    <AeroText> até</AeroText>
+                                </View>
+                                <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                                    <Input
+                                        style={styles.Input}
+                                        placeholder='Saída'
+                                        onChangeText={(saida) => this.setState({ saida })}
+                                        value={this.state.saida}
+                                    />
+                                </Item>
+                            </Form>
+
                         </View>
                     </View>
-
-                    <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                        <AeroText style={{ color: '#F75400', fontSize: 18 }}>Clubes</AeroText>
-                        <View style={{ backgroundColor: "#ddd", borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
-                            <IconSVG name="Add" height="15" width="15" fill="#fff" />
-                        </View>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
-                        <AeroText style={{ color: "#808080" }}>Alphaville Esporte Clube</AeroText>
-                        <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
-                            <IconSVG name="Remove" height="15" width="15" fill="#ddd" />
-                        </View>
-                    </View>
-                </View>
+                </ScrollView>
             </Container>
         )
     }
@@ -112,7 +189,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     content: {
-        flex: 1,
         padding: 30,
     },
     header: {
@@ -178,6 +254,22 @@ const styles = StyleSheet.create({
         shadowOpacity: 2,
         shadowRadius: 9,
     },
+    bottonAdd: {
+        backgroundColor: "#ddd",
+        borderRadius: 30,
+        height: 30,
+        width: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    bottonAddPress: {
+        backgroundColor: "#F75400",
+        borderRadius: 30,
+        height: 30,
+        width: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     item: {
         backgroundColor: 'red',
         flexDirection: 'row',
@@ -198,6 +290,31 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 30,
         alignItems: "flex-start"
-    }
+    },
+    bottomDiasDaSemana: {
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 30,
+        height: 30,
+        backgroundColor: '#f7f7f7'
+    },
+    bottomDiasDaSemanaPress: {
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 30,
+        height: 30,
+        backgroundColor: '#F75400'
+    },
+    fontDiasDaSemana: {
+        fontSize: 10,
+        fontFamily: 'Aero'
+    },
+    fontDiasDaSemanaPress: {
+        fontSize: 10,
+        fontFamily: 'Aero',
+        color: 'white'
+    },
 
 });

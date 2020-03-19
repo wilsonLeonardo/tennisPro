@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
-use Model\User;
+use App\Model\User;
 
 class UserController extends Controller
 {
@@ -19,6 +20,17 @@ class UserController extends Controller
         $user = User::findOrFail(auth()->user()->getAuthIdentifier());
 
         $user->setDeviceIdentifier($request->device_identifier);
+
         $user->save();
+    }
+    public function findTeacher()
+    {
+        $query = User::query()
+        ->where('profile', '=', 'TEACHER')
+        ->get()->toArray();
+
+        
+        return $query;
+
     }
 }

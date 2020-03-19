@@ -30,13 +30,16 @@ class Ranking extends Component {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <Icon
-                        name='arrowleft'
-                        type='AntDesign'
-                        style={{ color: 'white' }}
-                    >
-                        <AeroText style={{ fontSize: 22, color: 'white' }}>  Ranking</AeroText>
-                    </Icon>
+                    <View style={{flexDirection:`row`}}>
+                        <Icon
+                            name='arrowleft'
+                            type='AntDesign'
+                            style={{ color: 'white' }}
+                            onPress={() => this.props.navigation.goBack()}
+                        >
+                        </Icon>
+                        <AeroText style={{ fontSize: 22, color: 'white', left:"120%"}}>Ranking</AeroText>
+                    </View>
                     <View style={{ alignSelf: "center", width: 100, height: 100, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
                 <View style={styles.content}>

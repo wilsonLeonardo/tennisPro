@@ -4,7 +4,7 @@ import _ from "lodash";
 import { Alert } from "react-native";
 import { getAccessToken } from "../service/AuthService";
 
-axios.defaults.baseURL = "http://localhost:8080/api/";
+axios.defaults.baseURL = "http://76b64534.ngrok.io/api/";
 
 axios.interceptors.request.use(
 	function(config) {

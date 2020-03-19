@@ -13,7 +13,7 @@ import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
 
-class Conta extends Component {
+class NewCampeonatos extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -88,7 +88,7 @@ class Conta extends Component {
     }
 }
 
-export default Conta
+export default NewCampeonatos
 
 const styles = StyleSheet.create({
     container: {
