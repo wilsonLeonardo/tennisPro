@@ -12,6 +12,7 @@ import { Form, Button, Item, Input, Header, Container, Content, Icon } from 'nat
 import { AeroText } from '../../../components/StyledText';
 import { TabsProf } from '../../../components/TabsProf';
 import { TitleTennis } from '../../../components/Title'
+import IconSVG from '../../../components/Icon/IconSVG';
 
 class TeacherDataScreen extends Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class TeacherDataScreen extends Component {
     this.state = {
       cep: '',
       clube: '',
+      nome:'',
+      nascimento:'',
       email: '',
       senha: ''
     }
@@ -34,7 +37,7 @@ class TeacherDataScreen extends Component {
         <TabsProf navegar={navigate} />
         <TitleTennis placeholder='Preencha seus dados' Icon="Check" />
         <Content style={styles.content}>
-          <Form>
+        <Form>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
               <Input
                 placeholder='Cep'
@@ -42,7 +45,9 @@ class TeacherDataScreen extends Component {
                 onChangeText={(cep) => this.setState({ cep })}
                 value={this.state.cep}
               />
-              <Icon name='locate' style={{ color: '#F75400' }} />
+              <View style={{ paddingHorizontal: 5 }}>
+                <IconSVG name='Location' width='25' height='25' fill='#F75400' />
+              </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
               <Input
@@ -51,7 +56,31 @@ class TeacherDataScreen extends Component {
                 onChangeText={(clube) => this.setState({ clube })}
                 value={this.state.clube}
               />
-              <Icon name='shirt' style={{ color: '#F75400' }} />
+              <View style={{ paddingHorizontal: 5 }}>
+                <IconSVG name='Clothes' width='25' height='25' fill='#F75400' />
+              </View>
+            </Item>
+            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
+              <Input
+                placeholder='Nome'
+                style={styles.Input}
+                onChangeText={(nome) => this.setState({ nome })}
+                value={this.state.nome}
+              />
+              <View style={{ paddingHorizontal: 5 }}>
+                <IconSVG name='AccountForm' width='25' height='25' fill='#F75400' />
+              </View>
+            </Item>
+            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
+              <Input
+                placeholder='Nascimento'
+                style={styles.Input}
+                onChangeText={(nascimento) => this.setState({ nascimento })}
+                value={this.state.nascimento}
+              />
+              <View style={{ paddingHorizontal: 5 }}>
+                <IconSVG name='Date' width='25' height='25' fill='#F75400' />
+              </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
               <Input
@@ -60,7 +89,9 @@ class TeacherDataScreen extends Component {
                 onChangeText={(email) => this.setState({ email })}
                 value={this.state.email}
               />
-              <Icon name='mail' style={{ color: '#F75400' }} />
+              <View style={{ paddingHorizontal: 5 }}>
+                <IconSVG name='Mail' width='25' height='25' fill='#F75400' />
+              </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
               <Input
@@ -70,7 +101,9 @@ class TeacherDataScreen extends Component {
                 onChangeText={(senha) => this.setState({ senha })}
                 value={this.state.senha}
               />
-              <Icon name='key' style={{ color: '#F75400' }} />
+              <View style={{ paddingHorizontal: 5 }}>
+                <IconSVG name='Key' width='25' height='25' fill='#F75400' />
+              </View>
             </Item>
             <Button onPress={() => navigate('teacherDispo')}
               block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }} >

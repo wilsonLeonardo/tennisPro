@@ -5,14 +5,16 @@ import {
     ImageBackground,
     TouchableOpacity,
     Dimensions,
-    Image
+    Image,
+    TouchableHighlight
 } from 'react-native';
-import { Button, Container, Fab } from 'native-base';
+import { Button, Container, Fab, Item, Input } from 'native-base';
 import {
     LineChart,
     ProgressChart,
 } from "react-native-chart-kit";
 import { getUser } from "../../../service/AuthService";
+import Modal from "react-native-modal";
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,7 +25,8 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            active: false
+            active: false,
+            isModalVisible: true
         };
     }
     componentDidMount(){
@@ -33,7 +36,13 @@ class Home extends Component {
       });
     }
 
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
+    
     render() {
+        const deviceWidth = Dimensions.get("window").width;
+        const deviceHeight = Dimensions.get("window").height
         return (
             <Container>
                 <View style={styles.header}>
@@ -80,7 +89,7 @@ class Home extends Component {
                                         <AeroText style={{ color: '#F75400', paddingLeft: 2 }}>5º</AeroText>
                                     </View>
                                     <AeroText style={{ color: 'gray', paddingHorizontal: 10 }}>Especial Pro</AeroText>
-                                    <View style={{flexDirection:"row"}}>
+                                    <View style={{ flexDirection: "row" }}>
 
                                         <View style={{ flexDirection: 'row', paddingRight: 5 }}>
                                             <View style={{ backgroundColor: '#FCB900', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
@@ -173,29 +182,34 @@ class Home extends Component {
                         <Divider style={{ backgroundColor: '#ddd', marginVertical: 20 }} />
 
                         <AeroText style={{ color: '#F75400', alignSelf: 'flex-start', paddingBottom: 30 }}>Seus campeonatos</AeroText>
+                        <TouchableHighlight style={styles.buttomCampeonatos}>
+                            <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
+                                <View style={{ justifyContent: 'space-around', flex: 1 }} >
 
-                        <View style={styles.buttomCampeonatos}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <View style={{}}>
-                                    <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
-                                </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                    <View style={styles.priceView}>
-                                        <View style={{ paddingRight: 5, justifyContent: "center", alignItems: 'center' }}>
-                                            <IconSVG name='Done' width='10' height='10' fill='white' />
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <View style={{}}>
+                                            <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
                                         </View>
-                                        <AeroText style={styles.price}>Inscritos</AeroText>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                                            <View style={styles.priceView}>
+                                                <View style={{ paddingRight: 5, justifyContent: "center", alignItems: 'center' }}>
+                                                    <IconSVG name='Done' width='10' height='10' fill='white' />
+                                                </View>
+                                                <AeroText style={styles.price}>Inscritos</AeroText>
+                                            </View>
+                                        </View>
+                                    </View>
+
+                                    <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
+                                        <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
+                                        <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
                                     </View>
                                 </View>
-                            </View>
+                            </ImageBackground>
 
-                            <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                <IconSVG name='Star' width='10' height='10' fill='#F75400' />
-                                <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
-                                <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
-                                <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
-                            </View> 
-                        </View>
+                        </TouchableHighlight>
                     </View>
                 </ScrollView>
                 <View style={{ flex: 1 }}>
@@ -210,6 +224,35 @@ class Home extends Component {
                         <IconSVG name='Chat' width='30' height='30' fill='white' />
                     </Fab>
                 </View>
+                <Modal
+                    isVisible={this.state.isModalVisible}
+                    animationInTiming={300}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutRight"
+                    coverScreen={true}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                            <AeroText style={{ color: '#F75400', fontSize: 18 }}>Quem te indicou o App?</AeroText>
+
+                            <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >
+                                <Input placeholder='Nome' />
+                                <IconSVG name="AccountForm" height="20" width="20" fill="#F75400" />
+                            </Item>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                <Button style={{ backgroundColor: '#ddd', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                    <AeroText style={{ color: 'gray' }} >Cancelar</AeroText>
+                                </Button>
+                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                    <AeroText style={{ color: 'white' }} >Confirmar</AeroText>
+                                </Button>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
             </Container >
         )
     }
@@ -317,7 +360,6 @@ const styles = StyleSheet.create({
     buttomCampeonatos: {
         justifyContent: "space-around",
         flex: 1,
-        paddingHorizontal: 10,
         height: 110,
         backgroundColor: "#ffff",
         borderWidth: 2,

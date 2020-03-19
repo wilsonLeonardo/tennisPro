@@ -14,7 +14,6 @@ import { TabsTennis } from '../../../components/Tabs';
 import { TitleTennis } from '../../../components/Title'
 import IconSVG from '../../../components/Icon/IconSVG';
 
-//export default function UserDataScreen(props) {
 class UserDataScreen extends Component {
   constructor(props) {
     super(props)

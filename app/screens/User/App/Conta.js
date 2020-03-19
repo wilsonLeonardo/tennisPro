@@ -5,11 +5,12 @@ import {
     ImageBackground,
     TouchableOpacity,
     KeyboardAvoidingView,
-    TouchableHighlight
+    TouchableHighlight,
+    Dimensions
 } from 'react-native';
 import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker, Input } from 'native-base';
 import { Divider } from 'react-native-elements';
-
+import Modal from "react-native-modal";
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
@@ -34,11 +35,18 @@ class Conta extends Component {
             sab: false,
             dom: false,
             entrada: '',
-            saida: ''
+            saida: '',
+            isModalVisible: false
         }
     }
 
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
+
     render() {
+        const deviceWidth = Dimensions.get("window").width;
+        const deviceHeight = Dimensions.get("window").height
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
@@ -51,7 +59,7 @@ class Conta extends Component {
                         >
                         </Icon>
                         <AeroText style={{ fontSize: 22, color: 'white', left:"-60%" }}>  Conta</AeroText>
-                        <Button style={styles.button} >
+                        <Button style={styles.button} onPress={this.toggleModal}>
                             <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
                             <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
                         </Button>
@@ -176,6 +184,35 @@ class Conta extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                <Modal
+                    isVisible={this.state.isModalVisible}
+                    animationInTiming={300}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutRight"
+                    coverScreen={true}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                            <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira a sua senha</AeroText>
+
+                            <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >
+                                <Input placeholder='Senha' secureTextEntry={true} />
+                                <IconSVG name="Key" height="20" width="20" fill="#F75400" />
+                            </Item>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                <Button style={{ backgroundColor: '#ddd', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                    <AeroText style={{ color: 'gray' }} >Cancelar</AeroText>
+                                </Button>
+                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                    <AeroText style={{ color: 'white' }} >Confirmar</AeroText>
+                                </Button>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
             </Container>
         )
     }

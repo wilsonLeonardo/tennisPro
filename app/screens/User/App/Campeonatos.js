@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
 import Modal from "react-native-modal";
-import ExtraDimensions from 'react-native-extra-dimensions-android';
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -80,28 +79,30 @@ class Campeonatos extends Component {
                         <TouchableHighlight style={styles.buttonList}
                             onPress={this.toggleModal2}
                         >
+                            <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
+                                <View style={{ justifyContent: 'space-around', flex: 1 }} >
 
-                            <View style={{ justifyContent: 'space-around', flex: 1 }} >
-
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <View style={{}}>
-                                        <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                        <IconSVG name='Money' width='15' height='15' fill='#F75400' />
-                                        <View style={styles.priceView}>
-                                            <AeroText style={styles.price}>149,50</AeroText>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <View style={{}}>
+                                            <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                                            <IconSVG name='Money' width='15' height='15' fill='#F75400' />
+                                            <View style={styles.priceView}>
+                                                <AeroText style={styles.price}>149,50</AeroText>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
 
-                                <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                    <IconSVG name='Star' width='10' height='10' fill='#F75400' />
-                                    <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
-                                    <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
-                                    <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
+                                    <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
+                                        <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
+                                        <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
+                                    </View>
                                 </View>
-                            </View>
+                            </ImageBackground>
+
                         </TouchableHighlight>
 
                         <Modal
@@ -233,29 +234,31 @@ class Campeonatos extends Component {
                                             <AeroText style={{ fontSize: 18, color: 'white' }}>   Nome do Campeonato</AeroText>
                                         </TouchableHighlight>
                                     </ImageBackground>
-                                    <View style={{ padding: 10, flex:1, justifyContent: 'space-between' }}>
-                                        <View style={styles.CampeonatosModalTxtView}>
-                                            <IconSVG name='Star' width='15' height='15' fill='#F75400' />
-                                            <AeroText style={styles.CampeonatosModalTxt}>Especial Pro, Inter A, Inter B</AeroText>
-                                        </View>
-                                        <View style={styles.CampeonatosModalTxtView}>
-                                            <IconSVG name='Maps' width='15' height='15' fill='#F75400' />
-                                            <AeroText style={styles.CampeonatosModalTxt}>Avenida Raimundo Pereira de Magalhães, 254</AeroText>
-                                        </View>
-                                        <View style={styles.CampeonatosModalTxtView}>
-                                            <IconSVG name='Trophy' width='15' height='15' fill='#F75400' />
-                                            <AeroText style={styles.CampeonatosModalTxt}>Valor do prêmio</AeroText>
-                                            <AeroText style={{ color: '#F75400' }}>10.500 R$</AeroText>
-                                        </View>
-                                        <View style={styles.CampeonatosModalTxtView}>
-                                            <IconSVG name='Money' width='15' height='15' fill='#F75400' />
-                                            <AeroText style={styles.CampeonatosModalTxt}>Valor de Inscrição</AeroText>
-                                            <AeroText style={{ color: '#F75400' }}>140.50 R$</AeroText>
-                                        </View>
+                                    <View style={{ padding: 10, flex: 1 }}>
+                                        <ImageBackground source={require('../../../assets/images/campeonatoModalBack.png')} style={{flex:1, justifyContent: 'space-around'}}>
+                                            <View style={styles.CampeonatosModalTxtView}>
+                                                <IconSVG name='Star' width='15' height='15' fill='#F75400' />
+                                                <AeroText style={styles.CampeonatosModalTxt}>Especial Pro, Inter A, Inter B</AeroText>
+                                            </View>
+                                            <View style={styles.CampeonatosModalTxtView}>
+                                                <IconSVG name='Maps' width='15' height='15' fill='#F75400' />
+                                                <AeroText style={styles.CampeonatosModalTxt}>Avenida Raimundo Pereira de Magalhães, 254</AeroText>
+                                            </View>
+                                            <View style={styles.CampeonatosModalTxtView}>
+                                                <IconSVG name='Trophy' width='15' height='15' fill='#F75400' />
+                                                <AeroText style={styles.CampeonatosModalTxt}>Valor do prêmio</AeroText>
+                                                <AeroText style={{ color: '#F75400' }}>10.500 R$</AeroText>
+                                            </View>
+                                            <View style={styles.CampeonatosModalTxtView}>
+                                                <IconSVG name='Money' width='15' height='15' fill='#F75400' />
+                                                <AeroText style={styles.CampeonatosModalTxt}>Valor de Inscrição</AeroText>
+                                                <AeroText style={{ color: '#F75400' }}>140.50 R$</AeroText>
+                                            </View>
 
-                                        <Button block style={{ backgroundColor: '#F75400', justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal2} >
-                                            <AeroText style={{ color: 'white' }} >Inscrever</AeroText>
-                                        </Button>
+                                        </ImageBackground>
+                                            <Button block style={{ backgroundColor: '#F75400', justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal2} >
+                                                <AeroText style={{ color: 'white' }} >Inscrever</AeroText>
+                                            </Button>
 
                                     </View>
                                 </View>
@@ -299,7 +302,6 @@ const styles = StyleSheet.create({
         color: '#F75400'
     },
     buttonList: {
-        paddingHorizontal: 10,
         marginBottom: 20,
         height: 110,
         backgroundColor: "#ffff",

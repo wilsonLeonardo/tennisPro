@@ -3,11 +3,12 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
-import { Button, Container, Icon, Picker, Fab, Left,Right,Header } from 'native-base';
+import { Button, Container, Item,Icon, Picker, Fab, Left,Right,Header } from 'native-base';
 import { Input, Divider } from 'react-native-elements';
-
+import Modal from "react-native-modal";
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
@@ -23,17 +24,18 @@ class HomeTeacher extends Component {
             language: {
                 itemValue: '',
                 itemIndex: ''
-            }
+            },
+            isModalVisible: true
         }
     }
 
-     static navigationOptions = {
-        drawerIcon: ({ tintColor }) => {
-            <IconSVG name='Home' fill= {tintColor} width='20' height='20'  />
-        }
-    } 
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
 
     render() {
+        const deviceWidth = Dimensions.get("window").width;
+        const deviceHeight = Dimensions.get("window").height
             return (
                 <Container>
                     <View style={styles.header}>
@@ -92,6 +94,32 @@ class HomeTeacher extends Component {
                         onPress={() => this.setState({ active: !this.state.active })}>
                         <IconSVG name='Chat' width='30' height='30' fill='white' />
                     </Fab>
+                    <Modal
+                    isVisible={this.state.isModalVisible}
+                    animationInTiming={300}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutRight"
+                    coverScreen={true}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                            <AeroText style={{ color: '#F75400', fontSize: 18 }}>Quem te indicou o App?</AeroText>
+
+                            <Input placeholder='Nome' rightIcon={<IconSVG name="AccountForm" height="20" width="20" fill="#F75400" />} />
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                <Button style={{ backgroundColor: '#ddd', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                    <AeroText style={{ color: 'gray' }} >Cancelar</AeroText>
+                                </Button>
+                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                    <AeroText style={{ color: 'white' }} >Confirmar</AeroText>
+                                </Button>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
                 </Container >
 
             )

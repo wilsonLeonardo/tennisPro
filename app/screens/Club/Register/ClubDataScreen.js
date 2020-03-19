@@ -15,6 +15,7 @@ import { HeaderTennis } from '../../../components/Header'
 import { TitleTennis } from '../../../components/Title'
 import { bindActionCreators } from 'redux';
 import { render } from 'react-dom';
+import IconSVG from '../../../components/Icon/IconSVG';
 
 class ClubDataScreen extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class ClubDataScreen extends Component {
     }
 
     addDados = () => {
-        this.props.onAddDados({...this.state})
+        this.props.onAddDados({ ...this.state })
     }
     render() {
         const { navigate } = this.props.navigation;
@@ -46,7 +47,9 @@ class ClubDataScreen extends Component {
                                 onChangeText={(cep) => this.setState({ cep })}
                                 value={this.state.cep}
                             />
-                            <Icon name='locate' style={{ color: '#F75400' }} />
+                            <View style={{ paddingHorizontal: 5 }}>
+                                <IconSVG name='Location' width='25' height='25' fill='#F75400' />
+                            </View>
                         </Item>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                             <Input
@@ -55,7 +58,9 @@ class ClubDataScreen extends Component {
                                 onChangeText={(nome) => this.setState({ nome })}
                                 value={this.state.nome}
                             />
-                            <Icon name='person' style={{ color: '#F75400' }} />
+                            <View style={{ paddingHorizontal: 5 }}>
+                                <IconSVG name='AccountForm' width='25' height='25' fill='#F75400' />
+                            </View>
                         </Item>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                             <Input
@@ -64,7 +69,9 @@ class ClubDataScreen extends Component {
                                 onChangeText={(telefone) => this.setState({ telefone })}
                                 value={this.state.telefone}
                             />
-                            <Icon name='call' style={{ color: '#F75400' }} />
+                            <View style={{ paddingHorizontal: 5 }}>
+                                <IconSVG name='Phone' width='25' height='25' fill='#F75400' />
+                            </View>
                         </Item>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                             <Input
@@ -73,7 +80,9 @@ class ClubDataScreen extends Component {
                                 onChangeText={(email) => this.setState({ email })}
                                 value={this.state.email}
                             />
-                            <Icon name='mail' style={{ color: '#F75400' }} />
+                            <View style={{ paddingHorizontal: 5 }}>
+                                <IconSVG name='Mail' width='25' height='25' fill='#F75400' />
+                            </View>
                         </Item>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
                             <Input
@@ -83,7 +92,9 @@ class ClubDataScreen extends Component {
                                 onChangeText={(senha) => this.setState({ senha })}
                                 value={this.state.senha}
                             />
-                            <Icon name='key' style={{ color: '#F75400' }} />
+                            <View style={{ paddingHorizontal: 5 }}>
+                                <IconSVG name='Key' width='25' height='25' fill='#F75400' />
+                            </View>
                         </Item>
                         <Button onPress={() => navigate('clubeDispo')}
                             block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 15, elevation: 5 }}>
