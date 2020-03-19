@@ -3,11 +3,13 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    Modal,
     TouchableHighlight,
-    Picker
+    Picker,
+    Dimensions,
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
+import Modal from "react-native-modal";
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -22,22 +24,23 @@ class Campeonatos extends Component {
             language: {
                 itemValue: '',
                 itemIndex: ''
-            }
+            },
+            search: '',
+            isModalVisible: false,
+            isModalVisible2: false
         }
     }
-    state = {
-        search: '',
-        modalVisible: false,
+
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
+    toggleModal2 = () => {
+        this.setState({ isModalVisible2: !this.state.isModalVisible2 });
     };
 
-    updateSearch = search => {
-        this.setState({ search });
-    };
-
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
-    }
     render() {
+        const deviceWidth = Dimensions.get("window").width;
+        const deviceHeight = Dimensions.get("window").height
         const { search } = this.state;
         return (
             <Container style={styles.container}>
@@ -53,14 +56,9 @@ class Campeonatos extends Component {
                             </Icon>
                             <Button
                                 style={styles.button}
-                                onPress={() => {
-                                    this.setModalVisible(true);
-                                }}>
-                                <Icon
-                                    name='settings'
-                                    type='Octicons'
-                                    style={{ color: '#F75400' }}
-                                />
+                                onPress={this.toggleModal}
+                            >
+                                <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
                             </Button>
                         </View>
                     </View>
@@ -78,143 +76,190 @@ class Campeonatos extends Component {
                 </ImageBackground>
                 <ScrollView >
                     <View style={styles.content}>
-                        <View style={styles.buttonList}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <View style={{}}>
-                                    <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
-                                </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                    <IconSVG name='Money' width='15' height='15' fill='#F75400' />
-                                    <View style={styles.priceView}>
-                                        <AeroText style={styles.price}>149,50</AeroText>
+                        <TouchableHighlight style={styles.buttonList}
+                            onPress={this.toggleModal2}
+                        >
+
+                            <View style={{ justifyContent: 'space-around', flex: 1 }} >
+
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <View style={{}}>
+                                        <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                                        <IconSVG name='Money' width='15' height='15' fill='#F75400' />
+                                        <View style={styles.priceView}>
+                                            <AeroText style={styles.price}>149,50</AeroText>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
 
-                            <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
+                                <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
                                     <IconSVG name='Star' width='10' height='10' fill='#F75400' />
-                                <AeroText style={{ fontSize: 8, color:'#808080' }}>Especial Pro</AeroText>
-                                <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
-                                <AeroText style={{ fontSize: 8, color:'#808080' }}>Avenida Raimundo</AeroText>
+                                    <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
+                                    <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                    <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
+                                </View>
                             </View>
-                        </View>
-                       
-                        <View style={{ marginTop: 22 }}>
-                            <Modal
-                                animationType="slide"
-                                transparent={true}
-                                visible={this.state.modalVisible}
-                                onRequestClose={() => {
-                                    this.setModalVisible(!this.state.modalVisible);
-                                }}
-                            >
-                                <View style={{ backgroundColor: 'transparent', flex: 1, flexDirection: 'row', alignItems: "flex-end" }}>
-                                    <View style={{
-                                        backgroundColor: 'white', width: '100%', height: '70%', borderTopLeftRadius: 20, borderTopRightRadius: 20,
-                                    }}>
-                                        <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FitroBottom}>
-                                            <TouchableHighlight
-                                                style={{ paddingVertical: 20 }}
-                                                onPress={() => {
-                                                    this.setModalVisible(!this.state.modalVisible);
-                                                }}>
-                                                <Icon
-                                                    name='settings'
-                                                    type='Octicons'
-                                                    style={{ color: 'white', paddingHorizontal: 10 }}
-                                                >
-                                                    <AeroText style={{ fontSize: 25 }}>  Filtro</AeroText>
-                                                </Icon>
-                                            </TouchableHighlight>
-                                        </ImageBackground>
-                                        <View style={{ flex: 1, padding: 10, justifyContent: 'space-around' }}>
-                                            <View style={{ height: 70 }}>
+                        </TouchableHighlight>
 
-                                                <AeroText style={styles.txtFiltro} >Prêmio</AeroText>
-                                                <Picker
-                                                    selectedValue={this.state.language}
-                                                    style={{ flex: 1, height: 50 }}
-                                                    onValueChange={(itemValue, itemIndex) =>
-                                                        this.setState({ language: itemValue })
-                                                    }>
-                                                    <Picker.Item label="Geral" value="geral" />
-                                                    <Picker.Item label="Especial Pro" value="especialPro" />
-                                                    <Picker.Item label="Especial" value="especial" />
-                                                    <Picker.Item label="inter A" value="a" />
-                                                    <Picker.Item label="inter B" value="b" />
-                                                    <Picker.Item label="inter C" value="c" />
-                                                    <Picker.Item label="Principiante" value="principiante" />
-                                                    <Picker.Item label="Iniciante" value="iniciante" />
-                                                </Picker>
-                                                <Divider />
+                        <Modal
+                            isVisible={this.state.isModalVisible}
+                            animationInTiming={300}
+                            animationIn="slideInUp"
+                            animationOut="slideOutDown"
+                        >
+                            <View style={{ backgroundColor: 'transparent', flex: 1, flexDirection: 'row', alignItems: "flex-end" }}>
+                                <View style={{ backgroundColor: 'white', width: '100%', height: '70%', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
+                                    <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FitroBottom}>
+                                        <TouchableHighlight
+                                            style={{ paddingVertical: 20 }}
+                                            onPress={this.toggleModal}
+                                        >
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <View style={{ paddingHorizontal: 15 }}>
+                                                    <IconSVG name='Filter' width='30' height='30' fill='white' />
+                                                </View>
+
+                                                <AeroText style={{ fontSize: 25, color: 'white' }}>Filtro</AeroText>
                                             </View>
-                                            <View style={{ height: 70 }}>
+                                        </TouchableHighlight>
+                                    </ImageBackground>
+                                    <View style={{ flex: 1, padding: 10, justifyContent: 'space-around' }}>
+                                        <View style={{ height: 70 }}>
 
-                                                <AeroText style={styles.txtFiltro} >Cidade</AeroText>
-                                                <Picker
-                                                    selectedValue={this.state.language}
-                                                    style={{ flex: 1, height: 50 }}
-                                                    onValueChange={(itemValue, itemIndex) =>
-                                                        this.setState({ language: itemValue })
-                                                    }>
-                                                    <Picker.Item label="Geral" value="geral" />
-                                                    <Picker.Item label="Especial Pro" value="especialPro" />
-                                                    <Picker.Item label="Especial" value="especial" />
-                                                    <Picker.Item label="inter A" value="a" />
-                                                    <Picker.Item label="inter B" value="b" />
-                                                    <Picker.Item label="inter C" value="c" />
-                                                    <Picker.Item label="Principiante" value="principiante" />
-                                                    <Picker.Item label="Iniciante" value="iniciante" />
-                                                </Picker>
-                                                <Divider />
-                                            </View>
-                                            <View style={{ height: 70 }}>
+                                            <AeroText style={styles.txtFiltro} >Prêmio</AeroText>
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ flex: 1, height: 50 }}
+                                                onValueChange={(itemValue, itemIndex) =>
+                                                    this.setState({ language: itemValue })
+                                                }>
+                                                <Picker.Item label="Geral" value="geral" />
+                                                <Picker.Item label="Especial Pro" value="especialPro" />
+                                                <Picker.Item label="Especial" value="especial" />
+                                                <Picker.Item label="inter A" value="a" />
+                                                <Picker.Item label="inter B" value="b" />
+                                                <Picker.Item label="inter C" value="c" />
+                                                <Picker.Item label="Principiante" value="principiante" />
+                                                <Picker.Item label="Iniciante" value="iniciante" />
+                                            </Picker>
+                                            <Divider />
+                                        </View>
+                                        <View style={{ height: 70 }}>
 
-                                                <AeroText style={styles.txtFiltro} >Nível</AeroText>
-                                                <Picker
-                                                    selectedValue={this.state.language}
-                                                    style={{ flex: 1, height: 50 }}
-                                                    onValueChange={(itemValue, itemIndex) =>
-                                                        this.setState({ language: itemValue })
-                                                    }>
-                                                    <Picker.Item label="Geral" value="geral" />
-                                                    <Picker.Item label="Especial Pro" value="especialPro" />
-                                                    <Picker.Item label="Especial" value="especial" />
-                                                    <Picker.Item label="inter A" value="a" />
-                                                    <Picker.Item label="inter B" value="b" />
-                                                    <Picker.Item label="inter C" value="c" />
-                                                    <Picker.Item label="Principiante" value="principiante" />
-                                                    <Picker.Item label="Iniciante" value="iniciante" />
-                                                </Picker>
-                                                <Divider />
-                                            </View>
-                                            <View style={{ height: 70 }}>
+                                            <AeroText style={styles.txtFiltro} >Cidade</AeroText>
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ flex: 1, height: 50 }}
+                                                onValueChange={(itemValue, itemIndex) =>
+                                                    this.setState({ language: itemValue })
+                                                }>
+                                                <Picker.Item label="Geral" value="geral" />
+                                                <Picker.Item label="Especial Pro" value="especialPro" />
+                                                <Picker.Item label="Especial" value="especial" />
+                                                <Picker.Item label="inter A" value="a" />
+                                                <Picker.Item label="inter B" value="b" />
+                                                <Picker.Item label="inter C" value="c" />
+                                                <Picker.Item label="Principiante" value="principiante" />
+                                                <Picker.Item label="Iniciante" value="iniciante" />
+                                            </Picker>
+                                            <Divider />
+                                        </View>
+                                        <View style={{ height: 70 }}>
 
-                                                <AeroText style={styles.txtFiltro} >Data</AeroText>
-                                                <Picker
-                                                    selectedValue={this.state.language}
-                                                    style={{ flex: 1, height: 50 }}
-                                                    onValueChange={(itemValue, itemIndex) =>
-                                                        this.setState({ language: itemValue })
-                                                    }>
-                                                    <Picker.Item label="Geral" value="geral" />
-                                                    <Picker.Item label="Especial Pro" value="especialPro" />
-                                                    <Picker.Item label="Especial" value="especial" />
-                                                    <Picker.Item label="inter A" value="a" />
-                                                    <Picker.Item label="inter B" value="b" />
-                                                    <Picker.Item label="inter C" value="c" />
-                                                    <Picker.Item label="Principiante" value="principiante" />
-                                                    <Picker.Item label="Iniciante" value="iniciante" />
-                                                </Picker>
-                                                <Divider />
-                                            </View>
+                                            <AeroText style={styles.txtFiltro} >Nível</AeroText>
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ flex: 1, height: 50 }}
+                                                onValueChange={(itemValue, itemIndex) =>
+                                                    this.setState({ language: itemValue })
+                                                }>
+                                                <Picker.Item label="Geral" value="geral" />
+                                                <Picker.Item label="Especial Pro" value="especialPro" />
+                                                <Picker.Item label="Especial" value="especial" />
+                                                <Picker.Item label="inter A" value="a" />
+                                                <Picker.Item label="inter B" value="b" />
+                                                <Picker.Item label="inter C" value="c" />
+                                                <Picker.Item label="Principiante" value="principiante" />
+                                                <Picker.Item label="Iniciante" value="iniciante" />
+                                            </Picker>
+                                            <Divider />
+                                        </View>
+                                        <View style={{ height: 70 }}>
 
+                                            <AeroText style={styles.txtFiltro} >Data</AeroText>
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ flex: 1, height: 50 }}
+                                                onValueChange={(itemValue, itemIndex) =>
+                                                    this.setState({ language: itemValue })
+                                                }>
+                                                <Picker.Item label="Geral" value="geral" />
+                                                <Picker.Item label="Especial Pro" value="especialPro" />
+                                                <Picker.Item label="Especial" value="especial" />
+                                                <Picker.Item label="inter A" value="a" />
+                                                <Picker.Item label="inter B" value="b" />
+                                                <Picker.Item label="inter C" value="c" />
+                                                <Picker.Item label="Principiante" value="principiante" />
+                                                <Picker.Item label="Iniciante" value="iniciante" />
+                                            </Picker>
+                                            <Divider />
                                         </View>
 
                                     </View>
+
                                 </View>
-                            </Modal>
-                        </View>
+                            </View>
+                        </Modal>
+
+                        <Modal
+                            isVisible={this.state.isModalVisible2}
+                            animationInTiming={300}
+                            animationIn="slideInLeft"
+                            animationOut="slideOutRight"
+                            coverScreen={true}
+                            deviceWidth={deviceWidth}
+                            deviceHeight={deviceHeight}
+                        >
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ height: '55%', width: '95%', backgroundColor: 'white', justifyContent: 'space-between', borderRadius: 20 }}>
+                                    <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.CampeonatosModal}>
+                                        <TouchableHighlight
+                                            style={{ paddingVertical: 20 }}
+                                            onPress={this.toggleModal2}
+                                        >
+                                            <AeroText style={{ fontSize: 18, color: 'white' }}>   Nome do Campeonato</AeroText>
+                                        </TouchableHighlight>
+                                    </ImageBackground>
+                                    <View style={{ padding: 10, flex:1, justifyContent: 'space-between' }}>
+                                        <View style={styles.CampeonatosModalTxtView}>
+                                            <IconSVG name='Star' width='15' height='15' fill='#F75400' />
+                                            <AeroText style={styles.CampeonatosModalTxt}>Especial Pro, Inter A, Inter B</AeroText>
+                                        </View>
+                                        <View style={styles.CampeonatosModalTxtView}>
+                                            <IconSVG name='Maps' width='15' height='15' fill='#F75400' />
+                                            <AeroText style={styles.CampeonatosModalTxt}>Avenida Raimundo Pereira de Magalhães, 254</AeroText>
+                                        </View>
+                                        <View style={styles.CampeonatosModalTxtView}>
+                                            <IconSVG name='Trophy' width='15' height='15' fill='#F75400' />
+                                            <AeroText style={styles.CampeonatosModalTxt}>Valor do prêmio</AeroText>
+                                            <AeroText style={{ color: '#F75400' }}>10.500 R$</AeroText>
+                                        </View>
+                                        <View style={styles.CampeonatosModalTxtView}>
+                                            <IconSVG name='Money' width='15' height='15' fill='#F75400' />
+                                            <AeroText style={styles.CampeonatosModalTxt}>Valor de Inscrição</AeroText>
+                                            <AeroText style={{ color: '#F75400' }}>140.50 R$</AeroText>
+                                        </View>
+
+                                        <Button block style={{ backgroundColor: '#F75400', justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal2} >
+                                            <AeroText style={{ color: 'white' }} >Inscrever</AeroText>
+                                        </Button>
+
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
 
                     </View>
                 </ScrollView>
@@ -255,7 +300,6 @@ const styles = StyleSheet.create({
     buttonList: {
         paddingHorizontal: 10,
         marginBottom: 20,
-        justifyContent: "space-around",
         height: 110,
         backgroundColor: "#ffff",
         borderWidth: 2,
@@ -313,10 +357,26 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         backgroundColor: 'orange',
         justifyContent: "center"
-
     },
     txtFiltro: {
         color: '#F75400'
+    },
+    CampeonatosModal: {
+        width: '100%',
+        height: 80,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        backgroundColor: 'orange',
+        justifyContent: "center",
+    },
+    CampeonatosModalTxt: {
+        fontSize: 13,
+        paddingHorizontal: 10
+    },
+    CampeonatosModalTxtView: {
+        flexDirection: 'row',
+        alignItems: 'center'
     }
+
 
 });

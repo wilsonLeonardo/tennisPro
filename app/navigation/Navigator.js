@@ -13,6 +13,8 @@ import UserPlans from '../screens/User/Register/UserPlans'
 import TeacherDiponibilidade from '../screens/Teacher/Register/TeacherDiponibilidade';
 import UserDisponibilidade from '../screens/User/Register/UserDisponibilidade'
 import DrawerNavigator from './DrawerNavigator'
+import DrawerTeacher from './DrawerTeacher'
+import DrawerClub from './DrawerClub'
 
 const AppNavigator = createStackNavigator({
   Home: {

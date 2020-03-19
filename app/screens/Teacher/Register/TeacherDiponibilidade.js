@@ -6,7 +6,8 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    TouchableHighlight
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'native-base';
 
@@ -47,31 +48,44 @@ class TeacherDisponibilidade extends Component {
                 </View>
                 <Content style={styles.content}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
-
-                        <Button style={styles.bottomDiasDaSemana} onPress={(seg) => { this.setState({ seg: true }) }} value={this.state.diasDaSemana.seg}>
-                            <AeroText style={styles.fontDiasDaSemana} >Seg</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(ter) => { this.setState({ ter: true }) }} value={this.state.diasDaSemana.ter}>
-                            <AeroText style={styles.fontDiasDaSemana} >Ter</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(qua) => { this.setState({ qua: true }) }} value={this.state.diasDaSemana.qua}>
-                            <AeroText style={styles.fontDiasDaSemana} >Qua</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(qui) => { this.setState({ qui: true }) }} value={this.state.diasDaSemana.qui}>
-                            <AeroText style={styles.fontDiasDaSemana} >Qui</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(sex) => { this.setState({ sex: true }) }} value={this.state.diasDaSemana.sex}>
-                            <AeroText style={styles.fontDiasDaSemana} >Sex</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(sab) => { this.setState({ sab: true }) }} value={this.state.diasDaSemana.sab}>
-                            <AeroText style={styles.fontDiasDaSemana} >Sab</AeroText>
-                        </Button>
-                        <Button style={styles.bottomDiasDaSemana} onPress={(dom) => { this.setState({ dom: true }) }} value={this.state.diasDaSemana.dom}>
-                            <AeroText style={styles.fontDiasDaSemana} >Dom</AeroText>
-                        </Button>
-
+                        <TouchableHighlight style={this.state.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.seg ? () => this.setState({ seg: false }) : () => this.setState({ seg: true })}
+                            value={this.state.seg}>
+                            <AeroText style={this.state.seg ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Seg</AeroText>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.ter ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.ter ? () => this.setState({ ter: false }) : () => this.setState({ ter: true })}
+                            value={this.state.ter}>
+                            <AeroText style={this.state.ter ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Ter</AeroText>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.qua ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.qua ? () => this.setState({ qua: false }) : () => this.setState({ qua: true })}
+                            value={this.state.qua}>
+                            <AeroText style={this.state.qua ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana}  >Qua</AeroText>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.qui ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.qui ? () => this.setState({ qui: false }) : () => this.setState({ qui: true })}
+                            value={this.state.qui}>
+                            <AeroText style={this.state.qui ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Qui</AeroText>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.sex ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.sex ? () => this.setState({ sex: false }) : () => this.setState({ sex: true })}
+                            value={this.state.sex}>
+                            <AeroText style={this.state.sex ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sex</AeroText>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.sab ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.sab ? () => this.setState({ sab: false }) : () => this.setState({ sab: true })}
+                            value={this.state.sab}>
+                            <AeroText style={this.state.sab ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sab</AeroText>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={this.state.dom ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                            onPress={this.state.dom ? () => this.setState({ dom: false }) : () => this.setState({ dom: true })}
+                            value={this.state.dom}>
+                            <AeroText style={this.state.dom ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Dom</AeroText>
+                        </TouchableHighlight>
                     </View>
-                    <Form style={{ flexDirection: 'row', paddingTop: 40 }}>
+
+                    <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
@@ -92,7 +106,7 @@ class TeacherDisponibilidade extends Component {
                             />
                         </Item>
                     </Form>
-                    <Form style={{ flexDirection: 'row', justifyContent: "center" }}>
+                    <Form style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
@@ -114,7 +128,10 @@ class TeacherDisponibilidade extends Component {
                         </Item>
                     </Form>
                     <Form style={{ paddingTop: 20 }}>
-                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}>
+                        <Button block
+                            style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}
+                            onPress={() => console.warn([this.state.seg, this.state.ter, this.state.qua, this.state.qui, this.state.sex, this.state.sab, this.state.dom])}
+                        >
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText>
                         </Button>
                     </Form>
@@ -133,8 +150,11 @@ const mapDispatchToProps = (dispatch) => {
         onAddDispo: teacher => dispatch(addDisponibilidade(teacher))
     }
 }
+const mapStateToProps = state => ({
+    data: state.teacherRegister.data
+});
 
-export default connect(null, mapDispatchToProps)(TeacherDisponibilidade)
+export default connect(mapStateToProps, mapDispatchToProps)(TeacherDisponibilidade)
 
 const styles = StyleSheet.create({
     container: {
@@ -162,13 +182,26 @@ const styles = StyleSheet.create({
     bottomDiasDaSemana: {
         borderRadius: 10,
         justifyContent: 'center',
+        alignItems: 'center',
         width: 30,
         height: 30,
         backgroundColor: '#f7f7f7'
     },
+    bottomDiasDaSemanaPress: {
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 30,
+        height: 30,
+        backgroundColor: '#F75400'
+    },
     fontDiasDaSemana: {
         fontSize: 10,
         fontFamily: 'Aero'
-
+    },
+    fontDiasDaSemanaPress: {
+        fontSize: 10,
+        fontFamily: 'Aero',
+        color: 'white'
     },
 });

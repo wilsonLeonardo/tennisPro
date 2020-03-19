@@ -4,13 +4,14 @@ import {
     Text,
     Image,
     StyleSheet,
-    ImageBackground
+    ImageBackground,
+    TouchableHighlight
 } from 'react-native'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
 import { ScrollView } from 'react-native-gesture-handler'
-
-function CustomDrawer({ ...props }) {
+import IconSVG from '../../components/Icon/IconSVG'
+function User({ ...props }) {
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -18,7 +19,7 @@ function CustomDrawer({ ...props }) {
                 style={styles.imageBack}
             >
                 <View style={styles.image}></View>
-                
+
 
                 <View style={{ flex: 1 }}>
                     <AeroText style={styles.name}>Douglas Henrique</AeroText>
@@ -30,13 +31,17 @@ function CustomDrawer({ ...props }) {
 
             </ScrollView>
 
-            
-
+            <TouchableHighlight style={{ padding: 25 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
+                    <AeroText style={{ color: '#F75400', fontSize: 20, paddingHorizontal: 10 }}>Sair</AeroText>
+                </View>
+            </TouchableHighlight>
         </View>
     )
 }
 
-export default CustomDrawer
+export default User
 
 
 const styles = StyleSheet.create({
@@ -51,10 +56,11 @@ const styles = StyleSheet.create({
     imageBack: {
         flexDirection: 'row',
         resizeMode: 'contain',
-        height: 150,
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     name: {
-        marginTop: 30,
         fontSize: 15,
         color: 'white',
     },

@@ -61,6 +61,8 @@ class Mensagens extends Component {
                 </View>
               </View>
             </Button>
+            
+
           </View >
         </ScrollView>
       </Container>

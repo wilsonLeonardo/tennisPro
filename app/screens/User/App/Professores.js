@@ -3,16 +3,18 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  Modal,
   TouchableHighlight,
-  Picker
+  Picker,
+  Dimensions,
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
+import Modal from "react-native-modal";
 
 import { AeroText } from '../../../components/StyledText';
 import { ChatIcon } from '../../../components/Icon/Icon'
 import { ScrollView } from 'react-native-gesture-handler';
 import { SearchBar, Divider } from 'react-native-elements';
+import IconSVG from '../../../components/Icon/IconSVG';
 
 class Professores extends Component {
   constructor(props) {
@@ -21,17 +23,22 @@ class Professores extends Component {
       language: {
         itemValue: '',
         itemIndex: ''
-      }
+      },
+      isModalVisible: false,
+      isModalVisible2: false
     }
   }
-  state = {
-    modalVisible: false,
+
+  toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+  toggleModal2 = () => {
+    this.setState({ isModalVisible2: !this.state.isModalVisible2 });
   };
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
   render() {
+    const deviceWidth = Dimensions.get("window").width;
+    const deviceHeight = Dimensions.get("window").height
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
@@ -45,22 +52,21 @@ class Professores extends Component {
 
             </Icon>
 
-            <Button style={styles.buttonFilter}
-              onPress={() => {
-                this.setModalVisible(true);
-              }}>
-              <Icon
-                name='settings'
-                type='Octicons'
-                style={{ color: '#F75400' }}
-              />
+            <Button
+              style={styles.buttonFilter}
+              onPress={this.toggleModal}
+            >
+              <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
             </Button>
           </View>
         </ImageBackground>
         <ScrollView>
           <View style={styles.content}>
 
-            <Button style={styles.buttonList}>
+            <Button
+              style={styles.buttonList}
+              onPress={this.toggleModal2}
+            >
               <View style={{ flexDirection: "row" }}>
                 <View style={styles.bottom} />
 
@@ -90,101 +96,138 @@ class Professores extends Component {
 
           </View>
         </ScrollView>
-        <View style={{ marginTop: 22 }}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={this.state.modalVisible}
-            onRequestClose={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}
-          >
-            <View style={{ backgroundColor: 'transparent', flex: 1, flexDirection: 'row', alignItems: "flex-end" }}>
-              <View style={{
-                backgroundColor: 'white', width: '100%', height: '55%', borderTopLeftRadius: 20, borderTopRightRadius: 20,
-              }}>
-                <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FitroBottom}>
-                  <TouchableHighlight
-                    style={{ paddingVertical: 20 }}
-                    onPress={() => {
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}>
-                    <Icon
-                      name='settings'
-                      type='Octicons'
-                      style={{ color: 'white', paddingHorizontal: 10 }}
-                    >
-                      <AeroText style={{ fontSize: 25 }}>  Filtro</AeroText>
-                    </Icon>
-                  </TouchableHighlight>
-                </ImageBackground>
-                <View style={{ flex: 1, padding: 10, justifyContent: 'space-around' }}>
-                  <View style={{ height: 70 }}>
+        <Modal
+          isVisible={this.state.isModalVisible}
+          animationInTiming={300}
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          onBackdropPress={
+            this.toggleModal
+          }
+        >
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: "flex-end" }}>
+            <View style={{
+              backgroundColor: 'white', width: '100%', height: '55%', borderTopLeftRadius: 20, borderTopRightRadius: 20,
+            }}>
+              <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FitroBottom}>
+                <TouchableHighlight
+                  style={{ paddingVertical: 20 }}
+                  onPress={this.toggleModal}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ paddingHorizontal: 15 }}>
+                      <IconSVG name='Filter' width='30' height='30' fill='white' />
+                    </View>
 
-                    <AeroText style={styles.txtFiltro} >Preço</AeroText>
-                    <Picker
-                      selectedValue={this.state.language}
-                      style={{ flex: 1, height: 50 }}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ language: itemValue })
-                      }>
-                      <Picker.Item label="Geral" value="geral" />
-                      <Picker.Item label="Especial Pro" value="especialPro" />
-                      <Picker.Item label="Especial" value="especial" />
-                      <Picker.Item label="inter A" value="a" />
-                      <Picker.Item label="inter B" value="b" />
-                      <Picker.Item label="inter C" value="c" />
-                      <Picker.Item label="Principiante" value="principiante" />
-                      <Picker.Item label="Iniciante" value="iniciante" />
-                    </Picker>
-                    <Divider />
+                    <AeroText style={{ fontSize: 25, color: 'white' }}>Filtro</AeroText>
                   </View>
-                  <View style={{ height: 70 }}>
+                </TouchableHighlight>
+              </ImageBackground>
+              <View style={{ flex: 1, padding: 10, justifyContent: 'space-around' }}>
+                <View style={{ height: 70 }}>
 
-                    <AeroText style={styles.txtFiltro} >Clube</AeroText>
-                    <Picker
-                      selectedValue={this.state.language}
-                      style={{ flex: 1, height: 50 }}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ language: itemValue })
-                      }>
-                      <Picker.Item label="Geral" value="geral" />
-                      <Picker.Item label="Especial Pro" value="especialPro" />
-                      <Picker.Item label="Especial" value="especial" />
-                      <Picker.Item label="inter A" value="a" />
-                      <Picker.Item label="inter B" value="b" />
-                      <Picker.Item label="inter C" value="c" />
-                      <Picker.Item label="Principiante" value="principiante" />
-                      <Picker.Item label="Iniciante" value="iniciante" />
-                    </Picker>
-                    <Divider />
-                  </View>
-                  <View style={{ height: 70 }}>
+                  <AeroText style={styles.txtFiltro} >Preço</AeroText>
+                  <Picker
+                    selectedValue={this.state.language}
+                    style={{ flex: 1, height: 50 }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({ language: itemValue })
+                    }>
+                    <Picker.Item label="Geral" value="geral" />
+                    <Picker.Item label="Especial Pro" value="especialPro" />
+                    <Picker.Item label="Especial" value="especial" />
+                    <Picker.Item label="inter A" value="a" />
+                    <Picker.Item label="inter B" value="b" />
+                    <Picker.Item label="inter C" value="c" />
+                    <Picker.Item label="Principiante" value="principiante" />
+                    <Picker.Item label="Iniciante" value="iniciante" />
+                  </Picker>
+                  <Divider />
+                </View>
+                <View style={{ height: 70 }}>
 
-                    <AeroText style={styles.txtFiltro} >Nível</AeroText>
-                    <Picker
-                      selectedValue={this.state.language}
-                      style={{ flex: 1, height: 50 }}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ language: itemValue })
-                      }>
-                      <Picker.Item label="Geral" value="geral" />
-                      <Picker.Item label="Especial Pro" value="especialPro" />
-                      <Picker.Item label="Especial" value="especial" />
-                      <Picker.Item label="inter A" value="a" />
-                      <Picker.Item label="inter B" value="b" />
-                      <Picker.Item label="inter C" value="c" />
-                      <Picker.Item label="Principiante" value="principiante" />
-                      <Picker.Item label="Iniciante" value="iniciante" />
-                    </Picker>
-                    <Divider />
+                  <AeroText style={styles.txtFiltro} >Clube</AeroText>
+                  <Picker
+                    selectedValue={this.state.language}
+                    style={{ flex: 1, height: 50 }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({ language: itemValue })
+                    }>
+                    <Picker.Item label="Geral" value="geral" />
+                    <Picker.Item label="Especial Pro" value="especialPro" />
+                    <Picker.Item label="Especial" value="especial" />
+                    <Picker.Item label="inter A" value="a" />
+                    <Picker.Item label="inter B" value="b" />
+                    <Picker.Item label="inter C" value="c" />
+                    <Picker.Item label="Principiante" value="principiante" />
+                    <Picker.Item label="Iniciante" value="iniciante" />
+                  </Picker>
+                  <Divider />
+                </View>
+                <View style={{ height: 70 }}>
+
+                  <AeroText style={styles.txtFiltro} >Nível</AeroText>
+                  <Picker
+                    selectedValue={this.state.language}
+                    style={{ flex: 1, height: 50 }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({ language: itemValue })
+                    }>
+                    <Picker.Item label="Geral" value="geral" />
+                    <Picker.Item label="Especial Pro" value="especialPro" />
+                    <Picker.Item label="Especial" value="especial" />
+                    <Picker.Item label="inter A" value="a" />
+                    <Picker.Item label="inter B" value="b" />
+                    <Picker.Item label="inter C" value="c" />
+                    <Picker.Item label="Principiante" value="principiante" />
+                    <Picker.Item label="Iniciante" value="iniciante" />
+                  </Picker>
+                  <Divider />
+                </View>
+              </View>
+
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          isVisible={this.state.isModalVisible2}
+          animationInTiming={300}
+          animationIn="slideInLeft"
+          animationOut="slideOutRight"
+          coverScreen={true}
+          deviceWidth={deviceWidth}
+          deviceHeight={deviceHeight}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ height: '35%', width: '80%', backgroundColor: 'white', justifyContent: 'space-between', borderRadius: 20 }}>
+              <View style={{ alignItems: "center" }}>
+
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', width: 110, height: 110, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd', marginTop: -40 }}>
+                  <View style={styles.priceView2}>
+                    <AeroText style={styles.price}>R$ 758,60</AeroText>
                   </View>
                 </View>
+                <AeroText style={{ color: 'orange', marginTop:7 }}>
+                  Alphaville Esporte Clube
+                </AeroText>
+              </View>
+              <View style={{paddingHorizontal:20}}>
+                <Divider />
+              </View>
+              <View style={{ alignItems: "center", paddingBottom: 10, justifyContent:'space-between' }}>
+                
+                <AeroText style={{ fontSize: 15, color: '#455A64' }}>Maria de Carvalho Souza </AeroText>
+                <AeroText style={{ color: 'orange', marginTop:10 }}>Especial Pro</AeroText>
+
+
+                <Button style={{ alignSelf: "center", backgroundColor: 'orange', justifyContent: 'center', width: 125, borderRadius: 30, marginTop: 20 }} onPress={this.toggleModal2} >
+                  <AeroText style={{ color: 'white' }} >Conversar</AeroText>
+                </Button>
 
               </View>
             </View>
-          </Modal>
-        </View>
+          </View>
+        </Modal>
       </Container>
     )
   }
@@ -246,6 +289,14 @@ const styles = StyleSheet.create({
     height: 15,
     width: 60
   },
+  priceView2: {
+    backgroundColor: 'green',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent:'center',
+    height: 25,
+    width: 60
+  },
   price: {
     color: 'white',
     fontSize: 8,
@@ -268,5 +319,23 @@ const styles = StyleSheet.create({
   },
   txtFiltro: {
     color: '#F75400'
+  },
+  CampeonatosModal: {
+    width: '100%',
+    height: 80,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    backgroundColor: 'orange',
+    justifyContent: "center",
+  },
+  CampeonatosModalTxt: {
+    fontSize: 13,
+    paddingHorizontal: 10
+  },
+  CampeonatosModalTxtView: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center'
   }
+
 });

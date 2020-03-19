@@ -61,6 +61,77 @@ class Mensagens extends Component {
                 </View>
               </View>
             </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+            <Button style={styles.buttonList}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.bottom} />
+
+                <View style={{ alignSelf: "center" }}>
+                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
+                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
+                </View>
+              </View>
+            </Button>
+
           </View >
         </ScrollView>
       </Container>
