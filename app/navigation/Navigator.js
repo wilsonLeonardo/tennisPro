@@ -12,6 +12,7 @@ import TeacherDataScreen from '../screens/Teacher/Register/TeacherDataScreen';
 import UserPlans from '../screens/User/Register/UserPlans'
 import TeacherDiponibilidade from '../screens/Teacher/Register/TeacherDiponibilidade';
 import UserDisponibilidade from '../screens/User/Register/UserDisponibilidade'
+import Home from '../screens/Teacher/App/Home'
 import DrawerNavigator from './DrawerNavigator'
 
 const AppNavigator = createStackNavigator({
@@ -53,6 +54,12 @@ const AppNavigator = createStackNavigator({
   },
   homeUser:{
     screen: DrawerNavigator,
+    navigationOptions:{
+      headerShown: false
+    }
+  },
+  homeTeacher:{
+    screen: Home,
     navigationOptions:{
       headerShown: false
     }
