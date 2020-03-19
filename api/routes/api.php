@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,7 +10,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', 'AuthController@login')->middleware('request.snake.case.transform');
+Route::post('register', 'MobileUserController@store')->middleware('request.snake.case.transform');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth', 'request.snake.case.transform', 'check.user.status']], function(){
+    Route::patch('users/device-identifier', 'UserController@updateDeviceIdentifier');
 });
