@@ -13,6 +13,6 @@
 Route::post('login', 'AuthController@login')->middleware('request.snake.case.transform');
 Route::post('register', 'MobileUserController@store')->middleware('request.snake.case.transform');
 
-Route::group(['middleware' => ['auth', 'request.snake.case.transform', 'check.user.status']], function(){
+Route::group(['middleware' => ['auth', 'request.snake.case.transform']], function(){
     Route::patch('users/device-identifier', 'UserController@updateDeviceIdentifier');
 });

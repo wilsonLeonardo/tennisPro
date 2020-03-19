@@ -42,44 +42,6 @@ class HomeScreen extends React.Component {
     
   }
   
-  componentDidMount = () => {
-		isLogged().then(logged =>{
-        console.log(logged);
-			  if(logged) this.goToHome() 
-      }
-		);
-
-		this.registerLinkRedirectListener();
-
-		if (Platform.OS === "ios") {
-			Notifications.setBadgeNumberAsync(0);
-		}
-  };
-  goToHome = () =>
-		getUser().then(user => {
-			permissionService.syncDeviceIdentifier(user.id);
-
-			this.props.dispatch(
-				notificationsActions.fetchNotifications(user.id)
-      );
-      if(user.profile == 'USER')
-			  this.props.navigation.navigate("HomeOffers");
-    });
-    
-  registerLinkRedirectListener = () =>
-		Notifications.addListener(notification => {
-			if (notification.origin === "selected") {
-				isLogged().then(logged => {
-					if (logged && notification.data) {
-						this.props.navigation.navigate(
-							notification.data.screen,
-							notification.data.params
-						);
-					}
-				});
-			}
-		})
-  
 	handleLogin = () => {
     if (this.state.loading) return;
     
@@ -129,9 +91,9 @@ class HomeScreen extends React.Component {
               console.log(data);
 
                 if(data.user.profile == "USER")
-                  this.props.navigation.navigate("homeUser");
+                  this.props.navigation.navigate("SignedInUser");
                 else if(data.user.profile == "TEACHER")
-                this.props.navigation.navigate("homeTeacher");
+                this.props.navigation.navigate("SignedInTeacher");
                 
                 this.props.dispatch(
                   notificationsActions.fetchNotifications(data.user.id)

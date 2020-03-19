@@ -15,7 +15,7 @@ class MobileUserController extends Controller
     {
 
         return $this->respondWithToken(
-            auth()->login(UserService::create($request->all())));
+            auth('api')->login(UserService::create($request->all())));
     }
 
     protected function respondWithToken($token)
@@ -23,9 +23,9 @@ class MobileUserController extends Controller
         return response()->json([
             'access_token' => $token,
             'user' => [
-                'id' => auth()->user()->id,
-                'username' => auth()->user()->username,
-                'profile' => auth()->user()->profile,
+                'id' => auth('api')->user()->id,
+                'username' => auth('api')->user()->username,
+                'profile' => auth('api')->user()->profile,
             ],
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60 * 24

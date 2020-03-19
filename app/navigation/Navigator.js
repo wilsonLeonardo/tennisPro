@@ -12,12 +12,17 @@ import TeacherDataScreen from '../screens/Teacher/Register/TeacherDataScreen';
 import UserPlans from '../screens/User/Register/UserPlans'
 import TeacherDiponibilidade from '../screens/Teacher/Register/TeacherDiponibilidade';
 import UserDisponibilidade from '../screens/User/Register/UserDisponibilidade'
-import Home from '../screens/Teacher/App/Home'
+//import Home from '../screens/Teacher/App/Home'
 import DrawerNavigator from './DrawerNavigator'
+import HomeTeacher from '../screens/Teacher/App/Home';
+import HomeClub from '../screens/Club/App/Home';
 
-const AppNavigator = createStackNavigator({
-  Home: {
+export const SignedOutRoutes = createAppContainer(createStackNavigator({
+  Login: {
     screen: HomeScreen,
+    navigationOptions: {
+      headerShown: false
+    }
   },
   Type: {
     screen: TipoConta
@@ -52,18 +57,50 @@ const AppNavigator = createStackNavigator({
   userDispo:{
     screen: UserDisponibilidade
   },
+}));
+
+export const SignedInUserRoutes = createAppContainer(createStackNavigator({
   homeUser:{
     screen: DrawerNavigator,
     navigationOptions:{
       headerShown: false
     }
-  },
+  }
+}
+));
+export const SignedInTeacherRoutes = createAppContainer(createStackNavigator({
   homeTeacher:{
-    screen: Home,
+    screen: HomeTeacher,
     navigationOptions:{
       headerShown: false
     }
-  },
-});
+  }
+}
+));
+export const SignedInClubRoutes = createAppContainer(createStackNavigator({
+  homeTeacher:{
+    screen: HomeClub,
+    navigationOptions:{
+      headerShown: false
+    }
+  }
+}
+));
 
-export default createAppContainer(AppNavigator);
+export const createRootNavigator = (signedIn = false, profile) => {
+  return createAppContainer(createStackNavigator({
+    SignedInUser: { screen: SignedInUserRoutes },
+    SignedInTeacher: {screen : SignedInTeacherRoutes},
+    SignedInClub: {screen : SignedInClubRoutes},
+    SignedOut: { screen: SignedOutRoutes }
+  },
+  {
+    headerMode: "none",
+    mode: "modal",
+    initialRouteName: signedIn && profile === 'USER' ? "SignedInUser" : signedIn && profile === 'TEACHER' ?
+     "SignedInTeacher" : signedIn && profile === 'CLUB' ? "SignedInClub" : 'SignedOut', 
+    navigationOptions: {
+      gesturesEnabled: false
+    }
+  }));
+};

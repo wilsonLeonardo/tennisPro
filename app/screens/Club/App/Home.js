@@ -12,7 +12,7 @@ import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
 
-class Home extends Component {
+class HomeClub extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -101,11 +101,11 @@ class Home extends Component {
     }
 }
 
-Home.navigationOptions = {
+HomeClub.navigationOptions = {
     headerShown: false
 }
 
-export default Home
+export default HomeClub
 
 const styles = StyleSheet.create({
     container: {

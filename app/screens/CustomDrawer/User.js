@@ -4,11 +4,13 @@ import {
     Text,
     Image,
     StyleSheet,
-    ImageBackground
+    ImageBackground,
+    Button
 } from 'react-native'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
 import { ScrollView } from 'react-native-gesture-handler'
+import {logout} from '../../service/AuthService'
 
 function CustomDrawer({ ...props }) {
     return (
@@ -27,7 +29,7 @@ function CustomDrawer({ ...props }) {
             </ImageBackground>
             <ScrollView>
                 <DrawerNavigatorItems {...props} />
-
+            <Button title='Sair' onPress={() =>  logout().then(() => props.navigation.navigate("SignedOut"))}/>
             </ScrollView>
 
             

@@ -24,11 +24,6 @@ class AuthController extends Controller
         if ($token = auth()->attempt($credentials)) {
             event(LoginEvent::of(auth()->user(), 'SIMPLE_AUTHENTICATION', $coordinates));
 
-            if (auth()->user()->profile != 'ADMIN' && auth()->user()->status == 'INACTIVE') {
-                throw new UnauthorizedException(
-                    'Sua conta foi desativada. Entre em contato para mais informações.');
-            }
-
             return $this->respondWithToken($token, auth()->user());
         }
 

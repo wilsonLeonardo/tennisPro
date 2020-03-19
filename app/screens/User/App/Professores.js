@@ -21,12 +21,10 @@ class Professores extends Component {
       language: {
         itemValue: '',
         itemIndex: ''
-      }
+      },
+      modalVisible: false,
     }
   }
-  state = {
-    modalVisible: false,
-  };
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });

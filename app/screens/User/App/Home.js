@@ -12,6 +12,7 @@ import {
     LineChart,
     ProgressChart,
 } from "react-native-chart-kit";
+import { getUser } from "../../../service/AuthService";
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -25,12 +26,12 @@ class Home extends Component {
             active: false
         };
     }
-
-    /*    static navigationOptions = {
-           drawerIcon: ({tintColor}) => {
-               <Icon name='Menu' style={{fontSize:24, color:tintColor}} />
-           }
-       } */
+    componentDidMount(){
+        getUser().then(user => {
+          this.setState({ user: user }
+          );
+      });
+    }
 
     render() {
         return (
@@ -38,7 +39,7 @@ class Home extends Component {
                 <View style={styles.header}>
                     <TouchableOpacity
                         onPress={
-                            () => this.props.navigation.openDrawer()
+                            () =>  this.props.navigation.openDrawer()
                         }
                     >
                         <IconSVG name='Menu' height='22' width='22' fill='#F75400' />

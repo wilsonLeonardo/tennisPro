@@ -11,6 +11,8 @@ class UserController extends Controller
     {
         $roles = [ 'device_identifier' => 'required' ];
         $labels = [ 'device_identifier' => 'ID do Aparelho' ];
+
+        
         
         $request->validate($roles, [], $labels);
 
