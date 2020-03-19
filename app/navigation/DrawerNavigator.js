@@ -76,7 +76,7 @@ const DrawerNavigator = createDrawerNavigator({
         navigationOptions: {
             title: 'Conta',
             drawerIcon: ({ tintColor }) =>
-                <IconSVG name='Edit' fill={tintColor} width='20' height='20' />
+                <IconSVG name='Config' fill={tintColor} width='20' height='20' />
         }
     },
     Chat: {
