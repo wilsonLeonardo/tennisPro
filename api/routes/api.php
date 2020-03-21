@@ -16,4 +16,7 @@ Route::post('register', 'MobileUserController@store')->middleware('request.snake
 Route::group(['middleware' => ['auth', 'request.snake.case.transform']], function(){
     Route::patch('users/device-identifier', 'UserController@updateDeviceIdentifier');
     Route::get('users/find-teacher', 'UserController@findTeacher');
+    Route::get('me', 'MeController@index');
+    Route::get('meTeacher', 'MeController@indexTeacher');
+    Route::put('meTeacher', 'MeController@updateTeacher');
 });

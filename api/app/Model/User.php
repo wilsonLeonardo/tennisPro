@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username', 'preço','telefone'
     ];    
     /**
      * The attributes that should be hidden for arrays.
@@ -63,6 +63,14 @@ class User extends Authenticatable implements JWTSubject
             'name' => 'required|max:200',
             'email' => 'required|email|max:200',
             'password' => 'required|max:20',
+        ];
+    }
+    public static function roles() {
+        return [
+            'name' => 'required|max:200',
+            'email' => 'required|email|max:200',
+            'username' => 'required|max:100',
+            'telefone' => 'required',
         ];
     }
     public static function mappedProperties()

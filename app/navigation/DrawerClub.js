@@ -18,13 +18,13 @@ const DrawerClub = createDrawerNavigator({
                 <IconSVG name='Home' fill={tintColor} width='20' height='20' />
         }
     },
-    Mensagens: {
-        screen: () => <Mensagens />,
-        navigationOptions: {
-            title: 'Chat', drawerIcon: ({ tintColor }) =>
-                <IconSVG name='Chat' fill={tintColor} width='20' height='20' />
-        }
-    },
+    // Mensagens: {
+    //     screen: () => <Mensagens />,
+    //     navigationOptions: {
+    //         title: 'Chat', drawerIcon: ({ tintColor }) =>
+    //             <IconSVG name='Chat' fill={tintColor} width='20' height='20' />
+    //     }
+    // },
     NewCampeonatos: {
         screen: () => <NewCampeonatos />,
         navigationOptions: {

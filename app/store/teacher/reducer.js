@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable';
 const initialState = Immutable({
     loading: false,
     avatarUri: null,
-    teacher: []
+    meTeacher: []
 });
 
 export default function reduce(state = initialState, action = {}) {
@@ -15,7 +15,7 @@ export default function reduce(state = initialState, action = {}) {
             });
         case types.USER_LOADED:
             return state.merge({
-                teacher: action.teacher
+                meTeacher: action.me
             });
         case types.USER_CLEARING:
             return initialState;

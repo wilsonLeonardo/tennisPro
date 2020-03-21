@@ -35,7 +35,7 @@ class Mensagens extends Component {
                 onPress={() => this.props.navigation.goBack()}
               >
               </Icon>
-                <AeroText style={{ fontSize: 22, color: 'white' }}>   Chat</AeroText>
+                <AeroText style={{ fontSize: 22, color: 'white', left:"-300%" }}>   Chat</AeroText>
             </View>
           </View>
           <View style={{ alignItems: "center" }}>

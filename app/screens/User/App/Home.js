@@ -15,6 +15,9 @@ import {
 } from "react-native-chart-kit";
 import { getUser } from "../../../service/AuthService";
 import Modal from "react-native-modal";
+import {connect} from 'react-redux'
+import * as userActions from '../../../store/user/actions'
+import {setCompletedIntro, isCompletedIntro} from '../../../util/IntroUtil'
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -26,18 +29,17 @@ class Home extends Component {
         super(props)
         this.state = {
             active: false,
-            isModalVisible: true
+            isModalVisible: false
         };
     }
     componentDidMount(){
-        getUser().then(user => {
-          this.setState({ user: user }
-          );
-      });
+        isCompletedIntro().then(isCompleted => 
+            !isCompleted ? this.setState({isModalVisible: true}) : null)
+        this.props.onLoadTeacher();
     }
 
     toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
+        setCompletedIntro(true).then(() => this.setState({ isModalVisible: false }));
     };
     
     render() {
@@ -261,8 +263,15 @@ class Home extends Component {
 Home.navigationOptions = {
     headerShown: false
 }
+const mapStateToProps = state => ({
+    teachers: state.user,
+  });
+  
+const mapDispatchToProps = dispatch => ({
+    onLoadTeacher: () => dispatch(userActions.loadTeacher()),
+});
 
-export default Home
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
     container: {

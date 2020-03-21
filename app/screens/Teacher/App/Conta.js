@@ -3,15 +3,21 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    Dimensions
+    Dimensions,
+    Alert,
+    KeyboardAvoidingView
 } from 'react-native';
 import { Button, Container, Item, Input, Icon, Picker } from 'native-base';
 import { Divider } from 'react-native-elements';
+import {connect} from 'react-redux'
+import update from "immutability-helper";
+import * as teacherActions from '../../../store/teacher/actions'
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
 import Modal from "react-native-modal";
+import HttpService from '../../../service/HttpService'
 
 class Conta extends Component {
     constructor(props) {
@@ -24,26 +30,93 @@ class Conta extends Component {
             language: {
                 itemValue: '',
                 itemIndex: '',
-                isModalVisible: false
-            }
+            },
+            isModalVisible: false,
+            isEditable: false,
+            credentials: {
+                email: '',
+                password: ""
+            },
+            user: {},
+            display: "disabled",
+            blocked: 'grey'
         }
     }
+    componentDidMount(){
+        if(!this.props.me.meTeacher) return null
+            this.setState({user: this.props.me.meTeacher, credentials:{email: this.props.me.meTeacher.email}});
+    }
+    handleLogin = () => {    
+        if(!this.state.credentials.password){
+            Alert.alert('Editar', 'Insira sua senha')
+        }else{
+            HttpService.login(this.state.credentials)
+                   .then(() => this.passwordEnter())
+                   .catch(err => {
+                     console.log(err);
+                     return Alert.alert(
+                       "Editar",
+                       err.response.data.error === "Unauthorized"
+                                       ? "Senha incorreta"
+                                       : err.response.data.error
+                       );
+                     })
+                     .finally(() => this.setState({ loading: false }));   
+        }
+    };
+    handlePassword = name => value =>
+        this.setState(
+          update(this.state, {
+            credentials: {
+              [name]: { $set: value }
+            },
+            user:{
+              [name]: { $set: value }
+            }
+          })
+    );
+    handleChangeValue = name => value =>
+        this.setState(
+          update(this.state, {
+            user: {
+              [name]: { $set: value }
+            }
+          })
+    );
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
+    passwordEnter = () => {
+        this.setState({ isModalVisible: false, isEditable: true, display:"false", blocked:'black', credentials:{password: ''} });
+    };
+    handleSave = () => HttpService
+        .update('meTeacher', {}, this.state.user)
+        .then(() => {
+            console.log(this.state.user)
+            Alert.alert('Meus dados', 'Seus dados foram alterados com sucesso.',[
+                {text: 'OK'}
+            ]);
+            this.props.dispatch(teacherActions.loadMeTeacher());
+            this.setState({isEditable: false, disabled:"false", blocked:'grey'})
+        }).catch(error => console.log(error));
+    
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
+        const {isEditable, credentials, user, blocked} = this.state;
+
+        
         return (
-            <Container style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
                     <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
                         <Icon
                             name='arrowleft'
                             type='AntDesign'
                             style={{ paddingRight: 20, color: 'white' }}
+                            onPress={() => this.props.navigation.goBack()}
                         >
                             <AeroText style={{ fontSize: 22, color: 'white' }}>  Conta</AeroText>
                         </Icon>
@@ -55,28 +128,54 @@ class Conta extends Component {
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
 
-                <View style={styles.content}>
+                <View style={styles.content} >
                     <View style={{ flex: 1, justifyContent: "space-around" }}>
                         <Item >
-                            <Input placeholder='Nome' />
+                            <Input editable={isEditable} placeholder='Nome' value={user.name} 
+                            style={{color:blocked}}
+                            onChangeText={this.handleChangeValue(
+                                "name"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="Account" height="20" width="20" fill="#ddd" 
+                            
+                            />
+                        </Item>
+                        <Item >
+                            <Input editable={isEditable} placeholder='Username' value={user.username} 
+                                style={{color:blocked}}
+                             onChangeText={this.handleChangeValue(
+                                "username"
+                              ).bind(this)}
+                            />
                             <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
                         </Item>
 
                         <Item >
-                            <Input placeholder='Data de Nascimento' />
-                            <IconSVG name="Date" height="20" width="20" fill="#ddd" />
+                            <Input editable={isEditable} placeholder='Preço' value={user.preço}
+                            style={{color:blocked}}
+                             onChangeText={this.handleChangeValue(
+                                "preço"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="Money" height="20" width="20" fill="#ddd" />
                         </Item>
 
                         <Item >
-                            <Input placeholder='Email' />
-                            <IconSVG name="Mail" height="20" width="20" fill="#ddd" />
+                            <Input editable={isEditable} placeholder='Telefone' value={user.telefone} 
+                            style={{color:blocked}}
+                             onChangeText={this.handleChangeValue(
+                                "telefone"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="Phone" height="20" width="20" fill="#ddd" />
                         </Item>
-
-                        <Item >
-                            <Input placeholder='Senha' />
-                            <IconSVG name="Key" height="20" width="20" fill="#ddd" />
-                        </Item>
-                        <View style={{ height: 40, paddingHorizontal: 10 }}>
+                        {/* <Button block disabled={!isEditable} style={{ borderRadius: 10, alignItems: 'center', backgroundColor: blocked == 'grey' ? 'grey' : '#F75400', 
+                        marginTop: 20, elevation: 5}}
+                        onPress={this.handleSave.bind(this)}
+                        >
+                            <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Alterar </AeroText></Button> */}
+                        {/* <View style={{ height: 40, paddingHorizontal: 10 }}>
                             <Picker
                                 selectedValue={this.state.language}
                                 style={{ flex: 1, height: 50 }}
@@ -89,7 +188,7 @@ class Conta extends Component {
                                 <Picker.Item label="Espanhol" value="espanhol" />
                             </Picker>
                             <Divider style={{ backgroundColor: '#000' }} />
-                        </View>
+                        </View> */}
                     </View>
 
 
@@ -99,7 +198,7 @@ class Conta extends Component {
                     animationInTiming={300}
                     animationIn="slideInLeft"
                     animationOut="slideOutRight"
-                    coverScreen={true}
+                    coverScreen={false}
                     deviceWidth={deviceWidth}
                     deviceHeight={deviceHeight}
                 >
@@ -108,7 +207,12 @@ class Conta extends Component {
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira a sua senha</AeroText>
 
                             <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >
-                                <Input placeholder='Senha' secureTextEntry={true} />
+                                <Input placeholder='Senha' secureTextEntry={true}  
+                                value={credentials.password}
+                                onChangeText={this.handlePassword(
+                                  "password"
+                                ).bind(this)}
+                                />
                                 <IconSVG name="Key" height="20" width="20" fill="#F75400" />
                             </Item>
 
@@ -116,19 +220,21 @@ class Conta extends Component {
                                 <Button style={{ backgroundColor: '#ddd', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
                                     <AeroText style={{ color: 'gray' }} >Cancelar</AeroText>
                                 </Button>
-                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.handleLogin.bind(this)} >
                                     <AeroText style={{ color: 'white' }} >Confirmar</AeroText>
                                 </Button>
                             </View>
                         </View>
                     </View>
                 </Modal>
-            </Container>
+            </KeyboardAvoidingView>
         )
     }
 }
-
-export default Conta
+const mapStateToProps = state => ({
+    me: state.meTeacher,
+});
+export default connect(mapStateToProps, null)(Conta)
 
 const styles = StyleSheet.create({
     container: {

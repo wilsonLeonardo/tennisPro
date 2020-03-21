@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
     View,
     Text,
@@ -6,41 +6,64 @@ import {
     StyleSheet,
     ImageBackground,
     Button,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
 import { ScrollView } from 'react-native-gesture-handler'
 import IconSVG from '../../components/Icon/IconSVG'
-import {logout} from '../../service/AuthService'
+import {logout, getUser} from '../../service/AuthService'
+import HttpService from '../../service/HttpService'
 
-function CustomDrawer({ ...props }) {
-    return (
-        <View style={styles.container}>
-            <ImageBackground
-                source={require('../../assets/images/HeaderMenu.png')}
-                style={styles.imageBack}
-            >
-                <View style={styles.image}></View>
+class CustomDrawer extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            user: {}
+        }
+    }
+    componentDidMount(){
+        HttpService
+            .find('me')
+            .then(user => this.setState({user: user}));
+    }
+    SignOut(){
+        Alert.alert('Sair', 'Tem certeza que deseja sair?',[
+            {text: 'Sim', onPress: () => logout().then(() => this.props.navigation.navigate('SignedOut'))},
+            {text: 'Cancelar', style:'cancel'},
+        ])
+    }
 
-
-                <View style={{ flex: 1 }}>
-                    <AeroText style={styles.name}>Douglas Henrique</AeroText>
-                    <AeroText style={styles.email}>douglashenrique@gmail.com</AeroText>
-                </View>
-            </ImageBackground>
-            <ScrollView>
-                <DrawerNavigatorItems {...props} />
-            </ScrollView>
-
-            <TouchableOpacity style={{ padding: 25 }} onPress={() => logout().then(() => props.navigation.navigate('SignedOut'))}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
-                    <AeroText style={{ color: '#F75400', fontSize: 20, paddingHorizontal: 10 }}>Sair</AeroText>
-                </View>
-            </TouchableOpacity>
-        </View>
-    )
+    render(){
+        const {Username, Email} = this.state.user
+        return (
+            <View style={styles.container}>
+                <ImageBackground
+                    source={require('../../assets/images/HeaderMenu.png')}
+                    style={styles.imageBack}
+                >
+                    <View style={styles.image}></View>
+    
+                    
+                    <View style={{ flex: 1 }}>
+                        <AeroText style={styles.name}>{Username}</AeroText>
+                        <AeroText style={styles.email}>{Email}</AeroText>
+                    </View>
+                </ImageBackground>
+                <ScrollView>
+                    <DrawerNavigatorItems {...this.props} />
+                </ScrollView>
+    
+                <TouchableOpacity style={{ padding: 25 }} onPress={() => this.SignOut()}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
+                        <AeroText style={{ color: '#F75400', fontSize: 20, paddingHorizontal: 10 }}>Sair</AeroText>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 }
 
 export default CustomDrawer
@@ -67,7 +90,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     email: {
-        fontSize: 8,
+        fontSize: 12,
         color: 'white',
     },
     image: {

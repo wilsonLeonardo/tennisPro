@@ -32,6 +32,7 @@ class Mensagens extends Component {
                 name='arrowleft'
                 type='AntDesign'
                 style={{ color: 'white' }}
+                onPress={() => this.props.navigation.goBack()}
               >
                 <AeroText style={{ fontSize: 22, color: 'white' }}>   Chat</AeroText>
               </Icon>

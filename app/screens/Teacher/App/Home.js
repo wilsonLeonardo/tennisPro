@@ -12,6 +12,10 @@ import Modal from "react-native-modal";
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
+import {setCompletedIntro, isCompletedIntro} from '../../../util/IntroUtil'
+import HttpService from '../../../service/HttpService'
+import * as teacherActions from '../../../store/teacher/actions'
+import {connect} from 'react-redux'
 
 class HomeTeacher extends Component {
     constructor(props) {
@@ -25,17 +29,29 @@ class HomeTeacher extends Component {
                 itemValue: '',
                 itemIndex: ''
             },
-            isModalVisible: true
+            isModalVisible: false,
+            user:{}
         }
     }
 
+    componentDidMount(){
+        isCompletedIntro().then(isCompleted =>
+             !isCompleted ? this.setState({isModalVisible: true}) : null)
+
+        this.props.onLoadMe();
+    }
+
     toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
+        setCompletedIntro(true).then(() => this.setState({ isModalVisible: false }));
     };
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
+        const {meTeacher} = this.props.me;
+
+            if(!meTeacher) return null
+            
             return (
                 <Container>
                     <View style={styles.header}>
@@ -53,21 +69,29 @@ class HomeTeacher extends Component {
                     <View style={styles.content}>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', width: '100%' }}>
                             <AeroText style={{ fontSize: 15, color: '#F75400' }}>Dados Pessoais</AeroText>
-                            <Button style={styles.button} >
+                            {/* <Button style={styles.button} >
                                 <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
                                 <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
-                            </Button>
+                            </Button> */}
                         </View>
                         <View style={{ flex: 1, justifyContent: "space-around" }}>
-                            <Input placeholder='Nome' rightIcon={<IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />} />
+                            <Input editable={false} style={{color:'grey'}}
+                            placeholder='Nome' value={meTeacher.username} rightIcon={<IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />} />
 
-                            <Input placeholder='Data de Nascimento' rightIcon={<IconSVG name="Date" height="20" width="20" fill="#ddd" />} />
+                            <Input editable={false} style={{color:'grey'}}
+                             placeholder='Preço' value={meTeacher.preço} rightIcon={<IconSVG name="Money" height="20" width="20" fill="#ddd" />} />
 
-                            <Input placeholder='Email' rightIcon={<IconSVG name="Mail" height="20" width="20" fill="#ddd" />} />
+                            <Input editable={false} style={{color:'grey'}}
+                            placeholder='Telefone' value={meTeacher.telefone} rightIcon={<IconSVG name="Phone" height="20" width="20" fill="#ddd" />} />
 
-                            <Input placeholder='Senha' rightIcon={<IconSVG name="Key" height="20" width="20" fill="#ddd" />} />
+                            <Input editable={false} style={{color:'grey'}}
+                            placeholder='Data de Nascimento' rightIcon={<IconSVG name="Date" height="20" width="20" fill="#ddd" />} />
 
-                            <View style={{ height: 40, paddingHorizontal: 10 }}>
+                            <Input editable={false} style={{color:'grey'}}
+                            placeholder='Email' value={meTeacher.email} rightIcon={<IconSVG name="Mail" height="20" width="20" fill="#ddd" />} />
+
+
+                            {/* <View style={{ height: 40, paddingHorizontal: 10 }}>
                                 <Picker
                                     selectedValue={this.state.language}
                                     style={{ flex: 1, height: 50 }}
@@ -80,12 +104,12 @@ class HomeTeacher extends Component {
                                     <Picker.Item label="Espanhol" value="espanhol" />
                                 </Picker>
                                 <Divider style={{ backgroundColor: '#000' }} />
-                            </View>
+                            </View> */}
                         </View>
 
 
                     </View>
-                    <Fab
+                    {/* <Fab
                         active={this.state.active}
                         direction="up"
                         containerStyle={{}}
@@ -93,7 +117,7 @@ class HomeTeacher extends Component {
                         position="bottomRight"
                         onPress={() => this.setState({ active: !this.state.active })}>
                         <IconSVG name='Chat' width='30' height='30' fill='white' />
-                    </Fab>
+                    </Fab> */}
                     <Modal
                     isVisible={this.state.isModalVisible}
                     animationInTiming={300}
@@ -129,8 +153,16 @@ class HomeTeacher extends Component {
 HomeTeacher.navigationOptions = {
     headerShown: false
 }
+const mapStateToProps = state => ({
+    me: state.meTeacher,
+});
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onLoadMe: () => dispatch(teacherActions.loadMeTeacher())
+    }
+  }
 
-export default HomeTeacher
+export default connect(mapStateToProps, mapDispatchToProps)(HomeTeacher)
 
     const styles = StyleSheet.create({
         container: {

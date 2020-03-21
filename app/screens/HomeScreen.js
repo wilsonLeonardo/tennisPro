@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  Alert
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 import { Icon, Content, Form, Item, Input, Button, Footer, Container } from 'native-base';
 import HttpService from '../service/HttpService'
@@ -16,6 +17,8 @@ import LocationService from "../service/LocationService";
 import update from "immutability-helper";
 import * as permissionService from "../service/PermissionService";
 import * as notificationsActions from "../store/notifications/actions";
+import * as teacherActions from "../store/teacher/actions";
+import * as userActions from "../store/user/actions";
 import { isLogged, getUser, logout } from "../service/AuthService";
 import { Notifications, Linking } from "expo";
 
@@ -74,7 +77,7 @@ class HomeScreen extends React.Component {
               .finally(() => this.setState({ loading: false }));
             });
           }
-        };
+      };
         
         handleChangeValue = name => value =>
         this.setState(
@@ -88,13 +91,17 @@ class HomeScreen extends React.Component {
           loginSuccess = data => {
             this.setState({ loading: true });
             return setAuthUser(data).then(() => {
-              console.log(data);
+              this.state.credentials.email = "" 
+			        this.state.credentials.password = ""
 
-                if(data.user.profile == "USER")
+                if(data.user.profile == "USER"){
                   this.props.navigation.navigate("SignedInUser");
-                else if(data.user.profile == "TEACHER")
+                }
+                else if(data.user.profile == "TEACHER"){
+                  this.props.dispatch(teacherActions.loadMeTeacher());
                   this.props.navigation.navigate("SignedInTeacher");
-                else if(data.user.profile == "Club")
+                }
+                else if(data.user.profile == "CLUB")
                   this.props.navigation.navigate("SignedInClub");
 
                 this.props.dispatch(
@@ -122,6 +129,7 @@ class HomeScreen extends React.Component {
                               this
                             )}
                             autoCapitalize='none'
+                            keyboardType='email-address'
                           />
                           <PersonFullIcon style={{ width: 22, height: 26, left: -10 }} />
                         </Item>
@@ -134,11 +142,14 @@ class HomeScreen extends React.Component {
                           />
                           <KeyIcon style={{ width: 22, height: 12, left: -10 }} />
                         </Item>
-                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400' }} onPress={this.handleLogin.bind(this)}>
-                          <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }} >
-                            Login
-                          </AeroText>
-                        </Button>
+                          <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400' }} 
+                            onPress={this.handleLogin.bind(this)}>
+                              {loading ? <ActivityIndicator color="#FFFFFF" /> : 
+                                <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }} >
+                                Login
+                                </AeroText>
+                              }
+                          </Button>
                         <View style={{ alignItems: 'center', marginTop: 15 }}>
                           <TouchableOpacity onPress={() => navigate('Type')}>
                             <AeroText style={{ color: '#fff' }}>Não possui uma conta?</AeroText>

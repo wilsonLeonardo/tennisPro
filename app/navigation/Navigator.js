@@ -60,7 +60,7 @@ export const SignedOutRoutes = createAppContainer(createStackNavigator({
 
 export const SignedInUserRoutes = createAppContainer(createStackNavigator({
   homeUser:{
-    screen: DrawerClub,
+    screen: DrawerNavigator,
     navigationOptions:{
       headerShown: false
     }
