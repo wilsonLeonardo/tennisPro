@@ -5,8 +5,7 @@ import {
     ImageBackground,
     TouchableOpacity,
     KeyboardAvoidingView,
-    Modal,
-    Alert
+    Alert,
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer, Picker } from 'native-base';
 
@@ -30,15 +29,13 @@ class Ranking extends Component {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <View style={{flexDirection:`row`}}>
-                        <Icon
-                            name='arrowleft'
-                            type='AntDesign'
-                            style={{ color: 'white' }}
-                            onPress={() => this.props.navigation.goBack()}
-                        >
-                        </Icon>
-                        <AeroText style={{ fontSize: 22, color: 'white', left:"120%"}}>Ranking</AeroText>
+                    <View style={{ flexDirection: `row` }}>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start" }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                                <IconSVG name='Back' height='25' width='25' fill='white' />
+                            </TouchableOpacity>
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Ranking</AeroText>
+                        </View>
                     </View>
                     <View style={{ alignSelf: "center", width: 100, height: 100, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
@@ -114,10 +111,9 @@ class Ranking extends Component {
                     </ScrollView>
 
                 </View>
-                <View style={{ paddingHorizontal: 10 }}>
 
-                    <Divider style={{height:2}}/>
-                    <View style={{ flex: 1 }}>
+                <View style={{ paddingHorizontal: 10, flex: 1, borderColor: 'gray', borderWidth: 2, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+                    <ScrollView>
 
                         <View style={styles.rankStatus}>
                             <View style={{ flexDirection: 'row' }}>
@@ -127,7 +123,7 @@ class Ranking extends Component {
                                 <AeroText style={{ color: '#F75400', paddingLeft: 2 }}>5º</AeroText>
                             </View>
                             <AeroText style={{ color: 'gray', paddingHorizontal: 10 }}>Nome</AeroText>
-                            <View style={{flexDirection:'row'}}>
+                            <View style={{ flexDirection: 'row' }}>
 
                                 <View style={{ flexDirection: 'row', paddingRight: 5 }}>
                                     <View style={{ backgroundColor: '#FCB900', borderRadius: 10, height: 20, width: 20, alignItems: 'center', justifyContent: 'center' }}>
@@ -149,8 +145,9 @@ class Ranking extends Component {
                                 </View>
                             </View>
                         </View>
-                    </View>
+                    </ScrollView>
                 </View>
+
             </Container>
         )
     }

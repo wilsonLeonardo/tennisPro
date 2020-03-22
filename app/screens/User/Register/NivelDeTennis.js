@@ -4,7 +4,7 @@ import { addNivel } from '../../../store/userRegister/actions'
 import {
     StyleSheet,
     View,
-    TouchableHighlight
+    TouchableOpacity
 } from 'react-native';
 import { Button, Form } from 'native-base';
 
@@ -40,55 +40,55 @@ class NivelTenis extends Component {
                 <HeaderTennis />
                 <TitleTennis placeholder='Qual seu nível de tênis?' Icon="Ball" />
                 <View style={styles.content}>
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={this.state.niveis.especialPro ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.especialPro ? () => this.setState({ niveis: { especialPro: false } }) : () => this.setState({ niveis: { especialPro: true } })}
                         value={this.state.niveis.especialPro}
                     >
                         <AeroText style={this.state.niveis.especialPro ? styles.nivelTextPress : styles.nivelText}  >Especial Pro</AeroText>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={this.state.niveis.especial ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.especial ? () => this.setState({ niveis: { especial: false } }) : () => this.setState({ niveis: { especial: true } })}
                         value={this.state.niveis.especial}
                     >
                         <AeroText style={this.state.niveis.especial ? styles.nivelTextPress : styles.nivelText} >Especial</AeroText>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={this.state.niveis.interA ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.interA ? () => this.setState({ niveis: { interA: false } }) : () => this.setState({ niveis: { interA: true } })}
                         value={this.state.niveis.interA}
                     >
                         <AeroText style={this.state.niveis.interA ? styles.nivelTextPress : styles.nivelText} >Inter A</AeroText>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={this.state.niveis.interB ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.interB ? () => this.setState({ niveis: { interB: false } }) : () => this.setState({ niveis: { interB: true } })}
                         value={this.state.niveis.interB}
                     >
                         <AeroText style={this.state.niveis.interB ? styles.nivelTextPress : styles.nivelText} >Inter B</AeroText>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={this.state.niveis.interC ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.interC ? () => this.setState({ niveis: { interC: false } }) : () => this.setState({ niveis: { interC: true } })}
                         value={this.state.niveis.interC}
                     >
                         <AeroText style={this.state.niveis.interC ? styles.nivelTextPress : styles.nivelText} >Inter C</AeroText>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={this.state.niveis.principiante ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.principiante ? () => this.setState({ niveis: { principiante: false } }) : () => this.setState({ niveis: { principiante: true } })}
                         value={this.state.niveis.principiante}
                     >
                         <AeroText style={this.state.niveis.principiante ? styles.nivelTextPress : styles.nivelText} >Principiante</AeroText>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={this.state.niveis.iniciante ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.iniciante ? () => this.setState({ niveis: { iniciante: false } }) : () => this.setState({ niveis: { iniciante: true } })}
                         value={this.state.niveis.iniciante}
                     >
                         <AeroText style={this.state.niveis.iniciante ? styles.nivelTextPress : styles.nivelText} >Iniciante</AeroText>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     <Form style={styles.viewButton} >
                         <Button block style={styles.bottom} onPress={() => this.onAddNivel()}>

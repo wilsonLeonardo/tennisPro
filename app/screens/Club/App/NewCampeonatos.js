@@ -4,7 +4,8 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker, Input } from 'native-base';
 import { Divider } from 'react-native-elements';
@@ -33,56 +34,62 @@ class NewCampeonatos extends Component {
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
                     <View style={{ width: '100%' }}>
-                        <Icon
-                            name='arrowleft'
-                            type='AntDesign'
-                            style={{ paddingRight: 20, color: 'white' }}
-                        >
-                            <AeroText style={{ fontSize: 22, color: 'white' }}>  Novo Campeonato</AeroText>
-                        </Icon>
+                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                                <IconSVG name='Back' height='25' width='25' fill='white' />
+                            </TouchableOpacity>
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Novo Campeonato</AeroText>
+                        </View>
                     </View>
                 </ImageBackground>
+                <KeyboardAvoidingView
+                    style={styles.content}
+                    behavior={Platform.select({
+                        ios: 'padding',
+                        android: 'padding',
+                    })}
+                >
 
-                <ScrollView>
-                    <View style={styles.content}>
 
-                        <Item >
-                            <Input placeholder='Endereço' />
-                        </Item>
+                    <ScrollView>
 
-                        <Item style={{ marginVertical: 20, marginBottom: 20 }}>
-                            <Input placeholder='Nome' />
-                        </Item>
+                            <Item >
+                                <Input placeholder='Endereço' />
+                            </Item>
 
-                        <View style={{ flexDirection: 'row', justifyContent: "space-between", marginVertical: 10 }}>
-                            <AeroText style={{ color: '#F75400', fontSize: 18, marginBottom: 10 }}>Níveis</AeroText>
-                            <View style={{ backgroundColor: "#F75400", borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
-                                <IconSVG name="Add" height="15" width="15" fill="#fff" />
+                            <Item style={{ marginVertical: 20, marginBottom: 20 }}>
+                                <Input placeholder='Nome' />
+                            </Item>
+
+                            <View style={{ flexDirection: 'row', justifyContent: "space-between", marginVertical: 10 }}>
+                                <AeroText style={{ color: '#F75400', fontSize: 18, marginBottom: 10 }}>Níveis</AeroText>
+                                <View style={{ backgroundColor: "#F75400", borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                    <IconSVG name="Add" height="15" width="15" fill="#fff" />
+                                </View>
                             </View>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
-                            <AeroText style={{ color: "#808080" }}>Especial Pro</AeroText>
-                            <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
-                                <IconSVG name="Remove" height="15" width="15" fill="#000" />
-                            </View>
-                        </View>
-
-                        <View style={{ marginVertical: 20 }}>
-                            <AeroText style={{ color: '#F75400', fontSize: 18, marginBottom: 10 }}>Prêmios</AeroText>
-                            <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', marginTop: 10 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
                                 <AeroText style={{ color: "#808080" }}>Especial Pro</AeroText>
-                                <Item regular style={styles.item}>
-                                    <Input placeholder='R$' />
-                                </Item>
+                                <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                    <IconSVG name="Remove" height="15" width="15" fill="#000" />
+                                </View>
                             </View>
-                        </View>
 
-                        <Item style={{ marginTop: 20 }}>
-                            <Input placeholder='Taxa de inscrição' />
-                        </Item>
-                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 40, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
-                    </View>
-                </ScrollView>
+                            <View style={{ marginVertical: 20 }}>
+                                <AeroText style={{ color: '#F75400', fontSize: 18, marginBottom: 10 }}>Prêmios</AeroText>
+                                <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', marginTop: 10 }}>
+                                    <AeroText style={{ color: "#808080" }}>Especial Pro</AeroText>
+                                    <Item regular style={styles.item}>
+                                        <Input placeholder='R$' />
+                                    </Item>
+                                </View>
+                            </View>
+
+                            <Item style={{ marginTop: 20 }}>
+                                <Input placeholder='Taxa de inscrição' />
+                            </Item>
+                            <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 40, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
+                    </ScrollView>
+                </KeyboardAvoidingView>
             </Container>
         )
     }

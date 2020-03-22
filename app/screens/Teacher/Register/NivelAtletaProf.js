@@ -5,7 +5,8 @@ import {
     StyleSheet,
     View,
     KeyboardAvoidingView,
-    TouchableHighlight
+    TouchableOpacity,
+    
 } from 'react-native';
 import { Button } from 'native-base';
 
@@ -36,29 +37,29 @@ class NivelAtletaProf extends Component {
                 <HeaderTennis />
                 <TitleTennis placeholder='Qual nível de atleta você ensina?' Icon="Ball" />
                 <View style={styles.content}>
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={this.state.niveis.especialPro ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.especialPro ? () => this.setState({ niveis: { especialPro: false } }) : () => this.setState({ niveis: { especialPro: true } })}
                         value={this.state.niveis.especialPro}
                     >
                         <AeroText style={this.state.niveis.especialPro ? styles.nivelTextPress : styles.nivelText}  >Especial Pro</AeroText>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={this.state.niveis.especial ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.especial ? () => this.setState({ niveis: { especial: false } }) : () => this.setState({ niveis: { especial: true } })}
                         value={this.state.niveis.especial}
                     >
                         <AeroText style={this.state.niveis.especial ? styles.nivelTextPress : styles.nivelText} >Especial</AeroText>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={this.state.niveis.interA ? styles.bottomNiveisPress : styles.bottomNiveis}
                         onPress={this.state.niveis.interA ? () => this.setState({ niveis: { interA: false } }) : () => this.setState({ niveis: { interA: true } })}
                         value={this.state.niveis.interA}
                     >
                         <AeroText style={this.state.niveis.interA ? styles.nivelTextPress : styles.nivelText} >Inter A</AeroText>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <View style={styles.viewButton}>
                         <Button block style={styles.button} onPress={() => navigate('teacherData')}>
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>

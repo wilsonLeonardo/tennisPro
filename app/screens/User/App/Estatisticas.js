@@ -11,6 +11,7 @@ import {
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { AeroText } from '../../../components/StyledText'
+import IconSVG from '../../../components/Icon/IconSVG';
 
 import {
   LineChart,
@@ -36,15 +37,11 @@ class Estatisticas extends Component {
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-          <View style={{ flexDirection: 'row' }}>
-            <Icon
-              name='arrowleft'
-              type='AntDesign'
-              style={{ color: 'white' }}
-              onPress={() => this.props.navigation.goBack()}
-            >
-            </Icon>
-            <AeroText style={{ fontSize: 22, color: 'white', left:"20%" }}>  Estatísticas</AeroText>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start" }}>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+              <IconSVG name='Back' height='25' width='25' fill='white' />
+            </TouchableOpacity>
+            <AeroText style={{ fontSize: 22, color: 'white' }}>   Estatísticas</AeroText>
           </View>
         </ImageBackground>
         <ScrollView>

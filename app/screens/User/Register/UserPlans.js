@@ -130,9 +130,10 @@ class UserPlans extends Component {
                             coverScreen={true}
                             deviceWidth={deviceWidth}
                             deviceHeight={deviceHeight}
+                            onBackdropPress={() => this.setState({isModalVisible: false})}
                         >
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                                <View style={{ height: 250, width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
                                     <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira o seu cupom</AeroText>
 
                                     <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >

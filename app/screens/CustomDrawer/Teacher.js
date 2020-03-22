@@ -25,8 +25,8 @@ function Teacher({ ...props }) {
 
 
                     <View style={{ flex: 1 }}>
-                        <AeroText style={styles.name}>Douglas Henrique</AeroText>
-                        <AeroText style={styles.email}>douglashenrique@gmail.com</AeroText>
+                        <AeroText style={styles.name}>Alberto Freitas</AeroText>
+                        <AeroText style={styles.email}>alberto.freitas@gmail.com</AeroText>
                     </View>
                 </ImageBackground>
                 <ScrollView>

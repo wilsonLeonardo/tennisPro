@@ -3,7 +3,10 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    Dimensions
+    Dimensions,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import { Button, Container, Item, Input, Icon, Picker } from 'native-base';
 import { Divider } from 'react-native-elements';
@@ -40,13 +43,12 @@ class Conta extends Component {
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
                     <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
-                        <Icon
-                            name='arrowleft'
-                            type='AntDesign'
-                            style={{ paddingRight: 20, color: 'white' }}
-                        >
-                            <AeroText style={{ fontSize: 22, color: 'white' }}>  Conta</AeroText>
-                        </Icon>
+                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                                <IconSVG name='Back' height='25' width='25' fill='white' />
+                            </TouchableOpacity>
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Conta</AeroText>
+                        </View>
                         <Button style={styles.button} onPress={this.toggleModal} >
                             <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
                             <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
@@ -55,45 +57,51 @@ class Conta extends Component {
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
 
-                <View style={styles.content}>
-                    <View style={{ flex: 1, justifyContent: "space-around" }}>
-                        <Item >
-                            <Input placeholder='Nome' />
-                            <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
-                        </Item>
+                <KeyboardAvoidingView
+                    style={styles.content}
+                    behavior={Platform.select({
+                        ios: 'padding',
+                        android: 'padding',
+                    })}
+                >
+                    <ScrollView style={{}}>
+                        <View style={{ justifyContent: "space-around", height: 550 }}>
+                            <Item >
+                                <Input placeholder='Nome' />
+                                <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
+                            </Item>
 
-                        <Item >
-                            <Input placeholder='Data de Nascimento' />
-                            <IconSVG name="Date" height="20" width="20" fill="#ddd" />
-                        </Item>
+                            <Item >
+                                <Input placeholder='Data de Nascimento' />
+                                <IconSVG name="Date" height="20" width="20" fill="#ddd" />
+                            </Item>
 
-                        <Item >
-                            <Input placeholder='Email' />
-                            <IconSVG name="Mail" height="20" width="20" fill="#ddd" />
-                        </Item>
+                            <Item >
+                                <Input placeholder='Email' />
+                                <IconSVG name="Mail" height="20" width="20" fill="#ddd" />
+                            </Item>
 
-                        <Item >
-                            <Input placeholder='Senha' />
-                            <IconSVG name="Key" height="20" width="20" fill="#ddd" />
-                        </Item>
-                        <View style={{ height: 40, paddingHorizontal: 10 }}>
-                            <Picker
-                                selectedValue={this.state.language}
-                                style={{ flex: 1, height: 50 }}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    this.setState({ language: itemValue })
-                                }
-                            >
-                                <Picker.Item label="Português (Brasil)" value="portugues" />
-                                <Picker.Item label="Inglês" value="ingles" />
-                                <Picker.Item label="Espanhol" value="espanhol" />
-                            </Picker>
-                            <Divider style={{ backgroundColor: '#000' }} />
+                            <Item >
+                                <Input placeholder='Senha' secureTextEntry={true} />
+                                <IconSVG name="Key" height="20" width="20" fill="#ddd" />
+                            </Item>
+                            <View style={{ height: 40, paddingHorizontal: 10 }}>
+                                <Picker
+                                    selectedValue={this.state.language}
+                                    style={{ flex: 1, height: 50 }}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        this.setState({ language: itemValue })
+                                    }
+                                >
+                                    <Picker.Item label="Português (Brasil)" value="portugues" />
+                                    <Picker.Item label="Inglês" value="ingles" />
+                                    <Picker.Item label="Espanhol" value="espanhol" />
+                                </Picker>
+                                <Divider style={{ backgroundColor: '#000' }} />
+                            </View>
                         </View>
-                    </View>
-
-
-                </View>
+                    </ScrollView>
+                </KeyboardAvoidingView>
                 <Modal
                     isVisible={this.state.isModalVisible}
                     animationInTiming={300}
@@ -102,9 +110,10 @@ class Conta extends Component {
                     coverScreen={true}
                     deviceWidth={deviceWidth}
                     deviceHeight={deviceHeight}
+                    onBackdropPress={() => this.setState({ isModalVisible: false })}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                        <View style={{ height: 300, width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira a sua senha</AeroText>
 
                             <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >

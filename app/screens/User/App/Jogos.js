@@ -3,35 +3,51 @@ import {
     StyleSheet,
     View,
     ImageBackground,
-    TouchableOpacity,
-    KeyboardAvoidingView
+    Picker,
+    Dimensions,
+    TouchableWithoutFeedback,
+    TouchableOpacity
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
+import Modal from "react-native-modal";
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ChatIcon } from '../../../components/Icon/Icon';
+import IconSVG from '../../../components/Icon/IconSVG'
+import { Divider } from 'react-native-elements';
 
 class Jogos extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            language: {
+                itemValue: '',
+                itemIndex: ''
+            },
+            isModalVisible: false
+        }
+    }
+
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+    };
     render() {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
-                        <Icon
-                            name='arrowleft'
-                            type='AntDesign'
-                            style={{ color: 'white' }}
-                            onPress={() => this.props.navigation.goBack()}
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start" }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                                <IconSVG name='Back' height='25' width='25' fill='white' />
+                            </TouchableOpacity>
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Jogos</AeroText>
+                        </View>
+                        <Button
+                            style={styles.buttonFilter}
+                            onPress={this.toggleModal}
                         >
-                        </Icon>
-                            <AeroText style={{ fontSize: 22, color: 'white', left:"-60%" }}>  Jogos</AeroText>
-                        <Button style={styles.button} >
-                            <Icon
-                                name='settings'
-                                type='Octicons'
-                                style={{ color: '#F75400' }}
-                            />
+                            <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
                         </Button>
                     </View>
                 </ImageBackground>
@@ -56,6 +72,79 @@ class Jogos extends Component {
 
                     </View>
                 </ScrollView>
+                <Modal
+                    isVisible={this.state.isModalVisible}
+                    customBackdrop={
+                        <View style={{ flex: 1 }}>
+                            <TouchableWithoutFeedback onPress={() => this.setState(this.toggleModal)} >
+                                <View style={{ flex: 1, backgroundColor: '#CCCCCC' }}></View>
+                            </TouchableWithoutFeedback>
+                            <View style={{ backgroundColor: '#CCCCCC', flex: 1, flexDirection: 'row', alignItems: "flex-end" }}>
+                                <View style={{ backgroundColor: 'white', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
+                                    <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FitroBottom}>
+                                        <TouchableWithoutFeedback
+                                            style={{ paddingVertical: 20 }}
+                                            onPress={this.toggleModal}
+                                        >
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <View style={{ paddingHorizontal: 15 }}>
+                                                    <IconSVG name='Filter' width='30' height='30' fill='#fff' />
+                                                </View>
+
+                                                <AeroText style={{ fontSize: 25, color: 'white' }}>Filtro</AeroText>
+                                            </View>
+                                        </TouchableWithoutFeedback>
+                                    </ImageBackground>
+                                    <View style={{ backgroundColor:'white',flex: 1, padding: 10, justifyContent: 'space-around' }}>
+                                        <View style={{ height: 70 }}>
+
+                                            <AeroText style={styles.txtFiltro} >Clube</AeroText>
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ flex: 1, height: 50 }}
+                                                onValueChange={(itemValue, itemIndex) =>
+                                                    this.setState({ language: itemValue })
+                                                }>
+                                                <Picker.Item label="Geral" value="geral" />
+                                                <Picker.Item label="Especial Pro" value="especialPro" />
+                                                <Picker.Item label="Especial" value="especial" />
+                                                <Picker.Item label="inter A" value="a" />
+                                                <Picker.Item label="inter B" value="b" />
+                                                <Picker.Item label="inter C" value="c" />
+                                                <Picker.Item label="Principiante" value="principiante" />
+                                                <Picker.Item label="Iniciante" value="iniciante" />
+                                            </Picker>
+                                            <Divider />
+                                        </View>
+
+                                        <View style={{ height: 70 }}>
+
+                                            <AeroText style={styles.txtFiltro} >Data</AeroText>
+                                            <Picker
+                                                selectedValue={this.state.language}
+                                                style={{ flex: 1, height: 50 }}
+                                                onValueChange={(itemValue, itemIndex) =>
+                                                    this.setState({ language: itemValue })
+                                                }>
+                                                <Picker.Item label="Selecione uma data" value="geral" />
+                                                <Picker.Item label="Especial Pro" value="especialPro" />
+                                                <Picker.Item label="Especial" value="especial" />
+                                                <Picker.Item label="inter A" value="a" />
+                                                <Picker.Item label="inter B" value="b" />
+                                                <Picker.Item label="inter C" value="c" />
+                                                <Picker.Item label="Principiante" value="principiante" />
+                                                <Picker.Item label="Iniciante" value="iniciante" />
+                                            </Picker>
+                                            <Divider />
+                                        </View>
+
+
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    }
+                />
             </Container>
         )
     }
@@ -80,7 +169,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         padding: 20
     },
-    button: {
+    buttonFilter: {
         justifyContent: "center",
         backgroundColor: "#ffff",
         width: 55,
@@ -105,5 +194,17 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 2,
         shadowRadius: 9,
+    },
+    FitroBottom: {
+        width: '100%',
+        height: 100,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        backgroundColor: 'orange',
+        justifyContent: "center"
+
+    },
+    txtFiltro: {
+        color: '#F75400'
     },
 });

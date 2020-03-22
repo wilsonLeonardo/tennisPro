@@ -10,8 +10,9 @@ import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } f
 
 import { AeroText } from '../../../components/StyledText';
 import { SearchIcon } from '../../../components/Icon/Icon'
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 import { SearchBar } from 'react-native-elements';
+import IconSVG from '../../../components/Icon/IconSVG';
 
 class Mensagens extends Component {
   state = {
@@ -27,14 +28,10 @@ class Mensagens extends Component {
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={{}}>
           <View style={styles.header}>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
-              <Icon
-                name='arrowleft'
-                type='AntDesign'
-                style={{ color: 'white' }}
-                onPress={() => this.props.navigation.goBack()}
-              >
-              </Icon>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start" }}>
+                <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{paddingTop:5}}>
+                  <IconSVG name='Back' height='25' width='25' fill='white' />
+                </TouchableOpacity>
                 <AeroText style={{ fontSize: 22, color: 'white' }}>   Chat</AeroText>
             </View>
           </View>
@@ -43,7 +40,7 @@ class Mensagens extends Component {
               containerStyle={{ backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent' }}
               inputContainerStyle={styles.item}
               inputStyle={styles.Input}
-              placeholder="Pesquise por nomes"
+              searchIcon={<IconSVG name='Search' height='20' width='20' fill='black' />}
               onChangeText={this.updateSearch}
               value={search}
             />

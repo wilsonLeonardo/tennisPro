@@ -5,8 +5,8 @@ import {
     ImageBackground,
     TouchableOpacity,
     KeyboardAvoidingView,
-    TouchableHighlight,
-    Dimensions
+    Dimensions,
+    Platform
 } from 'react-native';
 import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker, Input } from 'native-base';
 import { Divider } from 'react-native-elements';
@@ -51,14 +51,12 @@ class Conta extends Component {
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
                     <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
-                        <Icon
-                            name='arrowleft'
-                            type='AntDesign'
-                            style={{ paddingRight: 20, color: 'white' }}
-                            onPress={() => this.props.navigation.goBack()}
-                        >
-                        </Icon>
-                        <AeroText style={{ fontSize: 22, color: 'white', left:"-60%" }}>  Conta</AeroText>
+                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                                <IconSVG name='Back' height='25' width='25' fill='white' />
+                            </TouchableOpacity>
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Conta</AeroText>
+                        </View>
                         <Button style={styles.button} onPress={this.toggleModal}>
                             <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
                             <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
@@ -66,8 +64,14 @@ class Conta extends Component {
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
-                <ScrollView style={{}}>
-                    <View style={styles.content}>
+                <KeyboardAvoidingView
+                    style={styles.content}
+                    behavior={Platform.select({
+                        ios: 'padding',
+                        android: 'padding',
+                    })}
+                >
+                    <ScrollView style={{}}>
                         <View style={{ justifyContent: "space-around", height: 450 }}>
                             <Item >
                                 <Input placeholder='Nome' />
@@ -85,7 +89,7 @@ class Conta extends Component {
                             </Item>
 
                             <Item >
-                                <Input placeholder='Senha' />
+                                <Input placeholder='Senha' secureTextEntry={true} />
                                 <IconSVG name="Key" height="20" width="20" fill="#ddd" />
                             </Item>
 
@@ -123,41 +127,41 @@ class Conta extends Component {
                         <View>
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Disponibilidade</AeroText>
                             <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
-                                <TouchableHighlight style={this.state.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                <TouchableOpacity style={this.state.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
                                     onPress={this.state.seg ? () => this.setState({ seg: false }) : () => this.setState({ seg: true })}
                                     value={this.state.seg}>
                                     <AeroText style={this.state.seg ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Seg</AeroText>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={this.state.ter ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                </TouchableOpacity>
+                                <TouchableOpacity style={this.state.ter ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
                                     onPress={this.state.ter ? () => this.setState({ ter: false }) : () => this.setState({ ter: true })}
                                     value={this.state.ter}>
                                     <AeroText style={this.state.ter ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Ter</AeroText>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={this.state.qua ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                </TouchableOpacity>
+                                <TouchableOpacity style={this.state.qua ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
                                     onPress={this.state.qua ? () => this.setState({ qua: false }) : () => this.setState({ qua: true })}
                                     value={this.state.qua}>
                                     <AeroText style={this.state.qua ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana}  >Qua</AeroText>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={this.state.qui ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                </TouchableOpacity>
+                                <TouchableOpacity style={this.state.qui ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
                                     onPress={this.state.qui ? () => this.setState({ qui: false }) : () => this.setState({ qui: true })}
                                     value={this.state.qui}>
                                     <AeroText style={this.state.qui ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Qui</AeroText>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={this.state.sex ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                </TouchableOpacity>
+                                <TouchableOpacity style={this.state.sex ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
                                     onPress={this.state.sex ? () => this.setState({ sex: false }) : () => this.setState({ sex: true })}
                                     value={this.state.sex}>
                                     <AeroText style={this.state.sex ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sex</AeroText>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={this.state.sab ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                </TouchableOpacity>
+                                <TouchableOpacity style={this.state.sab ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
                                     onPress={this.state.sab ? () => this.setState({ sab: false }) : () => this.setState({ sab: true })}
                                     value={this.state.sab}>
                                     <AeroText style={this.state.sab ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sab</AeroText>
-                                </TouchableHighlight>
-                                <TouchableHighlight style={this.state.dom ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                </TouchableOpacity>
+                                <TouchableOpacity style={this.state.dom ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
                                     onPress={this.state.dom ? () => this.setState({ dom: false }) : () => this.setState({ dom: true })}
                                     value={this.state.dom}>
                                     <AeroText style={this.state.dom ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Dom</AeroText>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
                             </View>
                             <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
                                 <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
@@ -182,10 +186,11 @@ class Conta extends Component {
                             </Form>
 
                         </View>
-                    </View>
-                </ScrollView>
+                    </ScrollView>
+                </KeyboardAvoidingView>
                 <Modal
                     isVisible={this.state.isModalVisible}
+                    onBackdropPress={() => this.setState({ isModalVisible: false })}
                     animationInTiming={300}
                     animationIn="slideInLeft"
                     animationOut="slideOutRight"
@@ -194,7 +199,7 @@ class Conta extends Component {
                     deviceHeight={deviceHeight}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                        <View style={{ height: 250, width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira a sua senha</AeroText>
 
                             <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >

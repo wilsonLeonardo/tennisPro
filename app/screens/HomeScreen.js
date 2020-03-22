@@ -134,7 +134,7 @@ class HomeScreen extends React.Component {
                           />
                           <KeyIcon style={{ width: 22, height: 12, left: -10 }} />
                         </Item>
-                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400' }} onPress={this.handleLogin.bind(this)}>
+                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400' }} onPress={navigate('homeUser')}>
                           <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }} >
                             Login
                           </AeroText>

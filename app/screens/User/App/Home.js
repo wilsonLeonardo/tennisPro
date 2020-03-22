@@ -226,6 +226,7 @@ class Home extends Component {
                 </View>
                 <Modal
                     isVisible={this.state.isModalVisible}
+                    onBackdropPress={() => this.setState({isModalVisible: false})}
                     animationInTiming={300}
                     animationIn="slideInLeft"
                     animationOut="slideOutRight"
@@ -234,7 +235,7 @@ class Home extends Component {
                     deviceHeight={deviceHeight}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                        <View style={{ height: 250, width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Quem te indicou o App?</AeroText>
 
                             <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >
