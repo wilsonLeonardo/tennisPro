@@ -14,6 +14,8 @@ import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'nat
 import { AeroText } from '../../../components/StyledText';
 import { HeaderTennis } from '../../../components/Header'
 import { TitleTennis } from '../../../components/Title'
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 class TeacherDisponibilidade extends Component {
     constructor(props) {
@@ -22,14 +24,55 @@ class TeacherDisponibilidade extends Component {
             diasDaSemana: {
                 seg: false, ter: false, qua: false, qui: false, sex: false, sab: false, dom: false
             },
-            entrada: '',
-            saida: '',
+            entrada: 'Entrada',
+            saida: 'Saída',
             p_min: '',
-            p_max: ''
+            p_max: '',
+            isVisible: false,
+            isVisible2: false,
         }
     }
     onAddDispo = () => {
         this.props.addDisponibilidade({ ...this.state })
+    }
+
+    handlePicker = (time) => {
+        this.setState({
+            isVisible: false,
+            entrada: moment(time).format('HH:mm'),
+
+        })
+    }
+
+    hidePicker = () => {
+        this.setState({
+            isVisible: false,
+        })
+    }
+
+    showPicker = () => {
+        this.setState({
+            isVisible: true
+        })
+    }
+    handlePicker2 = (time2) => {
+        this.setState({
+            isVisible2: false,
+            saida: moment(time2).format('HH:mm')
+
+        })
+    }
+
+    hidePicker2 = () => {
+        this.setState({
+            isVisible2: false,
+        })
+    }
+
+    showPicker2 = () => {
+        this.setState({
+            isVisible2: true
+        })
     }
 
     render() {
@@ -86,25 +129,41 @@ class TeacherDisponibilidade extends Component {
                     </View>
 
                     <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
-                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                        {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
                                 placeholder='Entrada'
                                 onChangeText={(entrada) => this.setState({ entrada })}
                                 value={this.state.entrada}
                             />
-                        </Item>
+                        </Item> */}
+                        <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height:50, justifyContent:'center'}]} onPress={this.showPicker} >
+                            <View style={{ flexDirection: "row", justifyContent:'space-around' }}>
+
+                                <AeroText style={{}}>
+                                    {this.state.entrada}
+                                </AeroText>
+                            </View>
+                        </TouchableOpacity>
                         <View style={{ justifyContent: "center", height: 40, width: 35 }}>
                             <AeroText style={{}}> até</AeroText>
                         </View>
-                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                        {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
                                 placeholder='Saída'
                                 onChangeText={(saida) => this.setState({ saida })}
                                 value={this.state.saida}
                             />
-                        </Item>
+                        </Item> */}
+                        <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height:50, justifyContent:'center'}]} onPress={this.showPicker2} >
+                            <View style={{ flexDirection: "row", justifyContent:'space-around' }}>
+
+                                <AeroText style={{}}>
+                                    {this.state.saida}
+                                </AeroText>
+                            </View>
+                        </TouchableOpacity>
                     </Form>
                     <Form style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
@@ -136,6 +195,18 @@ class TeacherDisponibilidade extends Component {
                         </Button>
                     </Form>
                 </Content>
+                <DateTimePickerModal
+                    mode="time"
+                    isVisible={this.state.isVisible}
+                    onConfirm={this.handlePicker}
+                    onCancel={this.hidePicker}
+                />
+                <DateTimePickerModal
+                    mode="time"
+                    isVisible={this.state.isVisible2}
+                    onConfirm={this.handlePicker2}
+                    onCancel={this.hidePicker2}
+                />
             </KeyboardAvoidingView>
         );
     }

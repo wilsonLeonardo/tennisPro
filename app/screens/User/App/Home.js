@@ -20,6 +20,7 @@ import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Divider } from 'react-native-elements';
 import IconSVG from '../../../components/Icon/IconSVG';
+import ProgressCircle from 'react-native-progress-circle'
 
 class Home extends Component {
     constructor(props) {
@@ -29,17 +30,17 @@ class Home extends Component {
             isModalVisible: true
         };
     }
-    componentDidMount(){
+    componentDidMount() {
         getUser().then(user => {
-          this.setState({ user: user }
-          );
-      });
+            this.setState({ user: user }
+            );
+        });
     }
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
-    
+
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
@@ -48,7 +49,7 @@ class Home extends Component {
                 <View style={styles.header}>
                     <TouchableOpacity
                         onPress={
-                            () =>  this.props.navigation.openDrawer()
+                            () => this.props.navigation.openDrawer()
                         }
                     >
                         <IconSVG name='Menu' height='22' width='22' fill='#F75400' />
@@ -117,32 +118,33 @@ class Home extends Component {
                         <Divider style={{ backgroundColor: '#ddd', marginVertical: 20 }} />
                         <AeroText style={{ color: '#F75400', alignSelf: 'flex-start' }}>Estatísticas</AeroText>
 
-                        <ProgressChart
+                        <View style={{ height:200, flex:1 ,flexDirection: 'row', justifyContent: 'space-between', alignItems:'center' }}>
 
-                            data={{
-                                data: [0.73]
-                            }}
-                            width={Dimensions.get("window").width}
-                            height={220}
-                            chartConfig={{
-                                backgroundGradientFrom: "white",
-                                backgroundGradientTo: "white",
-                                decimalPlaces: 2, // optional, defaults to 2dp
-                                color: (opacity = 0) => `rgba(247, 84, 0, ${opacity})`,
-                                labelColor: (opacity = 0) => `rgba(128, 129, 130, ${opacity})`,
+                            <ProgressCircle
+                                percent={73}
+                                radius={50}
+                                borderWidth={15}
+                                color="#F75400"
+                                shadowColor="#ddd"
+                                bgColor="#fff"
+                            >
+                            </ProgressCircle>
+                            <View>
+                                <AeroText style={{ fontSize: 28, color: "#F75400" }}>73%</AeroText>
+                                <AeroText style={{ fontSize: 13, color: "#F75400" }}>De Vitórias</AeroText>
+                            </View>
 
-                                propsForDots: {
-                                    r: "3",
-                                    strokeWidth: "20",
-                                    stroke: "#F75400",
-                                }
-                            }}
-                            style={{
-                                marginVertical: 8,
-                                borderRadius: 16
-                            }}
-                            hideLegend={false}
-                        />
+                            <View>
+                                <AeroText style={{ fontSize: 28, color: "#bbb" }}>27%</AeroText>
+                                <AeroText style={{ fontSize: 13, color: "#bbb" }}>De Derrotas</AeroText>
+                            </View>
+
+                            <View>
+                                <AeroText style={{ fontSize: 28, color: "#F75400" }}>{'216'}</AeroText>
+                                <AeroText style={{ fontSize: 13, color: "#F75400" }}>Jogos</AeroText>
+                            </View>
+
+                        </View>
 
                         <LineChart
                             data={{
@@ -226,7 +228,7 @@ class Home extends Component {
                 </View>
                 <Modal
                     isVisible={this.state.isModalVisible}
-                    onBackdropPress={() => this.setState({isModalVisible: false})}
+                    onBackdropPress={() => this.setState({ isModalVisible: false })}
                     animationInTiming={300}
                     animationIn="slideInLeft"
                     animationOut="slideOutRight"

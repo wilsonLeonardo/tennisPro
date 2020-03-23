@@ -13,6 +13,8 @@ import { AeroText } from '../../../components/StyledText';
 import { TabsProf } from '../../../components/TabsProf';
 import { TitleTennis } from '../../../components/Title'
 import IconSVG from '../../../components/Icon/IconSVG';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 class TeacherDataScreen extends Component {
   constructor(props) {
@@ -21,14 +23,35 @@ class TeacherDataScreen extends Component {
       cep: '',
       clube: '',
       nome:'',
-      nascimento:'',
+      nascimento: 'Nascimento',
       email: '',
-      senha: ''
+      senha: '',
+      isVisible: false,
     }
   }
   addDados = () => {
     this.props.onAddDados({ ...this.state })
   }
+
+  handlePicker = (date) => {
+    this.setState({
+      isVisible: false,
+      nascimento: moment(date).format('L'),
+    })
+  }
+
+  hidePicker = () => {
+    this.setState({
+      isVisible: false,
+    })
+  }
+
+  showPicker = () => {
+    this.setState({
+      isVisible: true
+    })
+  }
+  
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -71,17 +94,22 @@ class TeacherDataScreen extends Component {
                 <IconSVG name='AccountForm' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
-            <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+            <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', height:40, justifyContent:'center' }]} onPress={this.showPicker}>
+              {/* <Input
                 placeholder='Nascimento'
                 style={styles.Input}
                 onChangeText={(nascimento) => this.setState({ nascimento })}
                 value={this.state.nascimento}
-              />
-              <View style={{ paddingHorizontal: 5 }}>
-                <IconSVG name='Date' width='25' height='25' fill='#F75400' />
+              /> */}
+              <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                <AeroText style={{ paddingLeft: 5,paddingVertical: 5, color:'#555' }} >{this.state.nascimento}</AeroText>
+
+               
+                <View style={{ paddingHorizontal: 5 }}>
+                  <IconSVG name='Date' width='25' height='25' fill='#F75400' />
+                </View>
               </View>
-            </Item>
+            </TouchableOpacity>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
               <Input
                 placeholder='Email'
@@ -110,6 +138,12 @@ class TeacherDataScreen extends Component {
               <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText>
             </Button>
           </Form>
+          <DateTimePickerModal
+            mode="date"
+            isVisible={this.state.isVisible}
+            onConfirm={this.handlePicker}
+            onCancel={this.hidePicker}
+          />
         </Content>
       </KeyboardAvoidingView>
     );

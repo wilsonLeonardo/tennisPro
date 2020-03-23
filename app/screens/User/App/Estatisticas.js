@@ -12,15 +12,8 @@ import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } f
 import { ScrollView } from 'react-native-gesture-handler';
 import { AeroText } from '../../../components/StyledText'
 import IconSVG from '../../../components/Icon/IconSVG';
-
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
+import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts'
+import ProgressCircle from 'react-native-progress-circle'
 
 class Estatisticas extends Component {
   constructor(props) {
@@ -34,6 +27,10 @@ class Estatisticas extends Component {
     }
   }
   render() {
+    const data = [10, 25, 15, 30, 5, 20]
+    const dataX = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']
+    
+    const contentInset = { top: 20, bottom: 20 }
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
@@ -71,67 +68,55 @@ class Estatisticas extends Component {
           </View>
           <View style={styles.content}>
             <View>
-              <LineChart
-                data={{
-                  labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-                  datasets: [
-                    {
-                      data: [
-                        5,
-                        10,
-                        15,
-                        20,
-                        25,
-                        30
-                      ]
-                    }
-                  ]
-                }}
-                width={Dimensions.get("window").width}
-                height={220}
-                chartConfig={{
-                  backgroundGradientFrom: "white",
-                  backgroundGradientTo: "white",
-                  decimalPlaces: 2, // optional, defaults to 2dp
-                  color: (opacity = 1) => `rgba(247, 84, 0, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(128, 129, 130, ${opacity})`,
-                  strokeWidth: "10",
-                  stroke: "#F75400",
-                  propsForDots: {
-                    r: "0"
-                  }
-                }}
-                style={{
-                  marginVertical: 8,
-                  borderRadius: 16
-                }}
-              />
-              <ProgressChart
+              <View style={{ height: 300, flexDirection: 'row' }}>
+                <YAxis
+                  data={data}
+                  contentInset={contentInset}
+                  svg={{
+                    fill: 'grey',
+                    fontSize: 10,
+                  }}
+                  numberOfTicks={6}
+                  formatLabel={(value) => `${value}`}
+                />
 
-                data={{
-                  data: [0.73]
-                }}
-                width={Dimensions.get("window").width}
-                height={220}
-                chartConfig={{
-                  backgroundGradientFrom: "white",
-                  backgroundGradientTo: "white",
-                  decimalPlaces: 2, // optional, defaults to 2dp
-                  color: (opacity = 0) => `rgba(247, 84, 0, ${opacity})`,
-                  labelColor: (opacity = 0) => `rgba(128, 129, 130, ${opacity})`,
+                <LineChart
+                  style={{ flex: 1, marginLeft: 16 }}
+                  data={data}
+                  svg={{ stroke: '#F75400', strokeWidth:5 }}
+                  contentInset={contentInset}
+                >
+                  <Grid direction='BOTH' />
+                </LineChart>
 
-                  propsForDots: {
-                    r: "3",
-                    strokeWidth: "20",
-                    stroke: "#F75400",
-                  }
-                }}
-                style={{
-                  marginVertical: 8,
-                  borderRadius: 16
-                }}
-                hideLegend={false}
-              />
+
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View>
+
+                  <View>
+                    <AeroText style={{ fontSize: 35, color: "#F75400" }}>73%</AeroText>
+                    <AeroText style={{ fontSize: 20, color: "#F75400" }}>De Vitórias</AeroText>
+                  </View>
+
+                  <View>
+                    <AeroText style={{ fontSize: 35, color: "#bbb" }}>27%</AeroText>
+                    <AeroText style={{ fontSize: 20, color: "#bbb" }}>De Derrotas</AeroText>
+                  </View>
+                </View>
+
+                <ProgressCircle
+                  percent={73}
+                  radius={80}
+                  borderWidth={15}
+                  color="#F75400"
+                  shadowColor="#ddd"
+                  bgColor="#fff"
+                >
+                  <AeroText style={{ fontSize: 25, color: "#F75400" }}>{'216'}</AeroText>
+                  <AeroText style={{ fontSize: 18, color: "#F75400" }}>Jogos</AeroText>
+                </ProgressCircle>
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -149,7 +134,6 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
-    alignItems: "center"
   },
   header: {
     flexWrap: 'wrap',

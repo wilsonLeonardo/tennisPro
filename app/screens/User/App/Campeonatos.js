@@ -7,15 +7,18 @@ import {
     Picker,
     Dimensions,
     TouchableWithoutFeedback,
+    TouchableOpacity
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
 import Modal from "react-native-modal";
 
 import { AeroText } from '../../../components/StyledText';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import { SearchIcon, DollarIcon, StarIcon, LocationIcon } from '../../../components/Icon/Icon'
 import { SearchBar, Divider } from 'react-native-elements';
 import IconSVG from '../../../components/Icon/IconSVG';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 class Campeonatos extends Component {
     constructor(props) {
@@ -27,7 +30,9 @@ class Campeonatos extends Component {
             },
             search: '',
             isModalVisible: false,
-            isModalVisible2: false
+            isModalVisible2: false,
+            isVisible: false,
+            data: 'Selecione a Data'
         }
     }
 
@@ -37,6 +42,26 @@ class Campeonatos extends Component {
     toggleModal2 = () => {
         this.setState({ isModalVisible2: !this.state.isModalVisible2 });
     };
+
+    handlePicker = (date) => {
+        this.setState({
+            isVisible: false,
+            data: moment(date).format('L'),
+
+        })
+    }
+
+    hidePicker = () => {
+        this.setState({
+            isVisible: false,
+        })
+    }
+
+    showPicker = () => {
+        this.setState({
+            isVisible: true
+        })
+    }
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
@@ -112,20 +137,20 @@ class Campeonatos extends Component {
                                         <View style={{ flex: 1, backgroundColor: 'gray' }}></View>
                                     </TouchableWithoutFeedback>
                                     <View style={{ backgroundColor: 'gray', flex: 2, flexDirection: 'row', alignItems: "flex-end" }}>
-                                    <View style={{ backgroundColor: 'white', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+                                        <View style={{ backgroundColor: 'white', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
                                             <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FitroBottom}>
-                                                    <TouchableWithoutFeedback
-                                                        style={{ paddingVertical: 20 }}
-                                                        onPress={this.toggleModal}
-                                                    >
-                                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                            <View style={{ paddingHorizontal: 15 }}>
-                                                                <IconSVG name='Filter' width='30' height='30' fill='white' />
-                                                            </View>
-
-                                                            <AeroText style={{ fontSize: 25, color: 'white' }}>Filtro</AeroText>
+                                                <TouchableWithoutFeedback
+                                                    style={{ paddingVertical: 20 }}
+                                                    onPress={this.toggleModal}
+                                                >
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        <View style={{ paddingHorizontal: 15 }}>
+                                                            <IconSVG name='Filter' width='30' height='30' fill='white' />
                                                         </View>
-                                                    </TouchableWithoutFeedback>
+
+                                                        <AeroText style={{ fontSize: 25, color: 'white' }}>Filtro</AeroText>
+                                                    </View>
+                                                </TouchableWithoutFeedback>
                                             </ImageBackground>
 
 
@@ -190,26 +215,17 @@ class Campeonatos extends Component {
                                                     </Picker>
                                                     <Divider />
                                                 </View>
-                                                <View style={{ height: 70 }}>
 
-                                                    <AeroText style={styles.txtFiltro} >Data</AeroText>
-                                                    <Picker
-                                                        selectedValue={this.state.language}
-                                                        style={{ flex: 1, height: 50 }}
-                                                        onValueChange={(itemValue, itemIndex) =>
-                                                            this.setState({ language: itemValue })
-                                                        }>
-                                                        <Picker.Item label="Geral" value="geral" />
-                                                        <Picker.Item label="Especial Pro" value="especialPro" />
-                                                        <Picker.Item label="Especial" value="especial" />
-                                                        <Picker.Item label="inter A" value="a" />
-                                                        <Picker.Item label="inter B" value="b" />
-                                                        <Picker.Item label="inter C" value="c" />
-                                                        <Picker.Item label="Principiante" value="principiante" />
-                                                        <Picker.Item label="Iniciante" value="iniciante" />
-                                                    </Picker>
-                                                    <Divider />
-                                                </View>
+                                                <TouchableOpacity style={{ height: 30, }} onPress={this.showPicker} >
+                                                    <View >
+                                                        <AeroText style={styles.txtFiltro} >Data</AeroText>
+
+                                                        <AeroText style={{ paddingVertical: 5 }}>
+                                                            {this.state.data}
+                                                        </AeroText>
+                                                        <Divider />
+                                                    </View>
+                                                </TouchableOpacity>
 
                                             </View>
                                         </View>
@@ -220,6 +236,13 @@ class Campeonatos extends Component {
                             animationInTiming={300}
                             animationIn="slideInUp"
                             animationOut="slideOutDown"
+                        />
+
+                        <DateTimePickerModal
+                            mode="date"
+                            isVisible={this.state.isVisible}
+                            onConfirm={this.handlePicker}
+                            onCancel={this.hidePicker}
                         />
 
                         <Modal

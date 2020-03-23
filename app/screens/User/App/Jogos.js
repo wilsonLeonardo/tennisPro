@@ -16,6 +16,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ChatIcon } from '../../../components/Icon/Icon';
 import IconSVG from '../../../components/Icon/IconSVG'
 import { Divider } from 'react-native-elements';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 class Jogos extends Component {
     constructor(props) {
@@ -25,13 +27,36 @@ class Jogos extends Component {
                 itemValue: '',
                 itemIndex: ''
             },
-            isModalVisible: false
+            isModalVisible: false,
+            isVisible: false,
+            data: 'Selecione a data'
         }
     }
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
+
+    handlePicker = (date) => {
+        this.setState({
+            isVisible: false,
+            data: moment(date).format('L'),
+
+        })
+    }
+
+    hidePicker = () => {
+        this.setState({
+            isVisible: false,
+        })
+    }
+
+    showPicker = () => {
+        this.setState({
+            isVisible: true
+        })
+    }
+
     render() {
         return (
             <Container style={styles.container}>
@@ -72,6 +97,12 @@ class Jogos extends Component {
 
                     </View>
                 </ScrollView>
+                <DateTimePickerModal
+                    mode="date"
+                    isVisible={this.state.isVisible}
+                    onConfirm={this.handlePicker}
+                    onCancel={this.hidePicker}
+                />
                 <Modal
                     isVisible={this.state.isModalVisible}
                     customBackdrop={
@@ -95,7 +126,7 @@ class Jogos extends Component {
                                             </View>
                                         </TouchableWithoutFeedback>
                                     </ImageBackground>
-                                    <View style={{ backgroundColor:'white',flex: 1, padding: 10, justifyContent: 'space-around' }}>
+                                    <View style={{ backgroundColor: 'white', flex: 1, padding: 10, justifyContent: 'space-around' }}>
                                         <View style={{ height: 70 }}>
 
                                             <AeroText style={styles.txtFiltro} >Clube</AeroText>
@@ -117,26 +148,16 @@ class Jogos extends Component {
                                             <Divider />
                                         </View>
 
-                                        <View style={{ height: 70 }}>
+                                        <TouchableOpacity style={{ height: 30, }} onPress={this.showPicker} >
+                                            <View >
+                                                <AeroText style={styles.txtFiltro} >Data</AeroText>
 
-                                            <AeroText style={styles.txtFiltro} >Data</AeroText>
-                                            <Picker
-                                                selectedValue={this.state.language}
-                                                style={{ flex: 1, height: 50 }}
-                                                onValueChange={(itemValue, itemIndex) =>
-                                                    this.setState({ language: itemValue })
-                                                }>
-                                                <Picker.Item label="Selecione uma data" value="geral" />
-                                                <Picker.Item label="Especial Pro" value="especialPro" />
-                                                <Picker.Item label="Especial" value="especial" />
-                                                <Picker.Item label="inter A" value="a" />
-                                                <Picker.Item label="inter B" value="b" />
-                                                <Picker.Item label="inter C" value="c" />
-                                                <Picker.Item label="Principiante" value="principiante" />
-                                                <Picker.Item label="Iniciante" value="iniciante" />
-                                            </Picker>
-                                            <Divider />
-                                        </View>
+                                                <AeroText style={{ paddingVertical: 5 }}>
+                                                    {this.state.data}
+                                                </AeroText>
+                                                <Divider />
+                                            </View>
+                                        </TouchableOpacity>
 
 
                                     </View>

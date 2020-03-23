@@ -11,10 +11,12 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'native-base';
-
 import { AeroText } from '../../../components/StyledText';
 import { HeaderTennis } from '../../../components/Header'
 import { TitleTennis } from '../../../components/Title'
+import { TimePicker } from '../../../components/TimePicker'
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 class UserDisponibilidade extends Component {
 
@@ -28,8 +30,10 @@ class UserDisponibilidade extends Component {
             sex: false,
             sab: false,
             dom: false,
-            entrada: '',
-            saida: ''
+            entrada: 'Entrada',
+            saida: 'Saída',
+            isVisible: false,
+            isVisible2: false,
         }
     }
     onAddDispo = () => {
@@ -41,6 +45,46 @@ class UserDisponibilidade extends Component {
     // onShowUnderlay() {
     //     this.setState({ diasDaSemana:{seg: true}  })
     // }
+
+    handlePicker = (time) => {
+        this.setState({
+            isVisible: false,
+            entrada: moment(time).format('HH:mm'),
+
+        })
+    }
+
+    hidePicker = () => {
+        this.setState({
+            isVisible: false,
+        })
+    }
+
+    showPicker = () => {
+        this.setState({
+            isVisible: true
+        })
+    }
+    handlePicker2 = (time2) => {
+        this.setState({
+            isVisible2: false,
+            saida: moment(time2).format('HH:mm')
+
+        })
+    }
+
+    hidePicker2 = () => {
+        this.setState({
+            isVisible2: false,
+        })
+    }
+
+    showPicker2 = () => {
+        this.setState({
+            isVisible2: true
+        })
+    }
+
 
     render() {
         console.log(this.props);
@@ -56,6 +100,7 @@ class UserDisponibilidade extends Component {
                     <AeroText style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
                         disponibilidade
                 </AeroText>
+
                 </View>
                 <Content style={styles.content}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
@@ -97,25 +142,41 @@ class UserDisponibilidade extends Component {
                     </View>
 
                     <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
-                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
-                            <Input
+                        {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, justifyContent:'center', alignItems:'center' }]}>
+                             <Input
                                 style={styles.Input}
                                 placeholder='Entrada'
                                 onChangeText={(entrada) => this.setState({ entrada })}
                                 value={this.state.entrada}
-                            />
-                        </Item>
+                            /> 
+                        </Item> */}
+                        <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height:50, justifyContent:'center'}]} onPress={this.showPicker} >
+                            <View style={{ flexDirection: "row", justifyContent:'space-around' }}>
+
+                                <AeroText style={{}}>
+                                    {this.state.entrada}
+                                </AeroText>
+                            </View>
+                        </TouchableOpacity>
                         <View style={{ justifyContent: "center", height: 40, width: 35 }}>
                             <AeroText> até</AeroText>
                         </View>
-                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
-                            <Input
+                        {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
+                           <Input
                                 style={styles.Input}
                                 placeholder='Saída'
                                 onChangeText={(saida) => this.setState({ saida })}
                                 value={this.state.saida}
-                            />
-                        </Item>
+                            /> 
+                        </Item> */}
+                        <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height:50, justifyContent:'center'}]} onPress={this.showPicker2} >
+                            <View style={{ flexDirection: "row", justifyContent:'space-around' }}>
+
+                                <AeroText style={{}}>
+                                    {this.state.saida}
+                                </AeroText>
+                            </View>
+                        </TouchableOpacity>
                     </Form>
                     <Form style={{ paddingTop: 20 }}>
                         <Button block
@@ -126,6 +187,18 @@ class UserDisponibilidade extends Component {
                         </Button>
                     </Form>
                 </Content>
+                <DateTimePickerModal
+                    mode="time"
+                    isVisible={this.state.isVisible}
+                    onConfirm={this.handlePicker}
+                    onCancel={this.hidePicker}
+                />
+                <DateTimePickerModal
+                    mode="time"
+                    isVisible={this.state.isVisible2}
+                    onConfirm={this.handlePicker2}
+                    onCancel={this.hidePicker2}
+                />
             </KeyboardAvoidingView>
         );
     }
@@ -216,5 +289,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#000066",
         borderWidth: 1,
         borderRadius: 10
+    },
+    buttonTime: {
+        width: 150,
+        height: 50,
+        backgroundColor: '#ddd',
+        borderRadius: 20,
+        justifyContent: 'center',
+        marginTop: 15
     }
 });

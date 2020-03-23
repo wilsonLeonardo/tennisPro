@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     Dimensions,
-    Platform
+    Platform,
 } from 'react-native';
 import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker, Input } from 'native-base';
 import { Divider } from 'react-native-elements';
@@ -14,6 +14,8 @@ import Modal from "react-native-modal";
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment'
 
 class Conta extends Component {
     constructor(props) {
@@ -27,6 +29,7 @@ class Conta extends Component {
                 itemValue: '',
                 itemIndex: ''
             },
+            nascimento: 'Data de Nascimento',
             seg: false,
             ter: false,
             qua: false,
@@ -34,15 +37,85 @@ class Conta extends Component {
             sex: false,
             sab: false,
             dom: false,
-            entrada: '',
-            saida: '',
-            isModalVisible: false
+            entrada: 'Entrada',
+            saida: 'Saída',
+            isModalVisible: false,
+            isVisible: false,
+            isVisible2: false,
+            isVisible3: false,
+            editar: 'Editar',
+            iconEditar: 'Edit',
+            corIcons:'#ddd'
+
         }
     }
 
     toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
+        this.setState({
+            isModalVisible: !this.state.isModalVisible,
+            editar: 'Salvar',
+            iconEditar: 'Done',
+            corIcons:'#000'
+        });
     };
+
+    handlePicker = (date) => {
+        this.setState({
+            isVisible: false,
+            nascimento: moment(date).format('L'),
+        })
+    }
+
+    hidePicker = () => {
+        this.setState({
+            isVisible: false,
+        })
+    }
+
+    showPicker = () => {
+        this.setState({
+            isVisible: true
+        })
+    }
+    handlePicker2 = (time) => {
+        this.setState({
+            isVisible2: false,
+            entrada: moment(time).format('HH:mm')
+
+        })
+    }
+
+    hidePicker2 = () => {
+        this.setState({
+            isVisible2: false,
+        })
+    }
+
+    showPicker2 = () => {
+        this.setState({
+            isVisible2: true
+        })
+    }
+
+    handlePicker3 = (time) => {
+        this.setState({
+            isVisible3: false,
+            saida: moment(time).format('HH:mm')
+
+        })
+    }
+
+    hidePicker3 = () => {
+        this.setState({
+            isVisible3: false,
+        })
+    }
+
+    showPicker3 = () => {
+        this.setState({
+            isVisible3: true
+        })
+    }
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
@@ -58,8 +131,8 @@ class Conta extends Component {
                             <AeroText style={{ fontSize: 22, color: 'white' }}>   Conta</AeroText>
                         </View>
                         <Button style={styles.button} onPress={this.toggleModal}>
-                            <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
-                            <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
+                            <IconSVG name={this.state.iconEditar} height="15" width="15" fill="#F75400" />
+                            <AeroText style={{ color: '#F75400', marginLeft: 5 }} >{this.state.editar}</AeroText>
                         </Button>
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
@@ -75,22 +148,30 @@ class Conta extends Component {
                         <View style={{ justifyContent: "space-around", height: 450 }}>
                             <Item >
                                 <Input placeholder='Nome' />
-                                <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
+                                <IconSVG name="AccountForm" height="20" width="20" fill={this.state.corIcons} />
                             </Item>
+                            <View>
 
-                            <Item >
-                                <Input placeholder='Data de Nascimento' />
-                                <IconSVG name="Date" height="20" width="20" fill="#ddd" />
-                            </Item>
+                                <TouchableOpacity style={{}} onPress={this.showPicker}>
+                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                                        <AeroText style={{ paddingLeft: 5, color: '#666' }} >{this.state.nascimento}</AeroText>
+
+                                        <View style={{ paddingHorizontal: 5 }}>
+                                            <IconSVG name='Date' width='20' height='20' fill={this.state.corIcons} />
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                                <Divider style={{ marginTop: 15 }} />
+                            </View>
 
                             <Item >
                                 <Input placeholder='Email' />
-                                <IconSVG name="Mail" height="20" width="20" fill="#ddd" />
+                                <IconSVG name="Mail" height="20" width="20" fill={this.state.corIcons} />
                             </Item>
 
                             <Item >
                                 <Input placeholder='Senha' secureTextEntry={true} />
-                                <IconSVG name="Key" height="20" width="20" fill="#ddd" />
+                                <IconSVG name="Key" height="20" width="20" fill={this.state.corIcons} />
                             </Item>
 
                             <View style={{ height: 40, paddingHorizontal: 10 }}>
@@ -164,25 +245,41 @@ class Conta extends Component {
                                 </TouchableOpacity>
                             </View>
                             <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
-                                <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
-                                    <Input
-                                        style={styles.Input}
-                                        placeholder='Entrada'
-                                        onChangeText={(entrada) => this.setState({ entrada })}
-                                        value={this.state.entrada}
-                                    />
-                                </Item>
-                                <View style={{ width: 35 }}>
-                                    <AeroText> até</AeroText>
+                                {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                            <Input
+                                style={styles.Input}
+                                placeholder='Entrada'
+                                onChangeText={(entrada) => this.setState({ entrada })}
+                                value={this.state.entrada}
+                            />
+                        </Item> */}
+                                <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker2} >
+                                    <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems:'center' }}>
+
+                                        <AeroText style={{}}>
+                                            {this.state.entrada}
+                                        </AeroText>
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{ justifyContent: "center", height: 40, width: 35 }}>
+                                    <AeroText style={{}}> até</AeroText>
                                 </View>
-                                <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
-                                    <Input
-                                        style={styles.Input}
-                                        placeholder='Saída'
-                                        onChangeText={(saida) => this.setState({ saida })}
-                                        value={this.state.saida}
-                                    />
-                                </Item>
+                                {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                            <Input
+                                style={styles.Input}
+                                placeholder='Saída'
+                                onChangeText={(saida) => this.setState({ saida })}
+                                value={this.state.saida}
+                            />
+                        </Item> */}
+                                <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker3} >
+                                    <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems:'center' }}>
+
+                                        <AeroText style={{}}>
+                                            {this.state.saida}
+                                        </AeroText>
+                                    </View>
+                                </TouchableOpacity>
                             </Form>
 
                         </View>
@@ -218,6 +315,24 @@ class Conta extends Component {
                         </View>
                     </View>
                 </Modal>
+                <DateTimePickerModal
+                    mode="date"
+                    isVisible={this.state.isVisible}
+                    onConfirm={this.handlePicker}
+                    onCancel={this.hidePicker}
+                />
+                <DateTimePickerModal
+                    mode="time"
+                    isVisible={this.state.isVisible2}
+                    onConfirm={this.handlePicker2}
+                    onCancel={this.hidePicker2}
+                />
+                <DateTimePickerModal
+                    mode="time"
+                    isVisible={this.state.isVisible3}
+                    onConfirm={this.handlePicker3}
+                    onCancel={this.hidePicker3}
+                />
             </Container>
         )
     }
