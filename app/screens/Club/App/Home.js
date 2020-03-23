@@ -13,6 +13,7 @@ import Modal from "react-native-modal";
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
+import {setCompletedIntro, isCompletedIntro} from '../../../util/IntroUtil'
 
 class HomeClub extends Component {
     constructor(props) {
@@ -26,15 +27,17 @@ class HomeClub extends Component {
                 itemValue: '',
                 itemIndex: ''
             },
-            isModalVisible: true
+            isModalVisible: false
         }
     }
     
     componentDidMount(){
-        console.log(this.props);
+        isCompletedIntro().then(isCompleted => 
+            !isCompleted ? this.setState({isModalVisible: true}) : null)
     }
+
     toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
+        setCompletedIntro(true).then(() => this.setState({ isModalVisible: false }));
     };
 
     render() {
@@ -44,6 +47,8 @@ class HomeClub extends Component {
             <Container>
                 <View style={styles.header}>
                     <TouchableOpacity
+                        onPress={() => this.props.navigation.openDrawer()
+                        }
                     >
                         <IconSVG name='Menu' height='22' width='22' fill='#F75400' />
                     </TouchableOpacity>

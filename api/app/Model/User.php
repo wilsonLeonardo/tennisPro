@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\Uuids;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Model\Club;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -18,18 +19,20 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
+    
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username', 'preço','telefone', 'nascimento'
     ];    
-    /**
+    /** 
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','device_identifier', 'created_at', 'updated_at'
     ];
-    
+
+    protected $keyType = 'uuid';
     /**
      * The attributes that should be cast to native types.
      *
@@ -39,6 +42,12 @@ class User extends Authenticatable implements JWTSubject
         'id' => 'uuid',
         'email_verified_at' => 'datetime',
     ];
+
+    public function club()
+    {
+        return $this->belongsTo(Club::class, 'club_id');
+    }
+    
     public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
     }
@@ -63,6 +72,14 @@ class User extends Authenticatable implements JWTSubject
             'name' => 'required|max:200',
             'email' => 'required|email|max:200',
             'password' => 'required|max:20',
+        ];
+    }
+    public static function roles() {
+        return [
+            'name' => 'required|max:200',
+            'email' => 'required|email|max:200',
+            'username' => 'required|max:100',
+            'telefone' => 'required',
         ];
     }
     public static function mappedProperties()

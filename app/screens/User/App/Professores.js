@@ -6,12 +6,16 @@ import {
   TouchableHighlight,
   Picker,
   Dimensions,
+  RefreshControl,
   TouchableWithoutFeedback,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
 import Modal from "react-native-modal";
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
+import * as userActions from '../../../store/user/actions'
+import TeacherDetails from './Modal'
 
 import { AeroText } from '../../../components/StyledText';
 import { ChatIcon } from '../../../components/Icon/Icon'
@@ -28,72 +32,80 @@ class Professores extends Component {
         itemIndex: ''
       },
       isModalVisible: false,
-      isModalVisible2: false
+      opened: false,
+      currentItem: undefined
     }
   }
-
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
-  toggleModal2 = () => {
+  toggleModal2 = (id) => {
     this.setState({ isModalVisible2: !this.state.isModalVisible2 });
-  };
+  };  
+  setCurrentItem = (user) => {
+    this.setState({currentItem: user});
+  }
+  setOpen = (bool) => {
+    this.setState({opened: bool})
+  }
+  RenderTeacher = () => this.props.teachers.teacher.map(teacher =>{
+    return(
+        <Button key={teacher.id}
+                style={styles.buttonList}
+                onPress={() =>{
+                  this.setCurrentItem(teacher),
+                  this.setOpen(true)
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <View style={styles.bottom} />
 
+                  <View style={{ alignSelf: "center" }}>
+                    <AeroText style={{ paddingBottom: 5, width:'95%' }}>{teacher.name}</AeroText>
+                    <AeroText style={{ fontSize: 12, color: 'red' }}>{teacher.nivel}</AeroText>
+                  </View>
+                </View>
+                <View style={{ paddingRight: 20 }}>
+                  <View style={{ paddingBottom: 10 }}>
+                    <View style={styles.priceView}>
+                        <AeroText style={styles.price}>R$ {teacher.preço}</AeroText>
+                    </View>
+
+                  </View>
+                </View>
+          </Button>
+    )
+  });
   render() {
-    const deviceWidth = Dimensions.get("window").width;
-    const deviceHeight = Dimensions.get("window").height
+    const {opened, currentItem} = this.state;
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start" }}>
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
-                <IconSVG name='Back' height='25' width='25' fill='white' />
-              </TouchableOpacity>
-              <AeroText style={{ fontSize: 22, color: 'white' }}>   Professores</AeroText>
-            </View>
-            <Button
-              style={styles.buttonFilter}
-              onPress={this.toggleModal}
+            <Icon
+              name='arrowleft'
+              type='AntDesign'
+              style={{ paddingRight: 20, color: 'white' }}
+              onPress={() => this.props.navigation.goBack()}
             >
-              <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
-            </Button>
+
+            </Icon>
+            <AeroText style={{ fontSize: 22, color: 'white', left: Platform.OS === 'ios' ? "-100%" : "-40%" }}>Professores</AeroText>
+            {Platform.OS === 'ios' ? null : 
+              <Button
+                style={styles.buttonFilter}
+                onPress={this.toggleModal}
+              >
+                <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
+              </Button>
+            }
           </View>
-        </ImageBackground>
-        <ScrollView>
+      </ImageBackground>
+        
+        <ScrollView style={{position:'absolute', top:'15%', height:'90%', paddingLeft:'2%'}} refreshControl={<RefreshControl refreshing={this.props.teachers.loading}
+         onRefresh={() => this.props.dispatch(userActions.loadTeacher())}/>}>
           <View style={styles.content}>
-
-            <Button
-              style={styles.buttonList}
-              onPress={this.toggleModal2}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <View style={styles.bottom} />
-
-                <View style={{ alignSelf: "center" }}>
-                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
-                  <AeroText style={{ fontSize: 10, color: 'red' }}>Nivel</AeroText>
-                </View>
-              </View>
-              <View style={{ paddingRight: 20 }}>
-                <View style={{ paddingBottom: 10 }}>
-                  <View style={styles.priceView}>
-                    <AeroText style={styles.price}>R$ 758,60</AeroText>
-                  </View>
-
-                </View>
-                <View style={{ alignItems: "flex-end" }}>
-                  <View style={styles.bottomMsg}>
-                    <Icon
-                      name='chat-bubble'
-                      type='MaterialIcons'
-                      style={{ color: 'white' }}
-                    />
-                  </View>
-                </View>
-              </View>
-            </Button>
-
+              <this.RenderTeacher/>
           </View>
         </ScrollView>
         <Modal
@@ -186,51 +198,17 @@ class Professores extends Component {
             </View>
           }
         />
-
-        <Modal
-          isVisible={this.state.isModalVisible2}
-          animationInTiming={300}
-          animationIn="slideInLeft"
-          animationOut="slideOutRight"
-          coverScreen={true}
-          deviceWidth={deviceWidth}
-          deviceHeight={deviceHeight}
-          onBackdropPress={() => this.setState({ isModalVisible2: false })}
-        >
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ height: '35%', width: '80%', backgroundColor: 'white', justifyContent: 'space-between', borderRadius: 20 }}>
-              <View style={{ alignItems: "center", justifyContent: 'space-around', flex: 1 }}>
-
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', width: 110, height: 110, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd', marginTop: -40 }}>
-                  <View style={styles.priceView2}>
-                    <AeroText style={styles.price}>R$ 758,60</AeroText>
-                  </View>
-                </View>
-                <AeroText style={{ color: 'orange' }}>
-                  Alphaville Esporte Clube
-                </AeroText>
-
-                <AeroText style={{ fontSize: 15, color: '#455A64' }}>Maria de Carvalho Souza </AeroText>
-                <AeroText style={{ color: 'orange' }}>Especial Pro</AeroText>
-              </View>
-              <View style={{ alignItems: "center", paddingBottom: 10 }}>
-
-
-
-                <Button style={{ alignSelf: "center", backgroundColor: 'orange', justifyContent: 'center', width: 125, borderRadius: 30, marginTop: 20 }} onPress={this.toggleModal2} >
-                  <AeroText style={{ color: 'white' }} >Conversar</AeroText>
-                </Button>
-
-              </View>
-            </View>
-          </View>
-        </Modal>
+        <TeacherDetails visible={opened} user={currentItem} end={() => this.setOpen(false)}/>
       </Container>
     )
   }
 }
+const mapStateToProps = state => ({
+  teachers: state.user,
+});
 
-export default connect()(Professores)
+
+export default connect(mapStateToProps, null)(Professores)
 
 const styles = StyleSheet.create({
   container: {
@@ -262,6 +240,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     height: 70,
+    width:"100%",
     backgroundColor: "#ffff",
     borderWidth: 2,
     borderRightWidth: 4,
@@ -275,17 +254,21 @@ const styles = StyleSheet.create({
   },
   bottom: {
     borderRadius: 60,
-    backgroundColor: 'red',
-    height: 70,
-    width: 70,
-    marginRight: 10
+    backgroundColor: '#F75400',
+    height: 80,
+    width: 80,
+    marginRight: 10, 
+    elevation:10,
+    position:'relative',
+    opacity:0.89,
+    left:"-20%"
   },
   priceView: {
     backgroundColor: 'green',
     borderRadius: 5,
     alignItems: 'center',
-    height: 15,
-    width: 60
+    height: 20,
+    width: 80
   },
   priceView2: {
     backgroundColor: 'green',
@@ -297,7 +280,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: 'white',
-    fontSize: 8,
+    fontSize: 12,
   },
   bottomMsg: {
     position: "absolute",

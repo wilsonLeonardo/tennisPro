@@ -1,51 +1,84 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
     View,
     Image,
     StyleSheet,
     ImageBackground,
-    SafeAreaView
+    SafeAreaView,
+    Alert
 } from 'react-native'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import IconSVG from '../../components/Icon/IconSVG'
 import {logout} from '../../service/AuthService'
+import HttpService from '../../service/HttpService'
+import * as userActions from '../../store/user/actions'
+import * as teacherActions from '../../store/teacher/actions'
+import {connect} from 'react-redux'
 
-function Teacher({ ...props }) {
-    return (
-        <SafeAreaView style={{ flex: 1 }}>
+class Teacher extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            user:{}
+        }
+    }
+    SignOut(){
+        Alert.alert('Sair', 'Tem certeza que deseja sair?',[
+            {text: 'Sim', onPress: () => this.SignOutConfirm()},
+            {text: 'Cancelar', style:'cancel'},
+        ])
+    }
+    SignOutConfirm(){
+        this.props.dispatch(
+            userActions.clear(),
+            teacherActions.clear()
+        )
+        logout().then(() => this.props.navigation.navigate('SignedOut'))
+    }
+    render(){
+        if(!this.props.me.meTeacher) return null
+        
+        const {username, email} = this.props.me.meTeacher
 
-            <View style={styles.container}>
-                <ImageBackground
-                    source={require('../../assets/images/HeaderMenu.png')}
-                    style={styles.imageBack}
-                >
-                    <View style={styles.image}></View>
-
-
-                    <View style={{ flex: 1 }}>
-                        <AeroText style={styles.name}>Alberto Freitas</AeroText>
-                        <AeroText style={styles.email}>alberto.freitas@gmail.com</AeroText>
-                    </View>
-                </ImageBackground>
-                <ScrollView>
-                    <DrawerNavigatorItems {...props} />
-
-                </ScrollView>
-                
-                <TouchableOpacity style={{padding:25}} onPress={() => logout().then(() => props.navigation.navigate('SignedOut'))}>
-                    <View style={{ flexDirection: 'row', alignItems:'center' }}>
-                        <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
-                        <AeroText style={{ color: '#F75400', fontSize:20, paddingHorizontal:10 }}>Sair</AeroText>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        </SafeAreaView>
-    )
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+    
+                <View style={styles.container}>
+                    <ImageBackground
+                        source={require('../../assets/images/HeaderMenu.png')}
+                        style={styles.imageBack}
+                    >
+                        <View style={styles.image}></View>
+    
+    
+                        <View style={{ flex: 1 }}>
+                            <AeroText style={styles.name}>{username}</AeroText>
+                            <AeroText style={styles.email}>{email}</AeroText>
+                        </View>
+                    </ImageBackground>
+                    <ScrollView>
+                        <DrawerNavigatorItems {...this.props} />
+    
+                    </ScrollView>
+                    
+                    <TouchableOpacity style={{ padding: 25 }} onPress={() => this.SignOut()}>
+                        <View style={{ flexDirection: 'row', alignItems:'center' }}>
+                            <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
+                            <AeroText style={{ color: '#F75400', fontSize:20, paddingHorizontal:10 }}>Sair</AeroText>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        )
+    }
 }
+const mapStateToProps = state => ({
+    me: state.meTeacher
+})
 
-export default Teacher
+export default connect(mapStateToProps, null)(Teacher)
 
 
 const styles = StyleSheet.create({
@@ -69,7 +102,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     email: {
-        fontSize: 8,
+        fontSize: 12,
         color: 'white',
     },
     image: {

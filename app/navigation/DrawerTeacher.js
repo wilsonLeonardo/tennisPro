@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import Home from '../screens/Teacher/App/Home'
-import Mensagens from '../screens/Teacher/App/Mensagens'
+//import Mensagens from '../screens/Teacher/App/Mensagens'
 import Conta from '../screens/Teacher/App/Conta'
 
 import Teacher from '../screens/CustomDrawer/Teacher'
@@ -19,13 +19,13 @@ const DrawerTeacher = createDrawerNavigator({
                 <IconSVG name='Home' fill={tintColor} width='20' height='20' />
         }
     }, 
-    Mensagens: {
-        screen: () => <Mensagens />,
-        navigationOptions: { title: 'Chat',drawerIcon: ({ tintColor }) =>
-        <IconSVG name='Chat' fill={tintColor} width='20' height='20' /> }
-    },
+    // Mensagens: {
+    //     screen: (props) => <Mensagens {...props} />,
+    //     navigationOptions: { title: 'Chat',drawerIcon: ({ tintColor }) =>
+    //     <IconSVG name='Chat' fill={tintColor} width='20' height='20' /> }
+    // },
     Perfil: {
-        screen: () => <Conta />,
+        screen: (props) => <Conta {...props} />,
         navigationOptions: {
             title: 'Conta', drawerIcon: ({ tintColor }) =>
             <IconSVG name='Config' fill={tintColor} width='20' height='20' />

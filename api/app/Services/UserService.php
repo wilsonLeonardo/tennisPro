@@ -27,11 +27,12 @@ class UserService
         $user = User::findOrFail($data['id']);
         $user->fill($data);
 
-        if (isset($data['activity_branch']) && isset($data['activity_branch']['id'])) {
-            $user->activityBranch()->associate(ActivityBranch::findOrFail($data['activity_branch']['id']));
-        } else {
-            $user->activityBranch()->dissociate();
-        }
+        return $user->save();
+    }
+    public static function updateTeacher($data) {
+        $user = User::findOrFail($data['id']);
+        $user->fill($data);
+        $user->name = $data['username'];
 
         return $user->save();
     }
