@@ -4,19 +4,20 @@ import {
     View,
     ImageBackground,
     Dimensions,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    Platform
+    Alert,
+    KeyboardAvoidingView
 } from 'react-native';
-import { Button, Container, Item, Input, Icon, Picker } from 'native-base';
+import { Button, Content, Item, Input, Icon, Form } from 'native-base';
 import { Divider } from 'react-native-elements';
+import {connect} from 'react-redux'
+import update from "immutability-helper";
+import * as teacherActions from '../../../store/teacher/actions'
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
 import Modal from "react-native-modal";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import moment from 'moment'
+import HttpService from '../../../service/HttpService'
 
 class Conta extends Component {
     constructor(props) {
@@ -29,134 +30,190 @@ class Conta extends Component {
             language: {
                 itemValue: '',
                 itemIndex: '',
-                isModalVisible: false
             },
-            nascimento: 'Data de Nascimento',
-            isVisible: false,
-            editar: 'Editar',
-            iconEditar: 'Edit',
-            corIcons:'#ddd'
+            isModalVisible: false,
+            isEditable: false,
+            credentials: {
+                email: '',
+                password: ""
+            },
+            user: {},
+            display: "disabled",
+            blocked: 'grey'
         }
     }
+    componentDidMount(){
+        if(!this.props.me.meTeacher) return null
+            this.setState({user: this.props.me.meTeacher, credentials:{email: this.props.me.meTeacher.email}});
+    }
+    handleLogin = () => {    
+        if(!this.state.credentials.password){
+            Alert.alert('Editar', 'Insira sua senha')
+        }else{
+            HttpService.login(this.state.credentials)
+                   .then(() => this.passwordEnter())
+                   .catch(err => {
+                     console.log(err);
+                     return Alert.alert(
+                       "Editar",
+                       err.response.data.error === "Unauthorized"
+                                       ? "Senha incorreta"
+                                       : err.response.data.error
+                       );
+                     })
+                     .finally(() => this.setState({ loading: false }));   
+        }
+    };
+    handlePassword = name => value =>
+        this.setState(
+          update(this.state, {
+            credentials: {
+              [name]: { $set: value }
+            },
+            user:{
+              [name]: { $set: value }
+            }
+          })
+    );
+    handleChangeValue = name => value =>
+        this.setState(
+          update(this.state, {
+            user: {
+              [name]: { $set: value }
+            }
+          })
+    );
 
     toggleModal = () => {
-        this.setState({
-            isModalVisible: !this.state.isModalVisible,
-            editar: 'Salvar',
-            iconEditar: 'Done',
-            corIcons:'#000'
-        });
+        this.setState({ isModalVisible: !this.state.isModalVisible });
     };
-
-    handlePicker = (date) => {
-        this.setState({
-            isVisible: false,
-            nascimento: moment(date).format('L'),
-        })
-    }
-
-    hidePicker = () => {
-        this.setState({
-            isVisible: false,
-        })
-    }
-
-    showPicker = () => {
-        this.setState({
-            isVisible: true
-        })
-    }
+    passwordEnter = () => {
+        this.setState({ isModalVisible: false, isEditable: true, display:"false", blocked:'black', credentials:{password: ''} });
+    };
+    handleSave = () => HttpService
+        .update('meTeacher', {}, this.state.user)
+        .then(() => {
+            console.log(this.state.user)
+            Alert.alert('Meus dados', 'Seus dados foram alterados com sucesso.',[
+                {text: 'OK'}
+            ]);
+            this.props.dispatch(teacherActions.loadMeTeacher());
+            this.setState({isEditable: false, disabled:"false", blocked:'grey'})
+        }).catch(error => console.log(error, this.state.user));
+    
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
+        const {isEditable, credentials, user, blocked} = this.state;
+
+        
         return (
-            <Container style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
                     <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
-                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
-                                <IconSVG name='Back' height='25' width='25' fill='white' />
-                            </TouchableOpacity>
-                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Conta</AeroText>
-                        </View>
-                        <Button style={styles.button} onPress={this.toggleModal} >
-                        <IconSVG name={this.state.iconEditar} height="15" width="15" fill="#F75400" />
-                            <AeroText style={{ color: '#F75400', marginLeft: 5 }} >{this.state.editar}</AeroText>
+                        <Icon
+                            name='arrowleft'
+                            type='AntDesign'
+                            style={{ paddingRight: 20, color: 'white' }}
+                            onPress={() => this.props.navigation.goBack()}
+                        >
+                            <AeroText style={{ fontSize: 22, color: 'white' }}>  Conta</AeroText>
+                        </Icon>
+                        <Button style={[styles.button, {display: blocked == 'grey' ? 'flex' :'none'}]} onPress={this.toggleModal} >
+                            <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
+                            <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
+                        </Button>
+                        <Button style={[styles.button, {display: blocked == 'grey' ? 'none' :'flex'}]} onPress={this.handleSave.bind(this)} >
+                            <IconSVG name="Done" height="23" width="18" fill="#F75400" />
+                            <AeroText style={{ color: '#F75400', marginLeft: 5, marginBottom:3 }} >Salvar</AeroText>
                         </Button>
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
 
-                <KeyboardAvoidingView
-                    style={styles.content}
-                    behavior={Platform.select({
-                        ios: 'padding',
-                        android: 'padding',
-                    })}
-                >
-                    <ScrollView style={{}}>
-                        <View style={{ justifyContent: "space-around", height: 550 }}>
+                <Content style={styles.content} >
+                    <Form>
                         <Item >
-                                <Input placeholder='Nome' />
-                                <IconSVG name="AccountForm" height="20" width="20" fill={this.state.corIcons} />
-                            </Item>
-                            <View>
+                            <Input editable={isEditable} placeholder='Nome' value={user.username} 
+                                style={{color:blocked, fontFamily:'Aero'}}
+                             onChangeText={this.handleChangeValue(
+                                "username"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
+                        </Item>
+                        <Item >
+                            <Input editable={isEditable} placeholder='Data de Nascimento' value={user.nascimento} 
+                                style={{color:blocked, fontFamily:'Aero'}}
+                             onChangeText={this.handleChangeValue(
+                                "nascimento"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="Date" height="20" width="20" fill="#ddd" />
+                        </Item>
+                        <Item >
+                            <Input editable={isEditable} placeholder='Preço' value={user.preço}
+                            style={{color:blocked, fontFamily:'Aero'}}
+                             onChangeText={this.handleChangeValue(
+                                "preço"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="Money" height="20" width="20" fill="#ddd" />
+                        </Item>
 
-                                <TouchableOpacity style={{}} onPress={this.showPicker}>
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                        <AeroText style={{ paddingLeft: 5, color: '#666' }} >{this.state.nascimento}</AeroText>
+                        <Item >
+                            <Input editable={isEditable} placeholder='Telefone' value={user.telefone} 
+                            style={{color:blocked, fontFamily:'Aero'}}
+                             onChangeText={this.handleChangeValue(
+                                "telefone"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="Phone" height="20" width="20" fill="#ddd" />
+                        </Item>
+                        {/* <Button block disabled={!isEditable} style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', 
+                        marginTop: 20, elevation: 5, display}}
+                        onPress={this.handleSave.bind(this)}
+                        >
+                            <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Alterar </AeroText></Button> */}
+                        {/* <View style={{ height: 40, paddingHorizontal: 10 }}>
+                            <Picker
+                                selectedValue={this.state.language}
+                                style={{ flex: 1, height: 50 }}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({ language: itemValue })
+                                }
+                            >
+                                <Picker.Item label="Português (Brasil)" value="portugues" />
+                                <Picker.Item label="Inglês" value="ingles" />
+                                <Picker.Item label="Espanhol" value="espanhol" />
+                            </Picker>
+                            <Divider style={{ backgroundColor: '#000' }} />
+                        </View> */}
+                    </Form>
 
-                                        <View style={{ paddingHorizontal: 5 }}>
-                                            <IconSVG name='Date' width='20' height='20' fill={this.state.corIcons} />
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                                <Divider style={{ marginTop: 15 }} />
-                            </View>
 
-                            <Item >
-                                <Input placeholder='Email' />
-                                <IconSVG name="Mail" height="20" width="20" fill={this.state.corIcons} />
-                            </Item>
-
-                            <Item >
-                                <Input placeholder='Senha' secureTextEntry={true} />
-                                <IconSVG name="Key" height="20" width="20" fill={this.state.corIcons} />
-                            </Item>
-                            <View style={{ height: 40, paddingHorizontal: 10 }}>
-                                <Picker
-                                    selectedValue={this.state.language}
-                                    style={{ flex: 1, height: 50 }}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        this.setState({ language: itemValue })
-                                    }
-                                >
-                                    <Picker.Item label="Português (Brasil)" value="portugues" />
-                                    <Picker.Item label="Inglês" value="ingles" />
-                                    <Picker.Item label="Espanhol" value="espanhol" />
-                                </Picker>
-                                <Divider style={{ backgroundColor: '#000' }} />
-                            </View>
-                        </View>
-                    </ScrollView>
-                </KeyboardAvoidingView>
+                </Content>
                 <Modal
                     isVisible={this.state.isModalVisible}
                     animationInTiming={300}
                     animationIn="slideInLeft"
                     animationOut="slideOutRight"
-                    coverScreen={true}
+                    coverScreen={false}
                     deviceWidth={deviceWidth}
                     deviceHeight={deviceHeight}
-                    onBackdropPress={() => this.setState({ isModalVisible: false })}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ height: 300, width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                        <View style={{ height: '40%', width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira a sua senha</AeroText>
 
                             <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >
-                                <Input placeholder='Senha' secureTextEntry={true} />
+                                <Input placeholder='Senha' secureTextEntry={true}  
+                                value={credentials.password}
+                                onChangeText={this.handlePassword(
+                                  "password"
+                                ).bind(this)}
+                                />
                                 <IconSVG name="Key" height="20" width="20" fill="#F75400" />
                             </Item>
 
@@ -164,25 +221,21 @@ class Conta extends Component {
                                 <Button style={{ backgroundColor: '#ddd', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
                                     <AeroText style={{ color: 'gray' }} >Cancelar</AeroText>
                                 </Button>
-                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.handleLogin.bind(this)} >
                                     <AeroText style={{ color: 'white' }} >Confirmar</AeroText>
                                 </Button>
                             </View>
                         </View>
                     </View>
                 </Modal>
-                <DateTimePickerModal
-                    mode="date"
-                    isVisible={this.state.isVisible}
-                    onConfirm={this.handlePicker}
-                    onCancel={this.hidePicker}
-                />
-            </Container>
+            </KeyboardAvoidingView>
         )
     }
 }
-
-export default Conta
+const mapStateToProps = state => ({
+    me: state.meTeacher,
+});
+export default connect(mapStateToProps, null)(Conta)
 
 const styles = StyleSheet.create({
     container: {
@@ -191,7 +244,9 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        padding: 30,
+        padding: 20,
+        paddingBottom:0,
+        paddingLeft:0
     },
     header: {
         alignItems: 'flex-start',
