@@ -39,6 +39,7 @@ class MeController extends Controller
         return [
             "name" => $user['name'],
             "email" => $user['email'],
+            "nascimento" => $user['nascimento'],
             "username" => $user['username'],
             "telefone"=> $user['telefone'],
             "preço"=> $user['preço'],

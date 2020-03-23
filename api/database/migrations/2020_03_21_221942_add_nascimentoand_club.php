@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNascimento extends Migration
+class AddNascimentoandClub extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,13 @@ class AddNascimento extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->uuid('club_id')->nullable();
+            $table->date('nascimento')->nullable();
+
+
+            $table->foreign('club_id')
+                ->references('id')
+                ->on('clubs');
         });
     }
 
@@ -26,7 +32,7 @@ class AddNascimento extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            
         });
     }
 }

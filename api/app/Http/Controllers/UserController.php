@@ -25,12 +25,10 @@ class UserController extends Controller
     }
     public function findTeacher()
     {
-        $query = User::query()
+        return User::query()
+        ->with('club')
         ->where('profile', '=', 'TEACHER')
-        ->get()->toArray();
-
-        
-        return $query;
+        ->get();
 
     }
 }

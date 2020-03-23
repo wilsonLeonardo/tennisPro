@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPrice extends Migration
+class ChangeDataNascimentoType extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddPrice extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->double('preço')->nullable();
+            $table->string('nascimento', 10)->change();
         });
     }
 

@@ -48,8 +48,7 @@ class Professores extends Component {
   }
   RenderTeacher = () => this.props.teachers.teacher.map(teacher =>{
     return(
-      <View key={teacher.id}>
-        <Button 
+        <Button key={teacher.id}
                 style={styles.buttonList}
                 onPress={() =>{
                   this.setCurrentItem(teacher),
@@ -60,7 +59,7 @@ class Professores extends Component {
                   <View style={styles.bottom} />
 
                   <View style={{ alignSelf: "center" }}>
-                    <AeroText style={{ paddingBottom: 5, width:'80%' }}>{teacher.name}</AeroText>
+                    <AeroText style={{ paddingBottom: 5, width:'95%' }}>{teacher.name}</AeroText>
                     <AeroText style={{ fontSize: 12, color: 'red' }}>{teacher.nivel}</AeroText>
                   </View>
                 </View>
@@ -73,7 +72,6 @@ class Professores extends Component {
                   </View>
                 </View>
           </Button>
-      </View>
     )
   });
   render() {
@@ -243,6 +241,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     height: 70,
+    width:"100%",
     backgroundColor: "#ffff",
     borderWidth: 2,
     borderRightWidth: 4,

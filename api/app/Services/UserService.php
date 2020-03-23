@@ -32,6 +32,7 @@ class UserService
     public static function updateTeacher($data) {
         $user = User::findOrFail($data['id']);
         $user->fill($data);
+        $user->name = $data['username'];
 
         return $user->save();
     }

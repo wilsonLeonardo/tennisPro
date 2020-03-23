@@ -50,9 +50,9 @@ class HomeTeacher extends Component {
         const deviceHeight = Dimensions.get("window").height
         const {meTeacher} = this.props.me;
 
-            if(!meTeacher) return null
-            
-            return (
+        if(!meTeacher) return null;
+             
+              return (
                 <Container>
                     <View style={styles.header}>
                         <TouchableOpacity
@@ -68,26 +68,26 @@ class HomeTeacher extends Component {
                     </View>
                     <View style={styles.content}>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', width: '100%' }}>
-                            <AeroText style={{ fontSize: 15, color: '#F75400' }}>Dados Pessoais</AeroText>
-                            {/* <Button style={styles.button} >
-                                <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
-                                <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
-                            </Button> */}
+                            <AeroText style={{ fontSize: 17, color: '#F75400' }}>Dados Pessoais</AeroText>
+                            <Button style={styles.button} onPress={() => this.props.navigation.navigate('Perfil')} >
+                                <IconSVG name="Edit" height="15" width="15" fill="#ffff" />
+                                <AeroText style={{ color: '#ffff', marginLeft: 5 }} >Editar</AeroText>
+                            </Button>
                         </View>
                         <View style={{ flex: 1, justifyContent: "space-around" }}>
-                            <Input editable={false} style={{color:'grey'}}
+                            <Input editable={false} inputStyle={{color:'grey', fontFamily:'Aero'}}
                             placeholder='Nome' value={meTeacher.username} rightIcon={<IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />} />
 
-                            <Input editable={false} style={{color:'grey'}}
+                            <Input editable={false} inputStyle={{color:'grey', fontFamily:'Aero'}}
+                            placeholder='Data de Nascimento' value={meTeacher.nascimento} rightIcon={<IconSVG name="Date" height="20" width="20" fill="#ddd" />} />
+
+                            <Input editable={false} inputStyle={{color:'grey', fontFamily:'Aero'}}
                              placeholder='Preço' value={meTeacher.preço} rightIcon={<IconSVG name="Money" height="20" width="20" fill="#ddd" />} />
 
-                            <Input editable={false} style={{color:'grey'}}
+                            <Input editable={false} inputStyle={{color:'grey', fontFamily:'Aero'}}
                             placeholder='Telefone' value={meTeacher.telefone} rightIcon={<IconSVG name="Phone" height="20" width="20" fill="#ddd" />} />
 
-                            <Input editable={false} style={{color:'grey'}}
-                            placeholder='Data de Nascimento' rightIcon={<IconSVG name="Date" height="20" width="20" fill="#ddd" />} />
-
-                            <Input editable={false} style={{color:'grey'}}
+                            <Input editable={false} inputStyle={{color:'grey', fontFamily:'Aero'}}
                             placeholder='Email' value={meTeacher.email} rightIcon={<IconSVG name="Mail" height="20" width="20" fill="#ddd" />} />
 
 
@@ -188,7 +188,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeTeacher)
             alignSelf: 'flex-end',
             justifyContent: "center",
             marginRight: 20,
-            backgroundColor: "#ffff",
+            backgroundColor: "#F75400",
             width: 100,
             borderRadius: 100,
         },

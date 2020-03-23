@@ -37,6 +37,7 @@ class NewCampeonatos extends Component {
                             name='arrowleft'
                             type='AntDesign'
                             style={{ paddingRight: 20, color: 'white' }}
+                            onPress={()=> this.props.navigation.goBack()}
                         >
                             <AeroText style={{ fontSize: 22, color: 'white' }}>  Novo Campeonato</AeroText>
                         </Icon>

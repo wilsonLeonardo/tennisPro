@@ -44,13 +44,13 @@ export default class  TeacherDetails extends Component {
                                 </View>
                                 </View>
                                 <AeroText style={{ color: 'orange', marginTop:7 }}>
-                                Alphaville Esporte Clube
+                                {user.club.name}
                                 </AeroText>
                             </View>
                             <View style={{paddingHorizontal:20}}>
                                 <Divider />
                             </View>
-                            <View style={{ alignItems: "center", paddingBottom: 10, justifyContent:'space-between' }}>
+                            <View style={{ alignItems: "center", paddingBottom: "15%", justifyContent:'space-between' }}>
                                 
                                 <AeroText style={{ fontSize: 20, color: '#455A64' }}>{user.name}</AeroText>
                                 <AeroText style={{ color: 'orange', marginTop:10, fontSize: 20 }}>{user.nivel}</AeroText>

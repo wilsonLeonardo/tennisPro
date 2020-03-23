@@ -7,7 +7,7 @@ import {
     Alert,
     KeyboardAvoidingView
 } from 'react-native';
-import { Button, Container, Item, Input, Icon, Picker } from 'native-base';
+import { Button, Content, Item, Input, Icon, Form } from 'native-base';
 import { Divider } from 'react-native-elements';
 import {connect} from 'react-redux'
 import update from "immutability-helper";
@@ -99,7 +99,7 @@ class Conta extends Component {
             ]);
             this.props.dispatch(teacherActions.loadMeTeacher());
             this.setState({isEditable: false, disabled:"false", blocked:'grey'})
-        }).catch(error => console.log(error));
+        }).catch(error => console.log(error, this.state.user));
     
 
     render() {
@@ -120,40 +120,41 @@ class Conta extends Component {
                         >
                             <AeroText style={{ fontSize: 22, color: 'white' }}>  Conta</AeroText>
                         </Icon>
-                        <Button style={styles.button} onPress={this.toggleModal} >
+                        <Button style={[styles.button, {display: blocked == 'grey' ? 'flex' :'none'}]} onPress={this.toggleModal} >
                             <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
                             <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
+                        </Button>
+                        <Button style={[styles.button, {display: blocked == 'grey' ? 'none' :'flex'}]} onPress={this.handleSave.bind(this)} >
+                            <IconSVG name="Done" height="23" width="18" fill="#F75400" />
+                            <AeroText style={{ color: '#F75400', marginLeft: 5, marginBottom:3 }} >Salvar</AeroText>
                         </Button>
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
 
-                <View style={styles.content} >
-                    <View style={{ flex: 1, justifyContent: "space-around" }}>
+                <Content style={styles.content} >
+                    <Form>
                         <Item >
-                            <Input editable={isEditable} placeholder='Nome' value={user.name} 
-                            style={{color:blocked}}
-                            onChangeText={this.handleChangeValue(
-                                "name"
-                              ).bind(this)}
-                            />
-                            <IconSVG name="Account" height="20" width="20" fill="#ddd" 
-                            
-                            />
-                        </Item>
-                        <Item >
-                            <Input editable={isEditable} placeholder='Username' value={user.username} 
-                                style={{color:blocked}}
+                            <Input editable={isEditable} placeholder='Nome' value={user.username} 
+                                style={{color:blocked, fontFamily:'Aero'}}
                              onChangeText={this.handleChangeValue(
                                 "username"
                               ).bind(this)}
                             />
                             <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
                         </Item>
-
+                        <Item >
+                            <Input editable={isEditable} placeholder='Data de Nascimento' value={user.nascimento} 
+                                style={{color:blocked, fontFamily:'Aero'}}
+                             onChangeText={this.handleChangeValue(
+                                "nascimento"
+                              ).bind(this)}
+                            />
+                            <IconSVG name="Date" height="20" width="20" fill="#ddd" />
+                        </Item>
                         <Item >
                             <Input editable={isEditable} placeholder='Preço' value={user.preço}
-                            style={{color:blocked}}
+                            style={{color:blocked, fontFamily:'Aero'}}
                              onChangeText={this.handleChangeValue(
                                 "preço"
                               ).bind(this)}
@@ -163,15 +164,15 @@ class Conta extends Component {
 
                         <Item >
                             <Input editable={isEditable} placeholder='Telefone' value={user.telefone} 
-                            style={{color:blocked}}
+                            style={{color:blocked, fontFamily:'Aero'}}
                              onChangeText={this.handleChangeValue(
                                 "telefone"
                               ).bind(this)}
                             />
                             <IconSVG name="Phone" height="20" width="20" fill="#ddd" />
                         </Item>
-                        {/* <Button block disabled={!isEditable} style={{ borderRadius: 10, alignItems: 'center', backgroundColor: blocked == 'grey' ? 'grey' : '#F75400', 
-                        marginTop: 20, elevation: 5}}
+                        {/* <Button block disabled={!isEditable} style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', 
+                        marginTop: 20, elevation: 5, display}}
                         onPress={this.handleSave.bind(this)}
                         >
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Alterar </AeroText></Button> */}
@@ -189,10 +190,10 @@ class Conta extends Component {
                             </Picker>
                             <Divider style={{ backgroundColor: '#000' }} />
                         </View> */}
-                    </View>
+                    </Form>
 
 
-                </View>
+                </Content>
                 <Modal
                     isVisible={this.state.isModalVisible}
                     animationInTiming={300}
@@ -243,7 +244,9 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        padding: 30,
+        padding: 20,
+        paddingBottom:0,
+        paddingLeft:0
     },
     header: {
         alignItems: 'flex-start',

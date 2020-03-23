@@ -47,6 +47,8 @@ class HomeClub extends Component {
             <Container>
                 <View style={styles.header}>
                     <TouchableOpacity
+                        onPress={() => this.props.navigation.openDrawer()
+                        }
                     >
                         <IconSVG name='Menu' height='22' width='22' fill='#F75400' />
                     </TouchableOpacity>

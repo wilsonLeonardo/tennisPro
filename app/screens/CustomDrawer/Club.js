@@ -21,8 +21,8 @@ class Club extends Component {
             user:{}
         }
     }
-    componentDidMount(){
-        HttpService
+    async componentDidMount(){
+       await HttpService
             .find('me')
             .then(user => this.setState({user: user}));
     }
@@ -35,34 +35,32 @@ class Club extends Component {
 
     render(){
         const {Username, Email} = this.state.user
-            return (
-                <View style={styles.container}>
-                    <ImageBackground
-                        source={require('../../assets/images/HeaderMenu.png')}
-                        style={styles.imageBack}
-                    >
-                        <View style={styles.image}></View>
-                        
-        
-                        <View style={{ flex: 1 }}>
+        return (
+            <View style={styles.container}>
+                <ImageBackground
+                    source={require('../../assets/images/HeaderMenu.png')}
+                    style={styles.imageBack}
+                >
+                    <View style={styles.image}></View>
+    
+                    
+                    <View style={{ flex: 1 }}>
                         <AeroText style={styles.name}>{Username}</AeroText>
-                            <AeroText style={styles.email}>{Email}</AeroText>
-                        </View>
-                    </ImageBackground>
-                    <ScrollView>
-                        <DrawerNavigatorItems {...this.props} />
-                    </ScrollView>
-        
-                    <TouchableOpacity style={{ padding: 25 }} onPress={() => this.SignOut()}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
-                            <AeroText style={{ color: '#F75400', fontSize: 20, paddingHorizontal: 10 }}>Sair</AeroText>
-                        </View>
-                    </TouchableOpacity>
-        
-                </View>
-
-            )
+                        <AeroText style={styles.email}>{Email}</AeroText>
+                    </View>
+                </ImageBackground>
+                <ScrollView>
+                    <DrawerNavigatorItems {...this.props} />
+                </ScrollView>
+    
+                <TouchableOpacity style={{ padding: 25 }} onPress={() => this.SignOut()}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <IconSVG name='Leave' width='20' height='20' fill='#F75400' />
+                        <AeroText style={{ color: '#F75400', fontSize: 20, paddingHorizontal: 10 }}>Sair</AeroText>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
     }
 }
 

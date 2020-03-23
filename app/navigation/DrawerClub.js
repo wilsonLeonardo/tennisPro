@@ -12,7 +12,7 @@ import IconSVG from '../components/Icon/IconSVG'
 
 const DrawerClub = createDrawerNavigator({
     Home: {
-        screen: (props) => <Home  {...props}/>,
+        screen: props => <Home  {...props}/>,
         navigationOptions: {
             drawerIcon: ({ tintColor }) =>
                 <IconSVG name='Home' fill={tintColor} width='20' height='20' />
@@ -26,14 +26,14 @@ const DrawerClub = createDrawerNavigator({
     //     }
     // },
     NewCampeonatos: {
-        screen: () => <NewCampeonatos />,
+        screen: props => <NewCampeonatos {...props} />,
         navigationOptions: {
             title: 'Campeonatos', drawerIcon: ({ tintColor }) =>
                 <IconSVG name='Trophy' fill={tintColor} width='20' height='20' />
         }
     },
     Perfil: {
-        screen: () => <Conta />,
+        screen: props => <Conta {...props}/>,
         navigationOptions: {
             title: 'Conta', drawerIcon: ({ tintColor }) =>
                 <IconSVG name='Edit' fill={tintColor} width='20' height='20' />

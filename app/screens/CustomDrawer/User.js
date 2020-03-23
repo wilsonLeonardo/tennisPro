@@ -23,8 +23,8 @@ class CustomDrawer extends Component {
             user: {}
         }
     }
-    componentDidMount(){
-        HttpService
+    async componentDidMount(){
+        await HttpService
             .find('me')
             .then(user => this.setState({user: user}));
     }

@@ -38,7 +38,10 @@ class Teacher extends Component {
         logout().then(() => this.props.navigation.navigate('SignedOut'))
     }
     render(){
+        if(!this.props.me.meTeacher) return null
+        
         const {username, email} = this.props.me.meTeacher
+
         return (
             <SafeAreaView style={{ flex: 1 }}>
     
