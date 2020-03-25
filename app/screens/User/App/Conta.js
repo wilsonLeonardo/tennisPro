@@ -45,7 +45,7 @@ class Conta extends Component {
             isVisible3: false,
             editar: 'Editar',
             iconEditar: 'Edit',
-            corIcons:'#ddd'
+            corIcons: '#ddd'
 
         }
     }
@@ -55,7 +55,7 @@ class Conta extends Component {
             isModalVisible: !this.state.isModalVisible,
             editar: 'Salvar',
             iconEditar: 'Done',
-            corIcons:'#000'
+            corIcons: '#000'
         });
     };
 
@@ -121,131 +121,130 @@ class Conta extends Component {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
         return (
-            <Container style={styles.container}>
-                <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
-                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
-                                <IconSVG name='Back' height='25' width='25' fill='white' />
-                            </TouchableOpacity>
-                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Conta</AeroText>
-                        </View>
-                        <Button style={styles.button} onPress={this.toggleModal}>
-                            <IconSVG name={this.state.iconEditar} height="15" width="15" fill="#F75400" />
-                            <AeroText style={{ color: '#F75400', marginLeft: 5 }} >{this.state.editar}</AeroText>
-                        </Button>
-                    </View>
-                    <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
-                </ImageBackground>
+            <Container >
                 <KeyboardAvoidingView
-                    style={styles.content}
-                    behavior={Platform.select({
-                        ios: 'padding',
-                        android: 'padding',
-                    })}
+                    style={styles.container} behavior="padding" enabled
                 >
-                    <ScrollView style={{}}>
-                        <View style={{ justifyContent: "space-around", height: 450 }}>
-                            <Item >
-                                <Input placeholder='Nome' />
+                    <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
+                        <View style={{ flexDirection: 'row', justifyContent: "space-between", width: '100%' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
+                                <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                                    <IconSVG name='Back' height='25' width='25' fill='white' />
+                                </TouchableOpacity>
+                                <AeroText style={{ fontSize: 22, color: 'white' }}>   Conta</AeroText>
+                            </View>
+                            <Button style={styles.button} onPress={this.toggleModal}>
+                                <IconSVG name={this.state.iconEditar} height="15" width="15" fill="#F75400" />
+                                <AeroText style={{ color: '#F75400', marginLeft: 5 }} >{this.state.editar}</AeroText>
+                            </Button>
+                        </View>
+                        <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
+                    </ImageBackground>
+                    <Content padder style={styles.content}>
+
+                        <Form style={{ height: 800, justifyContent: 'space-between' }}>
+                            <Item picker>
+                                <Input placeholder='Nome' style={{ fontFamily: 'Aero' }} />
                                 <IconSVG name="AccountForm" height="20" width="20" fill={this.state.corIcons} />
                             </Item>
-                            <View>
+                            <Item picker>
 
-                                <TouchableOpacity style={{}} onPress={this.showPicker}>
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                        <AeroText style={{ paddingLeft: 5, color: '#666' }} >{this.state.nascimento}</AeroText>
+                                <Button transparent
+                                    style={{ fontFamily: 'Aero', borderBottomWidth: 0.2, borderBottomColor: '#ddd', height: 45, justifyContent: 'center' }}
+                                    onPress={this.showPicker}
+                                >
+                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%' }}>
+                                        <AeroText style={{ paddingLeft: 5, fontSize: 16, color: '#666' }}  >{this.state.nascimento}</AeroText>
 
                                         <View style={{ paddingHorizontal: 5 }}>
-                                            <IconSVG name='Date' width='20' height='20' fill={this.state.corIcons} />
                                         </View>
+                                        <IconSVG name='Date' width='20' height='20' fill={this.state.corIcons} />
                                     </View>
-                                </TouchableOpacity>
-                                <Divider style={{ marginTop: 15 }} />
-                            </View>
+                                </Button>
+                            </Item>
 
-                            <Item >
-                                <Input placeholder='Email' />
+                            <Item picker>
+                                <Input placeholder='Email' style={{ fontFamily: 'Aero' }} />
                                 <IconSVG name="Mail" height="20" width="20" fill={this.state.corIcons} />
                             </Item>
 
-                            <Item >
-                                <Input placeholder='Senha' secureTextEntry={true} />
+                            <Item picker>
+                                <Input placeholder='Senha' secureTextEntry={true} style={{ fontFamily: 'Aero' }} />
                                 <IconSVG name="Key" height="20" width="20" fill={this.state.corIcons} />
                             </Item>
 
-                            <View style={{ height: 40, paddingHorizontal: 10 }}>
+                            <Item picker>
                                 <Picker
                                     selectedValue={this.state.language}
                                     style={{ flex: 1, height: 50 }}
                                     onValueChange={(itemValue, itemIndex) =>
                                         this.setState({ language: itemValue })
                                     }
+
                                 >
                                     <Picker.Item label="Português (Brasil)" value="portugues" />
                                     <Picker.Item label="Inglês" value="ingles" />
                                     <Picker.Item label="Espanhol" value="espanhol" />
                                 </Picker>
                                 <Divider style={{ backgroundColor: '#ddd', height: 1 }} />
-                            </View>
-                        </View>
-                        <View style={{ paddingVertical: 30 }}>
+                            </Item>
+                            <View style={{ paddingVertical: 30 }}>
 
-                            <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                                <AeroText style={{ color: '#F75400', fontSize: 18 }}>Clubes</AeroText>
-                                <View style={styles.bottonAdd}>
-                                    <IconSVG name="Add" height="15" width="15" fill="#fff" />
+                                <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
+                                    <AeroText style={{ color: '#F75400', fontSize: 18 }}>Clubes</AeroText>
+                                    <View style={styles.bottonAdd}>
+                                        <IconSVG name="Add" height="15" width="15" fill="#fff" />
+                                    </View>
+                                </View>
+                                <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
+                                    <AeroText style={{ color: "#808080" }}>Alphaville Esporte Clube</AeroText>
+                                    <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                        <IconSVG name="Remove" height="15" width="15" fill="#ddd" />
+                                    </View>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
-                                <AeroText style={{ color: "#808080" }}>Alphaville Esporte Clube</AeroText>
-                                <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
-                                    <IconSVG name="Remove" height="15" width="15" fill="#ddd" />
-                                </View>
-                            </View>
-                        </View>
 
-                        <View>
-                            <AeroText style={{ color: '#F75400', fontSize: 18 }}>Disponibilidade</AeroText>
-                            <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
-                                <TouchableOpacity style={this.state.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
-                                    onPress={this.state.seg ? () => this.setState({ seg: false }) : () => this.setState({ seg: true })}
-                                    value={this.state.seg}>
-                                    <AeroText style={this.state.seg ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Seg</AeroText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={this.state.ter ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
-                                    onPress={this.state.ter ? () => this.setState({ ter: false }) : () => this.setState({ ter: true })}
-                                    value={this.state.ter}>
-                                    <AeroText style={this.state.ter ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Ter</AeroText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={this.state.qua ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
-                                    onPress={this.state.qua ? () => this.setState({ qua: false }) : () => this.setState({ qua: true })}
-                                    value={this.state.qua}>
-                                    <AeroText style={this.state.qua ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana}  >Qua</AeroText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={this.state.qui ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
-                                    onPress={this.state.qui ? () => this.setState({ qui: false }) : () => this.setState({ qui: true })}
-                                    value={this.state.qui}>
-                                    <AeroText style={this.state.qui ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Qui</AeroText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={this.state.sex ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
-                                    onPress={this.state.sex ? () => this.setState({ sex: false }) : () => this.setState({ sex: true })}
-                                    value={this.state.sex}>
-                                    <AeroText style={this.state.sex ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sex</AeroText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={this.state.sab ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
-                                    onPress={this.state.sab ? () => this.setState({ sab: false }) : () => this.setState({ sab: true })}
-                                    value={this.state.sab}>
-                                    <AeroText style={this.state.sab ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sab</AeroText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={this.state.dom ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
-                                    onPress={this.state.dom ? () => this.setState({ dom: false }) : () => this.setState({ dom: true })}
-                                    value={this.state.dom}>
-                                    <AeroText style={this.state.dom ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Dom</AeroText>
-                                </TouchableOpacity>
-                            </View>
-                            <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
-                                {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                            <View>
+                                <AeroText style={{ color: '#F75400', fontSize: 18 }}>Disponibilidade</AeroText>
+                                <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
+                                    <TouchableOpacity style={this.state.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                        onPress={this.state.seg ? () => this.setState({ seg: false }) : () => this.setState({ seg: true })}
+                                        value={this.state.seg}>
+                                        <AeroText style={this.state.seg ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Seg</AeroText>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={this.state.ter ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                        onPress={this.state.ter ? () => this.setState({ ter: false }) : () => this.setState({ ter: true })}
+                                        value={this.state.ter}>
+                                        <AeroText style={this.state.ter ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Ter</AeroText>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={this.state.qua ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                        onPress={this.state.qua ? () => this.setState({ qua: false }) : () => this.setState({ qua: true })}
+                                        value={this.state.qua}>
+                                        <AeroText style={this.state.qua ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana}  >Qua</AeroText>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={this.state.qui ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                        onPress={this.state.qui ? () => this.setState({ qui: false }) : () => this.setState({ qui: true })}
+                                        value={this.state.qui}>
+                                        <AeroText style={this.state.qui ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Qui</AeroText>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={this.state.sex ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                        onPress={this.state.sex ? () => this.setState({ sex: false }) : () => this.setState({ sex: true })}
+                                        value={this.state.sex}>
+                                        <AeroText style={this.state.sex ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sex</AeroText>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={this.state.sab ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                        onPress={this.state.sab ? () => this.setState({ sab: false }) : () => this.setState({ sab: true })}
+                                        value={this.state.sab}>
+                                        <AeroText style={this.state.sab ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Sab</AeroText>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={this.state.dom ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
+                                        onPress={this.state.dom ? () => this.setState({ dom: false }) : () => this.setState({ dom: true })}
+                                        value={this.state.dom}>
+                                        <AeroText style={this.state.dom ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Dom</AeroText>
+                                    </TouchableOpacity>
+                                </View>
+                                <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
+                                    {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
                                 placeholder='Entrada'
@@ -253,18 +252,18 @@ class Conta extends Component {
                                 value={this.state.entrada}
                             />
                         </Item> */}
-                                <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker2} >
-                                    <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems:'center' }}>
+                                    <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker2} >
+                                        <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems: 'center' }}>
 
-                                        <AeroText style={{}}>
-                                            {this.state.entrada}
-                                        </AeroText>
+                                            <AeroText style={{}}>
+                                                {this.state.entrada}
+                                            </AeroText>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={{ justifyContent: "center", height: 40, width: 35 }}>
+                                        <AeroText style={{}}> até</AeroText>
                                     </View>
-                                </TouchableOpacity>
-                                <View style={{ justifyContent: "center", height: 40, width: 35 }}>
-                                    <AeroText style={{}}> até</AeroText>
-                                </View>
-                                {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                                    {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
                                 placeholder='Saída'
@@ -272,18 +271,19 @@ class Conta extends Component {
                                 value={this.state.saida}
                             />
                         </Item> */}
-                                <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker3} >
-                                    <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems:'center' }}>
+                                    <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker3} >
+                                        <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems: 'center' }}>
 
-                                        <AeroText style={{}}>
-                                            {this.state.saida}
-                                        </AeroText>
-                                    </View>
-                                </TouchableOpacity>
-                            </Form>
+                                            <AeroText style={{}}>
+                                                {this.state.saida}
+                                            </AeroText>
+                                        </View>
+                                    </TouchableOpacity>
+                                </Form>
 
-                        </View>
-                    </ScrollView>
+                            </View>
+                        </Form>
+                    </Content>
                 </KeyboardAvoidingView>
                 <Modal
                     isVisible={this.state.isModalVisible}
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     content: {
-        padding: 30,
+        flex: 1
     },
     header: {
         alignItems: 'flex-start',

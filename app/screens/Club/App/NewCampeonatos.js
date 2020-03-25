@@ -31,34 +31,30 @@ class NewCampeonatos extends Component {
 
     render() {
         return (
-            <Container style={styles.container}>
-                <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <View style={{ width: '100%' }}>
-                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
-                                <IconSVG name='Back' height='25' width='25' fill='white' />
-                            </TouchableOpacity>
-                            <AeroText style={{ fontSize: 22, color: 'white' }}>   Novo Campeonato</AeroText>
-                        </View>
-                    </View>
-                </ImageBackground>
+            <Container>
                 <KeyboardAvoidingView
-                    style={styles.content}
-                    behavior={Platform.select({
-                        ios: 'padding',
-                        android: 'padding',
-                    })}
-                >
+                    style={styles.container} behavior="padding" enabled>
+                    <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
+                        <View style={{ width: '100%' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
+                                <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                                    <IconSVG name='Back' height='25' width='25' fill='white' />
+                                </TouchableOpacity>
+                                <AeroText style={{ fontSize: 22, color: 'white' }}>   Novo Campeonato</AeroText>
+                            </View>
+                        </View>
+                    </ImageBackground>
 
+                    <Content padder>
 
-                    <ScrollView>
+                        <Form>
 
-                            <Item >
-                                <Input placeholder='Endereço' />
+                            <Item picker >
+                                <Input placeholder='Endereço' style={{fontFamily:'Aero'}} />
                             </Item>
 
-                            <Item style={{ marginVertical: 20, marginBottom: 20 }}>
-                                <Input placeholder='Nome' />
+                            <Item picker style={{ marginVertical: 20, marginBottom: 20 }}>
+                                <Input placeholder='Nome' style={{fontFamily:'Aero'}} />
                             </Item>
 
                             <View style={{ flexDirection: 'row', justifyContent: "space-between", marginVertical: 10 }}>
@@ -84,11 +80,12 @@ class NewCampeonatos extends Component {
                                 </View>
                             </View>
 
-                            <Item style={{ marginTop: 20 }}>
-                                <Input placeholder='Taxa de inscrição' />
+                            <Item picker style={{ marginTop: 20 }}>
+                                <Input placeholder='Taxa de inscrição' style={{ fontFamily: 'Aero' }} />
                             </Item>
                             <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 40, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
-                    </ScrollView>
+                        </Form>
+                    </Content>
                 </KeyboardAvoidingView>
             </Container>
         )

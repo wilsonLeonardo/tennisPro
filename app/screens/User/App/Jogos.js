@@ -8,7 +8,7 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity
 } from 'react-native';
-import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
+import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer, Fab } from 'native-base';
 import Modal from "react-native-modal";
 
 import { AeroText } from '../../../components/StyledText';
@@ -27,9 +27,14 @@ class Jogos extends Component {
                 itemValue: '',
                 itemIndex: ''
             },
+            active: false,
             isModalVisible: false,
             isVisible: false,
-            data: 'Selecione a data'
+            data: 'Selecione a data',
+            jogos: {
+                marcados: false,
+                pendentes: false
+            }
         }
     }
 
@@ -61,8 +66,8 @@ class Jogos extends Component {
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start" }}>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", height: 60 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: "flex-start" }}>
                             <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
                                 <IconSVG name='Back' height='25' width='25' fill='white' />
                             </TouchableOpacity>
@@ -75,28 +80,77 @@ class Jogos extends Component {
                             <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
                         </Button>
                     </View>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around' }}>
+                        <Button
+                            style={this.state.jogos.marcados ? styles.buttonPress : styles.button}
+                            onPress={this.state.jogos.marcados ? () => this.setState({ jogos: { marcados: false } }) : () => this.setState({ jogos: { marcados: true } })}
+                            value={this.state.jogos.marcados}
+                        >
+                            <AeroText style={this.state.jogos.marcados ? styles.textButtonPress : styles.textButton1} >Marcados</AeroText>
+                        </Button>
+                        <Button
+                            style={this.state.jogos.pendentes ? styles.buttonPress : styles.button}
+                            onPress={this.state.jogos.pendentes ? () => this.setState({ jogos: { pendentes: false } }) : () => this.setState({ jogos: { pendentes: true } })}
+                            value={this.state.jogos.pendentes}
+                        >
+                            <AeroText style={this.state.jogos.pendentes ? styles.textButtonPress : styles.textButton1} >Pendentes</AeroText>
+                        </Button>
+                    </View>
                 </ImageBackground>
                 <ScrollView>
                     <View style={styles.content}>
+                        <View style={{ height: 150 }}>
 
-                        <Button style={styles.buttonList}>
-                            <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginLeft: -20 }} />
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
+                            <View style={styles.buttonList}>
+                                <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginLeft: -20 }} />
+                                <AeroText style={{ padding: 10 }}>Nome</AeroText>
 
-                            <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+                                <View style={{ flexDirection: 'row', alignItems: "flex-start", justifyContent: 'space-between' }}>
+                                    <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: -40, marginTop: 40 }}>
+                                        <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'green', justifyContent: "center", alignItems: "center" }}>
+                                            <IconSVG name='Done' height='26' width='26' fill='white' />
+                                        </View>
+                                        <AeroText style={{ marginTop: 5, color: 'green', fontSize: 10 }}>VITÓRIA</AeroText>
+                                    </TouchableOpacity>
 
-                            <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                            <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} />
-                            <View style={{ alignItems: "flex-end", marginRight: -25 }}>
+                                    <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+                                    <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: 40, marginTop: 40 }}>
+                                        <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'red', justifyContent: "center", alignItems: "center" }}>
+                                            <IconSVG name='Close' height='23' width='23' fill='white' />
+                                        </View>
+                                        <AeroText style={{ marginTop: 5, color: 'red', fontSize: 10 }}>DERROTA</AeroText>
+                                    </TouchableOpacity>
+                                </View>
 
-                                <View style={{ position: "absolute", width: 40, height: 40, borderRadius: 50, backgroundColor: 'orange', justifyContent: "center", alignItems: "center" }}>
-                                    <ChatIcon />
+
+                                <AeroText style={{ padding: 10 }}>Nome</AeroText>
+                                <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} />
+                                <View style={{ alignItems: "flex-end", marginRight: -25 }}>
+
+                                    <TouchableOpacity style={{ position: "absolute", width: 40, height: 40, borderRadius: 50, backgroundColor: 'orange', justifyContent: "center", alignItems: "center" }}
+                                        onPress={() => this.props.navigation.navigate('Chat')}
+                                    >
+                                        <ChatIcon />
+                                    </TouchableOpacity>
                                 </View>
                             </View>
-                        </Button>
+                        </View>
+
 
                     </View>
                 </ScrollView>
+                <View style={{ flex: 1 }}>
+
+                    <Fab
+                        active={this.state.active}
+                        direction="up"
+                        containerStyle={{}}
+                        style={{ height: 80, width: 80, borderRadius: 50, backgroundColor: '#F75400' }}
+                        position="bottomRight"
+                        onPress={() => [this.setState({ active: !this.state.active }), this.props.navigation.navigate('NewJogo')]}>
+                        <IconSVG name='Add' width='30' height='30' fill='white' />
+                    </Fab>
+                </View>
                 <DateTimePickerModal
                     mode="date"
                     isVisible={this.state.isVisible}
@@ -112,7 +166,7 @@ class Jogos extends Component {
                             </TouchableWithoutFeedback>
                             <View style={{ backgroundColor: '#CCCCCC', flex: 1, flexDirection: 'row', alignItems: "flex-end" }}>
                                 <View style={{ backgroundColor: 'white', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
-                                    <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FitroBottom}>
+                                    <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.FiltroButton}>
                                         <TouchableWithoutFeedback
                                             style={{ paddingVertical: 20 }}
                                             onPress={this.toggleModal}
@@ -184,7 +238,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
     },
     header: {
-        flexDirection: 'row',
         height: 200,
         justifyContent: 'space-between',
         paddingTop: 40,
@@ -200,8 +253,9 @@ const styles = StyleSheet.create({
         color: '#F75400'
     },
     buttonList: {
-        flex: 1,
+        width: '100%',
         justifyContent: "space-between",
+        alignItems: 'center',
         marginVertical: 20,
         flexDirection: "row",
         height: 70,
@@ -216,7 +270,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 2,
         shadowRadius: 9,
     },
-    FitroBottom: {
+    FiltroButton: {
         width: '100%',
         height: 100,
         borderTopLeftRadius: 20,
@@ -227,5 +281,27 @@ const styles = StyleSheet.create({
     },
     txtFiltro: {
         color: '#F75400'
+    },
+    button: {
+        flexDirection: 'column',
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        backgroundColor: "#E2E2E2",
+        width: 130,
+        borderRadius: 100,
+    },
+    buttonPress: {
+        flexDirection: 'column',
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        backgroundColor: "#F75400",
+        width: 130,
+        borderRadius: 100,
+    },
+    textButton1: {
+        color: 'gray'
+    },
+    textButtonPress: {
+        color: 'white'
     },
 });

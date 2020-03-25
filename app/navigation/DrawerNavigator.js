@@ -11,6 +11,7 @@ import Home from '../screens/User/App/Home'
 import Mensagens from '../screens/User/App/Mensagens'
 import Conta from '../screens/User/App/Conta'
 import Chat from '../screens/User/App/Chat'
+import NewJogo from '../screens/User/App/NewJogo'
 
 import CustomDrawer from '../screens/CustomDrawer/User'
 import IconSVG from '../components/Icon/IconSVG'
@@ -78,6 +79,9 @@ const DrawerNavigator = createDrawerNavigator({
             drawerIcon: ({ tintColor }) =>
                 <IconSVG name='Config' fill={tintColor} width='20' height='20' />
         }
+    },
+    NewJogo: {
+        screen: (props) => <NewJogo {...props}/>,
     },
     Chat: {
         screen: (props) => <Chat {...props}/>,

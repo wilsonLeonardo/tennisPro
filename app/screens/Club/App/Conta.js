@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Button, Content, Form, Item, Input, Icon, Picker } from 'native-base';
 import { Divider } from 'react-native-elements';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import update from "immutability-helper";
 
 import { AeroText } from '../../../components/StyledText';
@@ -41,72 +41,72 @@ class Conta extends Component {
             blocked: 'grey'
         }
     }
-    async componentDidMount(){
+    async componentDidMount() {
         await HttpService
             .find('club')
-            .then(user => this.setState({user: user, credentials:{email: user.email}}))
+            .then(user => this.setState({ user: user, credentials: { email: user.email } }))
     }
-    handleLogin = () => {    
-        if(!this.state.credentials.password){
+    handleLogin = () => {
+        if (!this.state.credentials.password) {
             Alert.alert('Editar', 'Insira sua senha')
-        }else{
+        } else {
             HttpService.login(this.state.credentials)
-                   .then(() => this.passwordEnter())
-                   .catch(err => {
-                     console.log(err);
-                     return Alert.alert(
-                       "Editar",
-                       err.response.data.error === "Unauthorized"
-                                       ? "Senha incorreta"
-                                       : err.response.data.error
-                       );
-                     })
-                     .finally(() => this.setState({ loading: false }));   
+                .then(() => this.passwordEnter())
+                .catch(err => {
+                    console.log(err);
+                    return Alert.alert(
+                        "Editar",
+                        err.response.data.error === "Unauthorized"
+                            ? "Senha incorreta"
+                            : err.response.data.error
+                    );
+                })
+                .finally(() => this.setState({ loading: false }));
         }
     };
     handlePassword = name => value =>
         this.setState(
-          update(this.state, {
-            credentials: {
-              [name]: { $set: value }
-            },
-            user:{
-              [name]: { $set: value }
-            }
-          })
-    );
+            update(this.state, {
+                credentials: {
+                    [name]: { $set: value }
+                },
+                user: {
+                    [name]: { $set: value }
+                }
+            })
+        );
     handleChangeValue = name => value =>
         this.setState(
-          update(this.state, {
-            user: {
-              [name]: { $set: value }
-            }
-          })
-    );
+            update(this.state, {
+                user: {
+                    [name]: { $set: value }
+                }
+            })
+        );
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
     passwordEnter = () => {
-        this.setState({ isModalVisible: false, isEditable: true, display:"false", blocked:'black', credentials:{password: ''} });
+        this.setState({ isModalVisible: false, isEditable: true, display: "false", blocked: 'black', credentials: { password: '' } });
     };
     handleSave = () => HttpService
         .update('club', {}, this.state.user)
         .then(() => {
             console.log(this.state.user)
-            Alert.alert('Meus dados', 'Seus dados foram alterados com sucesso.',[
-                {text: 'OK'}
+            Alert.alert('Meus dados', 'Seus dados foram alterados com sucesso.', [
+                { text: 'OK' }
             ]);
-            this.setState({isEditable: false, disabled:"false", blocked:'grey'})
+            this.setState({ isEditable: false, disabled: "false", blocked: 'grey' })
         }).catch(error => console.log(error));
-    
+
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
-        const {isEditable, credentials, user, blocked} = this.state;
+        const { isEditable, credentials, user, blocked } = this.state;
 
-        
+
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
@@ -119,75 +119,74 @@ class Conta extends Component {
                         >
                             <AeroText style={{ fontSize: 22, color: 'white' }}>  Conta</AeroText>
                         </Icon>
-                        <Button style={[styles.button, {display: blocked == 'grey' ? 'flex' :'none'}]} onPress={this.toggleModal} >
+                        <Button style={[styles.button, { display: blocked == 'grey' ? 'flex' : 'none' }]} onPress={this.toggleModal} >
                             <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
                             <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
                         </Button>
-                        <Button style={[styles.button, {display: blocked == 'grey' ? 'none' :'flex'}]} onPress={this.handleSave.bind(this)} >
+                        <Button style={[styles.button, { display: blocked == 'grey' ? 'none' : 'flex' }]} onPress={this.handleSave.bind(this)} >
                             <IconSVG name="Done" height="23" width="18" fill="#F75400" />
-                            <AeroText style={{ color: '#F75400', marginLeft: 5, marginBottom:3 }} >Salvar</AeroText>
+                            <AeroText style={{ color: '#F75400', marginLeft: 5, marginBottom: 3 }} >Salvar</AeroText>
                         </Button>
                     </View>
                     <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
                 </ImageBackground>
-                <Content style={styles.content}>
-                    <Form  >
-                        <View style={{ flex: 1, justifyContent: "space-around" }}>
-                            <Item >
-                                <Input editable={isEditable} placeholder='Nome' value={user.name} 
-                                style={{color:blocked, fontFamily:'Aero'}}
+                <Content padder>
+                    <Form style={{height:600, justifyContent:'space-between'}} >
+                        <Item picker>
+                            <Input editable={isEditable} placeholder='Nome' value={user.name}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "name"
                                 ).bind(this)}
-                                />
-                                <IconSVG name="Account" height="20" width="20" fill="#ddd" 
-                                
-                                />
-                            </Item>
-                            <Item >
-                                <Input editable={isEditable} placeholder='Nº de Quadras' value={user.quadras} 
-                                style={{color:blocked, fontFamily:'Aero'}}
+                            />
+                            <IconSVG name="Account" height="20" width="20" fill="#ddd"
+
+                            />
+                        </Item>
+                        <Item picker >
+                            <Input editable={isEditable} placeholder='Nº de Quadras' value={user.quadras}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "quadras"
                                 ).bind(this)}
-                                />
-                                <IconSVG name="Boll" height="20" width="20" fill="#ddd" 
-                                
-                                />
-                            </Item>
-                            <Item >
-                                <Input editable={isEditable} placeholder='Preço do Aluguel' value={user.aluguel_price} 
-                                style={{color:blocked, fontFamily:'Aero'}}
+                            />
+                            <IconSVG name="Boll" height="20" width="20" fill="#ddd"
+
+                            />
+                        </Item>
+                        <Item picker>
+                            <Input editable={isEditable} placeholder='Preço do Aluguel' value={user.aluguel_price}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "aluguel_price"
                                 ).bind(this)}
-                                />
-                                <IconSVG name="Money" height="20" width="20" fill="#ddd" 
-                                
-                                />
-                            </Item>
-                            <Item >
-                                <Input editable={isEditable} placeholder='Preço da Mensalidade' value={user.mensal_price} 
-                                style={{color:blocked, fontFamily:'Aero'}}
+                            />
+                            <IconSVG name="Money" height="20" width="20" fill="#ddd"
+
+                            />
+                        </Item>
+                        <Item picker>
+                            <Input editable={isEditable} placeholder='Preço da Mensalidade' value={user.mensal_price}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "mensal_price"
                                 ).bind(this)}
-                                />
-                                <IconSVG name="Money" height="20" width="20" fill="#ddff" 
-                                
-                                />
-                            </Item>
-                            <Item >
-                                <Input editable={isEditable} placeholder='CEP' value={user.cep} 
-                                    style={{color:blocked, fontFamily:'Aero'}}
+                            />
+                            <IconSVG name="Money" height="20" width="20" fill="#ddff"
+
+                            />
+                        </Item>
+                        <Item picker>
+                            <Input editable={isEditable} placeholder='CEP' value={user.cep}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "cep"
                                 ).bind(this)}
-                                />
-                                <IconSVG name="Location" height="20" width="20" fill="#ddd" />
-                            </Item>
+                            />
+                            <IconSVG name="Location" height="20" width="20" fill="#ddd" />
+                        </Item>
 
-                            {/* <Item >
+                        {/* <Item >
                                 <Input editable={isEditable} placeholder='Preço' value={user.preço}
                                 style={{color:blocked}}
                                 onChangeText={this.handleChangeValue(
@@ -197,16 +196,16 @@ class Conta extends Component {
                                 <IconSVG name="Money" height="20" width="20" fill="#ddd" />
                             </Item> */}
 
-                            <Item >
-                                <Input editable={isEditable} placeholder='Telefone' value={user.telefone} 
-                                    style={{color:blocked, fontFamily:'Aero'}}
+                        <Item picker >
+                            <Input editable={isEditable} placeholder='Telefone' value={user.telefone}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "telefone"
                                 ).bind(this)}
-                                />
-                                <IconSVG name="Phone" height="20" width="20" fill="#ddd" />
-                            </Item>
-                            {/* <View style={{ height: 40, paddingHorizontal: 10 }}>
+                            />
+                            <IconSVG name="Phone" height="20" width="20" fill="#ddd" />
+                        </Item>
+                        {/* <View style={{ height: 40, paddingHorizontal: 10 }}>
                                 <Picker
                                     selectedValue={this.state.language}
                                     style={{ flex: 1, height: 50 }}
@@ -220,7 +219,6 @@ class Conta extends Component {
                                 </Picker>
                                 <Divider style={{ backgroundColor: '#000' }} />
                             </View> */}
-                        </View>
 
 
                     </Form>
@@ -239,11 +237,11 @@ class Conta extends Component {
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira a sua senha</AeroText>
 
                             <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >
-                                <Input placeholder='Senha' secureTextEntry={true}  
-                                value={credentials.password}
-                                onChangeText={this.handlePassword(
-                                  "password"
-                                ).bind(this)}
+                                <Input placeholder='Senha' secureTextEntry={true}
+                                    value={credentials.password}
+                                    onChangeText={this.handlePassword(
+                                        "password"
+                                    ).bind(this)}
                                 />
                                 <IconSVG name="Key" height="20" width="20" fill="#F75400" />
                             </Item>
@@ -276,7 +274,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         padding: 20,
-        paddingLeft:0
+        paddingLeft: 0
     },
     header: {
         alignItems: 'flex-start',
