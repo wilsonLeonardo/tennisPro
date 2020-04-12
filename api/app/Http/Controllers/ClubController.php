@@ -7,6 +7,7 @@ use App\Model\User;
 use App\Model\Club;
 use App\Services\ClubService;
 use App\Traits\RestControllerTrait;
+use Illuminate\Support\Facades\DB;
 
 class ClubController extends Controller
 {
@@ -18,6 +19,12 @@ class ClubController extends Controller
         
         return $this->respondWithToken(
             auth('api')->login(ClubService::createUser($request->all(), $clubId)));
+    }
+    public function find()
+    {
+        $clubs = DB::table('clubs')->select('id', 'name')->get();
+
+        return $clubs;
     }
 
     public function update(Request $request)
@@ -34,12 +41,11 @@ class ClubController extends Controller
 
     public function index()
     {
-        $user = User::findOrFail(auth()->user()->getAuthIdentifier());
-        $club = Club::findOrFail($user['club_id']);
-
+        $user = User::query()->with('clubs.club')->findOrFail(auth()->user()->getAuthIdentifier());
+        $club = $user->toArray()['clubs'][0]['club'];
 
         return [
-            "name" => $club['name'],
+            "name" => $user['name'],
             "email" => $user['email'],
             "telefone"=> $club['telefone'],
             "cep"=> "".$club['cep']."",

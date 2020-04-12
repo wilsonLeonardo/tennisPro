@@ -4,7 +4,9 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    ActivityIndicator,
+    Image
 } from 'react-native';
 import { Button, Container, Item,Icon, Picker, Fab, Left,Right,Header } from 'native-base';
 import { Input, Divider } from 'react-native-elements';
@@ -48,8 +50,8 @@ class HomeTeacher extends Component {
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
-        const {meTeacher} = this.props.me;
-
+        const {meTeacher, loading} = this.props.me;
+            
         if(!meTeacher) return null;
              
               return (
@@ -63,9 +65,14 @@ class HomeTeacher extends Component {
                             <IconSVG name='Menu' height='22' width='22' fill='#F75400' />
                         </TouchableOpacity>
                         <ImageBackground
-                            source={require('../../../assets/images/Conta.png')} style={styles.imgUser}
-                        />
+                        source={require('../../../assets/images/Conta.png')} style={styles.imgUser}
+                    >
+                      {loading ?  <ActivityIndicator color="black" style={{        marginLeft:"16%",
+        marginBottom:"25%"}} /> :  this.props.me.meTeacher.avatarUri && <Image resizeMode='cover' source={{uri:  this.props.me.meTeacher.avatarUri}} style={styles.avatar}></Image>}
+                    </ImageBackground>
                     </View>
+                    {
+                    loading ? <ActivityIndicator color="#F75400" />  :
                     <View style={styles.content}>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', width: '100%' }}>
                             <AeroText style={{ fontSize: 17, color: '#F75400' }}>Dados Pessoais</AeroText>
@@ -109,6 +116,7 @@ class HomeTeacher extends Component {
 
 
                     </View>
+                    }
                     {/* <Fab
                         active={this.state.active}
                         direction="up"
@@ -183,6 +191,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeTeacher)
         imgUser: {
             width: 70,
             height: 70,
+            alignItems: 'center',
+            justifyContent: 'center',
         },
         button: {
             alignSelf: 'flex-end',
@@ -260,6 +270,24 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeTeacher)
             flex: 1,
             padding: 30,
             alignItems: "flex-start"
-        }
+        },
+        avatar:{
+            width: 30,
+            height: 30,
+            marginLeft:"16%",
+            marginBottom:"25%",
+            backgroundColor: '#ffff',
+            shadowColor: '#000000',
+            shadowOffset: {
+                width: 0,
+                height: 5
+            },
+            shadowRadius: 10,
+            shadowOpacity: 0.9,
+            borderRadius: 50,
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
     });
 

@@ -5,7 +5,8 @@ import {
     StyleSheet,
     ImageBackground,
     SafeAreaView,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
@@ -16,6 +17,12 @@ import HttpService from '../../service/HttpService'
 import * as userActions from '../../store/user/actions'
 import * as teacherActions from '../../store/teacher/actions'
 import {connect} from 'react-redux'
+import { NavigationActions, StackActions } from 'react-navigation';
+
+const resetAction = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'SignedOut' })],
+});
 
 class Teacher extends Component {
     constructor(props){
@@ -31,16 +38,45 @@ class Teacher extends Component {
         ])
     }
     SignOutConfirm(){
+        logout().then(() => this.props.navigation.navigate('SignedOut'))
         this.props.dispatch(
             userActions.clear(),
             teacherActions.clear()
-        )
-        logout().then(() => this.props.navigation.navigate('SignedOut'))
+        ),
+        this.props.navigation.dispatch(resetAction)
+    }
+
+    Avatar = () => {
+        const { avatarUri, loading } = this.props;
+
+        const Avatar = () => (
+            <Image
+                resizeMode="cover"
+                source={{uri: avatarUri}}
+                style={styles.imgUser}
+            />
+        );
+
+        if (loading) {
+            return (
+                <View
+                style={styles.image}
+                >
+                    <ActivityIndicator color="black" />
+                </View>
+            )
+        }
+
+        return (
+            <View style={styles.image}>
+                {avatarUri ? <Avatar/> : null}
+            </View>
+        );
     }
     render(){
         if(!this.props.me.meTeacher) return null
         
-        const {username, email} = this.props.me.meTeacher
+        const {username, email, loading} = this.props.me.meTeacher
 
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -50,13 +86,16 @@ class Teacher extends Component {
                         source={require('../../assets/images/HeaderMenu.png')}
                         style={styles.imageBack}
                     >
-                        <View style={styles.image}></View>
-    
-    
+                        <View style={styles.image}>
+                            <this.Avatar/>
+                    </View>
+                    {!loading ?
                         <View style={{ flex: 1 }}>
                             <AeroText style={styles.name}>{username}</AeroText>
                             <AeroText style={styles.email}>{email}</AeroText>
                         </View>
+                        : null
+                    }
                     </ImageBackground>
                     <ScrollView>
                         <DrawerNavigatorItems {...this.props} />
@@ -75,7 +114,9 @@ class Teacher extends Component {
     }
 }
 const mapStateToProps = state => ({
-    me: state.meTeacher
+    me: state.meTeacher,
+    loading:state.meTeacher.loading,
+    avatarUri: state.meTeacher.meTeacher.avatarUri ? state.meTeacher.meTeacher.avatarUri : null
 })
 
 export default connect(mapStateToProps, null)(Teacher)
@@ -106,10 +147,26 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     image: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 50,
         width: 60,
-        height: 60
+        height: 60,
+        backgroundColor: '#ffff',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.9,
+        borderRadius: 50,
+        elevation: 5,
+        overflow: 'hidden',
+        margin:20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    imgUser: {
+        width: 70,
+        height: 70,
+        borderRadius: 50,
     },
 });

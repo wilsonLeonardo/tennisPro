@@ -2,20 +2,24 @@ import * as types from './actionTypes'
 import Immutable from 'seamless-immutable'
 
 const initialState =Immutable({
-    data: []
+    cep: '',
+    name: '',
+    telefone: '',
+    email: '',
+    password: ''
 });
 
 export default function reduce(state = initialState, action = {}){
     switch (action.type) {
         case types.CLUB_ADD_DADOS:
             return state.merge({
-                data: action.data
+                cep: action.data.cep,
+                name: action.data.nome,
+                telefone: action.data.telefone,
+                email: action.data.email,
+                password: action.data.senha
             });
-        case types.CLUB_ADD_DISPO:
-            return state.merge({
-                data: state.data.action(action.dispo)
-            })
             default:
-                return state
+                return initialState
     }
 }

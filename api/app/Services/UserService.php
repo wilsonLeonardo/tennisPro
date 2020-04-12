@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Model\ActivityBranch;
 use App\Model\Media;
 use App\Model\User;
+use App\Model\ClubUser;
+use App\Model\Club;
 
 class UserService
 {
@@ -17,19 +19,22 @@ class UserService
         $user->profile = $data['profile'];
         $user->remember_token = str_random(10);
         $user->status = 'ACTIVE';
-
+        
         $user->save();
 
+        if(isset($data['clube'])){
+            $club = new ClubUser();
+
+            $club->club()->associate(Club::findOrfail($data['clube']));
+            $club->user()->associate(User::findOrfail($user->id));
+
+            $club->save();
+        }
+        
         return $user;
     }
 
     public static function update($data) {
-        $user = User::findOrFail($data['id']);
-        $user->fill($data);
-
-        return $user->save();
-    }
-    public static function updateTeacher($data) {
         $user = User::findOrFail($data['id']);
         $user->fill($data);
         $user->name = $data['username'];

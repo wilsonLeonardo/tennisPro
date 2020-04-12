@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Connect, connect } from 'react-redux'
-import { addDados } from '../../../store/clubRegister/actions'
+import * as clubAction from '../../../store/clubRegister/actions'
 import {
     Image,
     StyleSheet,
@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView
 } from 'react-native';
+import update from "immutability-helper";
 import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'native-base';
 
 import { AeroText } from '../../../components/StyledText';
@@ -30,10 +31,17 @@ class ClubDataScreen extends Component {
     }
 
     addDados = () => {
-        this.props.onAddDados({ ...this.state })
+        this.props.dispatch(clubAction.addDados({...this.state}))
+        this.props.navigation.navigate('clubeDispo')
     }
+    handleChangeValue = name => value =>
+        this.setState(
+        update(this.state, {
+            [name]: { $set: value }
+        })
+    );
     render() {
-        const { navigate } = this.props.navigation;
+
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled keyboardVerticalOffset={0}>
                 <HeaderTennis />
@@ -44,7 +52,9 @@ class ClubDataScreen extends Component {
                             <Input
                                 placeholder='Cep'
                                 style={styles.Input}
-                                onChangeText={(cep) => this.setState({ cep })}
+                                onChangeText={this.handleChangeValue(
+                                    "cep"
+                                  ).bind(this)}
                                 value={this.state.cep}
                             />
                             <View style={{ paddingHorizontal: 5 }}>
@@ -55,7 +65,9 @@ class ClubDataScreen extends Component {
                             <Input
                                 placeholder='Nome'
                                 style={styles.Input}
-                                onChangeText={(nome) => this.setState({ nome })}
+                                onChangeText={this.handleChangeValue(
+                                    "nome"
+                                  ).bind(this)}
                                 value={this.state.nome}
                             />
                             <View style={{ paddingHorizontal: 5 }}>
@@ -66,7 +78,9 @@ class ClubDataScreen extends Component {
                             <Input
                                 placeholder='Telefone'
                                 style={styles.Input}
-                                onChangeText={(telefone) => this.setState({ telefone })}
+                                onChangeText={this.handleChangeValue(
+                                    "telefone"
+                                  ).bind(this)}
                                 value={this.state.telefone}
                             />
                             <View style={{ paddingHorizontal: 5 }}>
@@ -77,8 +91,11 @@ class ClubDataScreen extends Component {
                             <Input
                                 placeholder='Email'
                                 style={styles.Input}
-                                onChangeText={(email) => this.setState({ email })}
+                                onChangeText={this.handleChangeValue(
+                                    "email"
+                                  ).bind(this)}
                                 value={this.state.email}
+                                autoCapitalize='none'
                             />
                             <View style={{ paddingHorizontal: 5 }}>
                                 <IconSVG name='Mail' width='25' height='25' fill='#F75400' />
@@ -89,14 +106,16 @@ class ClubDataScreen extends Component {
                                 secureTextEntry={true}
                                 placeholder='Senha'
                                 style={styles.Input}
-                                onChangeText={(senha) => this.setState({ senha })}
+                                onChangeText={this.handleChangeValue(
+                                    "senha"
+                                  ).bind(this)}
                                 value={this.state.senha}
                             />
                             <View style={{ paddingHorizontal: 5 }}>
                                 <IconSVG name='Key' width='25' height='25' fill='#F75400' />
                             </View>
                         </Item>
-                        <Button onPress={() => navigate('clubeDispo')}
+                        <Button onPress={this.addDados.bind(this)}
                             block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 15, elevation: 5 }}>
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}>
                                 Próximo
@@ -113,13 +132,8 @@ ClubDataScreen.navigationOptions = {
     headerShown: false
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onAddDados: club => dispatch(addDados(club))
-    }
-}
 
-export default connect(null, mapDispatchToProps)(ClubDataScreen)
+export default connect(()=>({}))(ClubDataScreen)
 
 const styles = StyleSheet.create({
     container: {

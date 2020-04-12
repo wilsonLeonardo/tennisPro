@@ -4,14 +4,14 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
-  KeyboardAvoidingView
 } from 'react-native';
-import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
+import { Container, Content} from 'native-base';
+import {connect} from "react-redux";
+import * as messageActions from '../../../store/messages/actions';
+import ListView from "./components/ListView";
+import MessageItem from "./components/MessageItem";
 
 import { AeroText } from '../../../components/StyledText';
-import { SearchIcon } from '../../../components/Icon/Icon'
-import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
-import { SearchBar } from 'react-native-elements';
 import IconSVG from '../../../components/Icon/IconSVG';
 
 class Mensagens extends Component {
@@ -22,8 +22,15 @@ class Mensagens extends Component {
   updateSearch = search => {
     this.setState({ search });
   };
+
+  componentDidMount = () => this.props.dispatch(messageActions.fetchMessages());
+
+  onRefresh = () => this.props.dispatch(messageActions.fetchMessages());
+
   render() {
     const { search } = this.state;
+    const { messages, refreshing } = this.props;
+    console.log(refreshing);
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={{}}>
@@ -35,38 +42,32 @@ class Mensagens extends Component {
                 <AeroText style={{ fontSize: 22, color: 'white' }}>   Chat</AeroText>
             </View>
           </View>
-          <View style={{ alignItems: "center" }}>
-            <SearchBar
-              containerStyle={{ backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent' }}
-              inputContainerStyle={styles.item}
-              inputStyle={styles.Input}
-              searchIcon={<IconSVG name='Search' height='20' width='20' fill='black' />}
-              onChangeText={this.updateSearch}
-              value={search}
-            />
-          </View>
-
         </ImageBackground>
-        <ScrollView>
-          <View style={styles.content}>
-            <Button style={styles.buttonList}>
-              <View style={{ flexDirection: "row" }}>
-                <View style={styles.bottom} />
-
-                <View style={{ alignSelf: "center" }}>
-                  <AeroText style={{ paddingBottom: 5 }}>Nome</AeroText>
-                  <AeroText style={{ fontSize: 10, fontStyle: "italic" }}>Msg</AeroText>
-                </View>
-              </View>
-            </Button>
-          </View >
-        </ScrollView>
+          <ListView
+              data={messages}
+              onRefresh={this.onRefresh.bind(this)}
+              onLoadNext={() => (null)}
+              refreshing={refreshing}
+              renderItem={({item}) => (
+                  <MessageItem
+                      message={item}
+                      onPress={(params) => this.props.navigation.navigate('Chat', params)}
+                  />
+              )}
+          />
       </Container>
     )
   }
 }
+function mapStateToProps(state) {
+  return {
+      messages: state.messages.data,
+      refreshing: state.messages.refreshing,
+  };
+}
 
-export default Mensagens
+export default connect(mapStateToProps, null)(Mensagens)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

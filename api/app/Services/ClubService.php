@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Model\User;
 use App\Model\Club;
+use App\Model\ClubUser;
+use Illuminate\Support\Facades\DB;
 
 class ClubService
 {
@@ -31,23 +33,31 @@ class ClubService
         return $club->id;
     }
     public static function createUser($data, $clubId) {
-        $user = new User();
-        
-        $user->fill($data);
-        $user->username = $data['name'];
-        $user->profile = $data['profile'];
-        $user->remember_token = str_random(10);
-        $user->status = 'ACTIVE';
-        $user->club()->associate(Club::findOrfail($clubId));
+        return DB::transaction(function() use ($data, $clubId) {
+            $user = new User();
+            $club = new ClubUser();
+    
+            $user->fill($data);
+            $user->username = $data['name'];
+            $user->profile = $data['profile'];
+            $user->remember_token = str_random(10);
+            $user->status = 'ACTIVE';
+            $user->save();
+            
+            $club->club()->associate(Club::findOrfail($clubId));
+            $club->user()->associate(User::findOrfail($user->id));
+            $club->save();
 
-        $user->save();
-
-        return $user;
+            return $user;
+        });
+    }
+    public static function find() {
+        return Club::all();
     }
     public static function updateUser($data) {
-        $user = User::findOrFail($data['id']);
+        $user = User::with('clubs')->findOrFail($data['id']);
         $user->name = $data['name'];
-        $clubId = $user['club_id'];
+        $clubId = $user->clubs->toArray()[0]['club_id'];
         $user->save();
 
         return $clubId;

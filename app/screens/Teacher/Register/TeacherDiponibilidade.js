@@ -26,10 +26,11 @@ class TeacherDisponibilidade extends Component {
             },
             entrada: 'Entrada',
             saida: 'Saída',
-            p_min: '',
-            p_max: '',
+            preço: '',
             isVisible: false,
-            isVisible2: false,
+            isVisible2: false, 
+            data: this.props.data,
+            nivel: this.props.nivel
         }
     }
     onAddDispo = () => {
@@ -169,20 +170,9 @@ class TeacherDisponibilidade extends Component {
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
-                                placeholder='Preço mínimo'
-                                onChangeText={(p_min) => this.setState({ p_min })}
-                                value={this.state.p_min}
-                            />
-                        </Item>
-                        <View style={{ justifyContent: "center", height: 40, width: 35 }}>
-                            <AeroText > até</AeroText>
-                        </View>
-                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
-                            <Input
-                                style={styles.Input}
-                                placeholder='Preço máximo'
-                                onChangeText={(p_max) => this.setState({ p_max })}
-                                value={this.state.p_max}
+                                placeholder='Preço'
+                                onChangeText={(preço) => this.setState({ preço })}
+                                value={this.state.preço}
                             />
                         </Item>
                     </Form>
@@ -221,8 +211,9 @@ const mapDispatchToProps = (dispatch) => {
         onAddDispo: teacher => dispatch(addDisponibilidade(teacher))
     }
 }
-const mapStateToProps = state => ({
-    data: state.teacherRegister.data
+const mapStateToProps = state => (console.log(state),{
+    data: state.teacherRegister.data,
+    nivel: state.teacherRegister.nivel
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherDisponibilidade)

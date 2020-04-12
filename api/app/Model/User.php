@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Traits\Uuids;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Model\Club;
+use App\Model\ClubUser;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -19,9 +20,10 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
+    protected $keyType = 'uuid';
     
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'preço','telefone', 'nascimento'
+        'name', 'email', 'password', 'username', 'preço','telefone', 'nascimento','image'
     ];    
     /** 
      * The attributes that should be hidden for arrays.
@@ -31,8 +33,6 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token','device_identifier', 'created_at', 'updated_at'
     ];
-
-    protected $keyType = 'uuid';
     /**
      * The attributes that should be cast to native types.
      *
@@ -43,9 +43,9 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function club()
+    public function clubs()
     {
-        return $this->belongsTo(Club::class, 'club_id');
+        return $this->hasMany(ClubUser::class);
     }
     
     public function setPasswordAttribute($value){

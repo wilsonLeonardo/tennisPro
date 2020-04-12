@@ -19,6 +19,10 @@ export default function reduce(state = initialState, action = {}) {
             });
         case types.USER_CLEARING:
             return initialState;
+        case types.RELOAD_IMAGE:
+            return state.merge({
+                avatarUri: action.media
+            });
         default:
             return state;
     }

@@ -7,10 +7,14 @@ import {
     Picker,
     Dimensions,
     TouchableWithoutFeedback,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
 import Modal from "react-native-modal";
+import {connect} from 'react-redux'
+import HttpService from "../../../service/HttpService";
+import * as userActions from '../../../store/user/actions'
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -32,15 +36,16 @@ class Campeonatos extends Component {
             isModalVisible: false,
             isModalVisible2: false,
             isVisible: false,
-            data: 'Selecione a Data'
+            data: 'Selecione a Data',
+            currentData:{}
         }
     }
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
-    toggleModal2 = () => {
-        this.setState({ isModalVisible2: !this.state.isModalVisible2 });
+    toggleModal2 = (data) => {
+        this.setState({ isModalVisible2: !this.state.isModalVisible2, currentData: data });
     };
 
     handlePicker = (date) => {
@@ -49,6 +54,30 @@ class Campeonatos extends Component {
             data: moment(date).format('L'),
 
         })
+    }
+
+    subscribe = (id) => {
+        Alert.alert('Campeonato', 'Você realmente deseja se inscrever nesse campeonato?',[
+            {text: 'Sim', onPress: () => {
+                HttpService
+                    .insert(
+                        'users/{id}/subscribe',
+                        {},
+                        {id}
+                    ).then(
+                        () =>this.props.dispatch(userActions.loadCamps()),
+                        Alert.alert(
+                            `${this.state.currentData.name}`,
+                            "Você foi inscrito nesse campeonato!",[
+                                {text:'OK', onPress: () => this.setState({ isModalVisible2: false})}
+                            ]
+                        )
+                    ).catch(error => Alert.alert('Erro', error.response.data.error, [{text: 'OK', onPress: () => this.setState({ isModalVisible2: false})}]))
+            }},
+            {text: 'Cancelar', style:'cancel'},
+        ])
+       
+        
     }
 
     hidePicker = () => {
@@ -66,7 +95,9 @@ class Campeonatos extends Component {
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
-        const { search } = this.state;
+        const { search, currentData } = this.state;
+        const {camps} = this.props;
+        console.log(this.props.camps)
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={{}}>
@@ -78,15 +109,15 @@ class Campeonatos extends Component {
                                 </TouchableOpacity>
                                 <AeroText style={{ fontSize: 22, color: 'white' }}>   Campeonatos</AeroText>
                             </View>
-                            <Button
+                            {/* <Button
                                 style={styles.button}
                                 onPress={this.toggleModal}
                             >
                                 <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
-                            </Button>
+                            </Button> */}
                         </View>
                     </View>
-                    <View style={{ alignItems: "center" }}>
+                    {/* <View style={{ alignItems: "center" }}>
                         <SearchBar
                             containerStyle={{ backgroundColor: 'transparent', borderBottomColor: 'transparent', borderTopColor: 'transparent' }}
                             inputContainerStyle={styles.item}
@@ -96,38 +127,50 @@ class Campeonatos extends Component {
                             value={search}
                         />
 
-                    </View>
+                    </View> */}
                 </ImageBackground>
                 <ScrollView >
                     <View style={styles.content}>
-                        <TouchableOpacity style={styles.buttonList}
-                            onPress={this.toggleModal2}
-                        >
-                            <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
-                                <View style={{ justifyContent: 'space-around', flex: 1 }} >
+                        {camps && camps.length == 0 ? 
+                            <AeroText>Não existe campeonatos no momento</AeroText>
+                            :
+                            camps.map(camp =>{
+                                return (
+                                <TouchableOpacity style={styles.buttonList}
+                                    onPress={() => this.toggleModal2(camp)}
+                                >
+                                    <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
+                                        <View style={{ justifyContent: 'space-around', flex: 1 }} >
 
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <View style={{}}>
-                                            <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                            <IconSVG name='Money' width='15' height='15' fill='#F75400' />
-                                            <View style={styles.priceView}>
-                                                <AeroText style={styles.price}>149,50</AeroText>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                <View style={{}}>
+                                                    <AeroText style={styles.nameCampeonato}>{camp.name}</AeroText>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                                                    <IconSVG name='Money' width='15' height='15' fill='#F75400' />
+                                                    <View style={styles.priceView}>
+                                                        <AeroText style={styles.price}>{camp.taxa_inscricao}</AeroText>
+                                                    </View>
+                                                </View>
+                                            </View>
+
+                                            <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
+                                                <View style={{ flexDirection: "row", flex:2}}>
+                                                    <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                                    <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.niveis}</AeroText>
+                                                </View>
+                                                <View style={{ flexDirection: "row", flex:2}}>
+                                                    <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                                    <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.endereco}</AeroText>
+                                                </View>
                                             </View>
                                         </View>
-                                    </View>
+                                    </ImageBackground>
 
-                                    <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                        <IconSVG name='Star' width='10' height='10' fill='#F75400' />
-                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
-                                        <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
-                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-
-                        </TouchableOpacity>
+                                </TouchableOpacity>
+                                )
+                            })
+                        }
 
                         <Modal
                             isVisible={this.state.isModalVisible}
@@ -258,36 +301,37 @@ class Campeonatos extends Component {
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 <View style={{ height: '55%', width: '95%', backgroundColor: 'white', justifyContent: 'space-between', borderRadius: 20 }}>
                                     <ImageBackground source={require('../../../assets/images/Filtro.png')} style={styles.CampeonatosModal}>
-                                        <TouchableHighlight
+                                        <TouchableOpacity
                                             style={{ paddingVertical: 20 }}
                                             onPress={this.toggleModal2}
                                         >
-                                            <AeroText style={{ fontSize: 18, color: 'white' }}>   Nome do Campeonato</AeroText>
-                                        </TouchableHighlight>
+                                            <AeroText style={{ fontSize: 18, color: 'white' }}>  {currentData.name}</AeroText>
+                                        </TouchableOpacity>
                                     </ImageBackground>
                                     <View style={{ padding: 10, flex: 1 }}>
                                         <ImageBackground source={require('../../../assets/images/campeonatoModalBack.png')} style={{ flex: 1, justifyContent: 'space-around' }}>
                                             <View style={styles.CampeonatosModalTxtView}>
                                                 <IconSVG name='Star' width='15' height='15' fill='#F75400' />
-                                                <AeroText style={styles.CampeonatosModalTxt}>Especial Pro, Inter A, Inter B</AeroText>
+                                                <AeroText style={styles.CampeonatosModalTxt}>{currentData.niveis}</AeroText>
                                             </View>
                                             <View style={styles.CampeonatosModalTxtView}>
                                                 <IconSVG name='Maps' width='15' height='15' fill='#F75400' />
-                                                <AeroText style={styles.CampeonatosModalTxt}>Avenida Raimundo Pereira de Magalhães, 254</AeroText>
+                                                <AeroText style={styles.CampeonatosModalTxt}>{currentData.endereco}</AeroText>
                                             </View>
                                             <View style={styles.CampeonatosModalTxtView}>
                                                 <IconSVG name='Trophy' width='15' height='15' fill='#F75400' />
                                                 <AeroText style={styles.CampeonatosModalTxt}>Valor do prêmio</AeroText>
-                                                <AeroText style={{ color: '#F75400' }}>10.500 R$</AeroText>
+                                                <AeroText style={{ color: '#F75400' }}>{currentData.valor_premio} R$</AeroText>
                                             </View>
                                             <View style={styles.CampeonatosModalTxtView}>
                                                 <IconSVG name='Money' width='15' height='15' fill='#F75400' />
                                                 <AeroText style={styles.CampeonatosModalTxt}>Valor de Inscrição</AeroText>
-                                                <AeroText style={{ color: '#F75400' }}>140.50 R$</AeroText>
+                                                <AeroText style={{ color: '#F75400' }}>{currentData.taxa_inscricao} R$</AeroText>
                                             </View>
 
                                         </ImageBackground>
-                                        <Button block style={{ backgroundColor: '#F75400', justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal2} >
+                                        <Button block style={{ backgroundColor: '#F75400', justifyContent: 'center', borderRadius: 10 }} 
+                                            onPress={() => this.subscribe(currentData.id)} >
                                             <AeroText style={{ color: 'white' }} >Inscrever</AeroText>
                                         </Button>
 
@@ -307,7 +351,12 @@ Campeonatos.navigationOptions = {
     headerShown: false
 }
 
-export default Campeonatos
+const mapStateToProps = state => ({
+    camps: state.user.camps
+});
+  
+export default connect(mapStateToProps, null)(Campeonatos)
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

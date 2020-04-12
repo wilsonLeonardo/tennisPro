@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     caixa: {
         flexDirection:'row',
         width: 300,
-        height: 50,
+        height: 56,
         backgroundColor: '#fff',
         borderRadius: 10,
         alignItems: 'center',

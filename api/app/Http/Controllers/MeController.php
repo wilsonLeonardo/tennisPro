@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-// use App\Events\ClearNotificationEvent;
-// use App\Model\Broker;
-// use App\Model\Media;
-// use App\Model\Offer;
-// use App\Model\Proposal;
-// use App\Services\MessageService;
+use App\Services\MessageService;
+use App\Events\ClearNotificationEvent;
 use App\Services\UserService;
 use App\Traits\RestControllerTrait;
 use App\Model\User;
 use Illuminate\Http\Request;
-// use App\Services\MessageInterestedService;
+use App\Model\Club;
+use App\Model\ClubUser;
 
 class MeController extends Controller
 {
@@ -24,10 +21,19 @@ class MeController extends Controller
 
         $user = $user->toArray();
 
-        return [
-            'Username' => $user['username'],
-            'Email' => $user['email']
-        ];
+        if(isset($user['image'])){
+            return [
+                'Username' => $user['username'],
+                'Email' => $user['email'],
+                'avatarUri' =>  url('storage/users/'.$user['image'])
+            ];
+        }else{
+            return [
+                'Username' => $user['username'],
+                'Email' => $user['email']
+            ];
+        }
+
     }
 
     public function indexTeacher()
@@ -36,17 +42,51 @@ class MeController extends Controller
 
         $user = $user->toArray();
 
+        if(isset($user['image'])){
+            return [
+                "name" => $user['name'],
+                "email" => $user['email'],
+                "nascimento" => $user['nascimento'],
+                "username" => $user['username'],
+                "telefone"=> $user['telefone'],
+                "preço"=> $user['preço'],
+                'avatarUri' =>  url('storage/users/'.$user['image'])
+            ];
+        }else {
+            return [
+                "name" => $user['name'],
+                "email" => $user['email'],
+                "nascimento" => $user['nascimento'],
+                "username" => $user['username'],
+                "telefone"=> $user['telefone'],
+                "preço"=> $user['preço'],
+            ];
+        }
+    }
+    public function indexAccount()
+    {
+        $user = User::with('clubs.club')->findOrFail(auth()->user()->getAuthIdentifier());
+
+        $user = $user->toArray();
+
+
         return [
             "name" => $user['name'],
             "email" => $user['email'],
             "nascimento" => $user['nascimento'],
             "username" => $user['username'],
             "telefone"=> $user['telefone'],
-            "preço"=> $user['preço'],
+            "clubs" => $user['clubs']
         ];
     }
+    public function indexMyClub()
+    {
+        $myClubs = ClubUser::with('club')->where('user_id', auth()->user()->getAuthIdentifier())->get();
 
-    public function updateTeacher(Request $request)
+        return response()->json($myClubs);
+    }
+
+    public function update(Request $request)
     {
         $this->preconditions()
             ->request($request)
@@ -58,84 +98,28 @@ class MeController extends Controller
         $data['id'] = auth()->user()->getAuthIdentifier();
  
 
-        return $this->response(UserService::updateTeacher($data));
+        return $this->response(UserService::update($data));
     }
+    public function addClub($id){
+        $club = new ClubUser();
+        $clubExist = ClubUser::where('club_id', $id)->where('user_id', auth()->user()->getAuthIdentifier())->first();
 
-    // public function offers(Request $request)
-    // {
-    //     $query = Offer::query()
-    //         ->with('city.state')
-    //         ->with('product.defaultOfferPicture:id,key')
-    //         ->with('pictures')
-    //         ->where('user_id', auth()->user()->getAuthIdentifier())
-    //         ->orderBy('created_at', 'desc');
+        if(!isset($clubExist)){
+            $club->club()->associate(Club::findOrfail($id));
+            $club->user()->associate(User::findOrfail(auth()->user()->getAuthIdentifier()));
+            $club->save();
 
-    //     if (isset($request->type))
-    //     {
-    //         $query->where('type', $request->type == 'PURCHASE' ? 'PURCHASE' : 'SALE');
-    //     }
+            return response()->json($club);
+        }else{
+            return response()->json(['error' => 'Você já esta cadastrado nesse clube!'], 500);     
 
-    //     return $this->paginate(
-    //         $query, 
-    //         $request->current_page, 
-    //         200, 
-    //         Offer::generateS3UrlTransformer()
-    //     );
-    // }
+        }
+        
+    }
+    public function messages(Request $request)
+    {
+        event(ClearNotificationEvent::of(auth()->user()->getAuthIdentifier(), 'messages'));
 
-    // public function proposals(Request $request)
-    // {
-    //     $query = Proposal::with('offer.pictures')
-    //         ->with('offer.product.defaultOfferPicture');
-
-    //     if (isset($request->type))
-    //     {
-    //         $authUserId =  auth()->user()->getAuthIdentifier();
-
-    //         if ($request->type == 'SENT')
-    //         {
-    //             $query->where('user_id', $authUserId);
-    //         }
-    //         else if ($request->type == 'RECEIVED')
-    //         {
-    //             $query->whereHas('offer', function($query) {
-    //                 $query->where('user_id', auth()->user()->getAuthIdentifier());
-    //             });
-    //         }
-    //     }
-
-    //     $query->orderBy('created_at', 'desc');
-
-    //     event(ClearNotificationEvent::of(auth()->user()->getAuthIdentifier(), 'proposals'));
-
-    //     return $this->paginate(
-    //         $query,
-    //         $request->current_page,
-    //         12,
-    //         Proposal::generateS3UrlTransformer()
-    //     );
-    // }
-
-    // public function messages(Request $request)
-    // {
-    //     event(ClearNotificationEvent::of(auth()->user()->getAuthIdentifier(), 'messages'));
-
-    //     return $this->response(MessageService::findAllByUser(auth()->user()));
-    // }
-    // public function messagesInterested(Request $request)
-    // {
-    //     event(ClearNotificationEvent::of(auth()->user()->getAuthIdentifier(), 'messages'));
-
-    //     return $this->response(MessageInterestedService::findAllByUser(auth()->user()));
-    // }
-
-    // public function updateAvatar(Request $request, $mediaId)
-    // {
-    //     $media = Media::findOrFail($mediaId);
-    //     $user = User::findOrFail(auth()->user()->getAuthIdentifier());
-
-    //     $user->avatar()->associate($media);
-
-    //     $user->save();
-    // }
+        return $this->response(MessageService::findAllByUser(auth()->user()));
+    }
 }

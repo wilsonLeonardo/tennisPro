@@ -105,7 +105,7 @@ class Conta extends Component {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
         const { isEditable, credentials, user, blocked } = this.state;
-
+        console.log(this.state.credentials.email)
 
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>

@@ -15,5 +15,14 @@ export function loadMeTeacher() {
 export function loadingUser(loading) {
     return async(dispatch) => dispatch({ type: types.USER_LOADING, data: { loading } });
 }
+export function loadImage(media){
+    return (dispatch) => {
+        dispatch({ type: types.USER_LOADING, data: { loading: true } });
+
+        dispatch({ type: types.RELOAD_IMAGE, media });
+
+        dispatch({ type: types.USER_LOADING, data: { loading: false } });
+    };
+}
 
 export const clear = () => async(dispatch) => dispatch({ type: types.USER_CLEARING });

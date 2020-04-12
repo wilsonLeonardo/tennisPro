@@ -1,0 +1,3 @@
+export const MESSAGES_FETCHED = 'messages.MESSAGES_FETCHED';
+export const MESSAGES_REFRESHING = 'messages.MESSAGES_REFRESHING';
+export const MESSAGES_CLEARING = 'messages.MESSAGES_CLEARING';

@@ -6,9 +6,16 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Alert
 } from 'react-native';
+import update from "immutability-helper";
+import { setAuthUser } from "../../../service/AuthService";
 import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'native-base';
+import HttpService from '../../../service/HttpService'
+import * as clubActions from '../../../store/club/actions'
+import * as permissionService from "../../../service/PermissionService";
+import * as notificationsActions from "../../../store/notifications/actions";
 
 import { AeroText } from '../../../components/StyledText';
 import { HeaderTennis } from '../../../components/Header'
@@ -19,17 +26,43 @@ class ClubDisponibilidade extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            num_quadras: '',
-            aluguel: '',
-            mensalidade: ''
+            quadras: '',
+            aluguel_price: '',
+            mensal_price: '',
+            profile: 'CLUB'
         }
     }
 
-    onAddDispo = ()=>{
-        this.props.addDisponibilidade({...this.state})
+    handleChangeValue = name => value =>
+        this.setState(
+        update(this.state, {
+            [name]: { $set: value }
+        })
+    )
+    addDados = () => {
+        const {data} = this.props;
+        const dado = Object.assign({...this.state}, data)
+        console.log(dado);
+        
+        HttpService
+          .insert('registerClub', dado)
+          .then((data) => {
+              Alert.alert('Novo Cadastro', 'Seu cadastro foi realizado com sucesso.');
+              console.log(data);
+  
+              this.props.dispatch(clubActions.loadCamps());
+              this.props.dispatch(
+                notificationsActions.fetchNotifications(data.user.id)
+              );
+
+              permissionService.syncDeviceIdentifier(data.user.id);
+  
+              setAuthUser(data).then(() => this.props.navigation.navigate('SignedInClub'));
+          });
     }
 
     render() {
+        console.log(this.props.data)
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled keyboardVerticalOffset={0}>
@@ -49,7 +82,9 @@ class ClubDisponibilidade extends Component {
                             <Input
                                 placeholder='Nº de Quadras'
                                 style={styles.Input}
-                                onChangeText={(num_quadras) => this.setState({ num_quadras })}
+                                onChangeText={this.handleChangeValue(
+                                    "quadras"
+                                  ).bind(this)}
                                 value={this.state.num_quadras}
                             />
                             <Icon name='tennisball' style={{ color: '#F75400' }} />
@@ -58,7 +93,9 @@ class ClubDisponibilidade extends Component {
                             <Input
                                 placeholder='Preço do Aluguel'
                                 style={styles.Input}
-                                onChangeText={(aluguel) => this.setState({ aluguel })}
+                                onChangeText={this.handleChangeValue(
+                                    "aluguel_price"
+                                  ).bind(this)}
                                 value={this.state.aluguel}
                             />
                             <Icon name='logo-usd' style={{ color: '#F75400' }} />
@@ -68,12 +105,17 @@ class ClubDisponibilidade extends Component {
                             <Input
                                 placeholder='Preço da Mensalidade'
                                 style={styles.Input}
-                                onChangeText={(mensalidade) => this.setState({ mensalidade })}
+                                onChangeText={this.handleChangeValue(
+                                    "mensal_price"
+                                  ).bind(this)}
                                 value={this.state.mensalidade}
                             />
                             <Icon name='logo-usd' style={{ color: '#F75400' }} />
                         </Item>
-                        <Button block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
+                        <Button 
+                            onPress={this.addDados.bind(this)}
+                            block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}>
+                            <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
                     </Form>
                 </Content>
             </KeyboardAvoidingView>
@@ -81,13 +123,13 @@ class ClubDisponibilidade extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        onAddDispo: club => dispatch(addDisponibilidade(club))
+        data: state.clubRegister
     }
 }
 
-export default connect(null, mapDispatchToProps)(ClubDisponibilidade)
+export default connect(mapStateToProps, null)(ClubDisponibilidade)
 
 
 ClubDisponibilidade.navigationOptions = {

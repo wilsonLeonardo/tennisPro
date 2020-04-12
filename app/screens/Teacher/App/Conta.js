@@ -7,12 +7,18 @@ import {
     Alert,
     KeyboardAvoidingView,
     TouchableOpacity,
+    ActivityIndicator,
+    Image,
+    Keyboard
 } from 'react-native';
 import { Button, Content, Item, Input, Icon, Form } from 'native-base';
 import { Divider } from 'react-native-elements';
 import { connect } from 'react-redux'
 import update from "immutability-helper";
 import * as teacherActions from '../../../store/teacher/actions'
+import _ from 'lodash';
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -41,16 +47,21 @@ class Conta extends Component {
                 email: '',
                 password: ""
             },
-            user: {},
+            me: {},
             display: "disabled",
             blocked: 'grey',
             nascimento: 'Data de Nascimento',
             isVisible: false,
+            images: [
+                {id: 1, number: '01'}
+            ],
+            image: null,
+
         }
     }
     componentDidMount() {
         if (!this.props.me.meTeacher) return null
-        this.setState({ user: this.props.me.meTeacher, credentials: { email: this.props.me.meTeacher.email } });
+        this.setState({ me: this.props.me.meTeacher, image:this.props.me.meTeacher.avatarUri, credentials: { email: this.props.me.meTeacher.email } });
     }
     handleLogin = () => {
         if (!this.state.credentials.password) {
@@ -75,16 +86,13 @@ class Conta extends Component {
             update(this.state, {
                 credentials: {
                     [name]: { $set: value }
-                },
-                user: {
-                    [name]: { $set: value }
                 }
             })
         );
     handleChangeValue = name => value =>
         this.setState(
             update(this.state, {
-                user: {
+                me: {
                     [name]: { $set: value }
                 }
             })
@@ -94,24 +102,33 @@ class Conta extends Component {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
     passwordEnter = () => {
-        this.setState({ isModalVisible: false, isEditable: true, display: "false", blocked: 'black', credentials: { password: '' } });
+        this.setState({ isModalVisible: false, isEditable: true, display: "false", blocked: 'black'});
+        this.setState(
+            update(this.state, {
+                credentials: {
+                    password: { $set: '' }
+                }
+            })
+        );
     };
     handleSave = () => HttpService
-        .update('meTeacher', {}, this.state.user)
+        .update('meTeacher', {}, this.state.me)
         .then(() => {
-            console.log(this.state.user)
+            console.log(this.state.meTeacher)
             Alert.alert('Meus dados', 'Seus dados foram alterados com sucesso.', [
                 { text: 'OK' }
             ]);
             this.props.dispatch(teacherActions.loadMeTeacher());
             this.setState({ isEditable: false, disabled: "false", blocked: 'grey' })
-        }).catch(error => console.log(error, this.state.user));
+        }).catch(error => console.log(error, this.state.meTeacher));
 
     handlePicker = (date) => {
-        this.setState({
-            isVisible: false,
-            nascimento: moment(date).format('L'),
-        })
+        this.setState(update(this.state, {
+            meTeacher: {
+                nascimento: { $set: moment(date).format('DD/MM/YYYY')}
+            },
+            isVisible: {$set:false}
+        }))
     }
 
     hidePicker = () => {
@@ -125,12 +142,71 @@ class Conta extends Component {
             isVisible: true
         })
     }
+    _hasPermission = async () => {
+        const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
+        const libraryPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+        return cameraPermission.status === 'granted' && libraryPermission.status === 'granted';
+    };
+
+    _pickImage = async () => {
+        Keyboard.dismiss();
+
+        if (this._hasPermission()) {
+
+            let result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+               aspect: [4, 4],
+           });
+
+            if (!result.cancelled) {
+                this.props.dispatch(teacherActions.loadingUser(true));
+
+                HttpService.uploadImage(result)
+                    .then(() => {
+                        this.props.dispatch(teacherActions.loadMeTeacher())
+                    })
+                    .catch(() => this.props.dispatch(teacherActions.loadingUser(false)))
+            }
+        }
+    };
+    Avatar = () => {
+        const { avatarUri, loading } = this.props;
+
+        const Avatar = () => (
+            <Image
+                resizeMode="cover"
+                source={{uri: avatarUri}}
+                style={styles.avatar}
+            />
+        );
+
+        if (loading) {
+            return (
+                <View
+                style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 250, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }}
+                >
+                    <ActivityIndicator color="black" />
+                </View>
+            )
+        }
+
+        return (
+            <TouchableOpacity
+            style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 250, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} 
+            onPress={this._pickImage}>
+                {avatarUri ? <Avatar/> : null}
+            </TouchableOpacity>
+        );
+    }
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
-        const { isEditable, credentials, user, blocked } = this.state;
+        const { isEditable, credentials, blocked, image, me } = this.state;
+        const {meTeacher, loading} = this.props.me;
+       // const {avatarUri} = this.props;
 
-
+        if(!meTeacher) null
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
@@ -152,13 +228,13 @@ class Conta extends Component {
                             <AeroText style={{ color: '#F75400', marginLeft: 5, marginBottom: 3 }} >Salvar</AeroText>
                         </Button>
                     </View>
-                    <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
+                    <this.Avatar/>
                 </ImageBackground>
 
                 <Content padder>
                     <Form style={{justifyContent:'space-between', height:500}}>
                         <Item picker >
-                            <Input editable={isEditable} placeholder='Nome' value={user.username}
+                            <Input editable={isEditable} placeholder='Nome' value={me.username}
                                 style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "username"
@@ -169,15 +245,13 @@ class Conta extends Component {
 
                         <Item picker>
 
-                            <Button transparent editable={isEditable}
-                                style={{ color: blocked, fontFamily: 'Aero', borderBottomWidth: 0.2, borderBottomColor: '#ddd', height: 45, justifyContent: 'center' }}
-                                value={user.nascimento}
-                                onPress={[this.showPicker, this.handleChangeValue(
-                                    "nascimento"
-                                ).bind(this)]}
+                            <Button transparent
+                                style={{fontFamily: 'Aero', borderBottomWidth: 0.2, borderBottomColor: '#ddd', height: 45, justifyContent: 'center' }}
+                                value={me.nascimento}
+                                onPress={isEditable ? this.showPicker : null}
                             >
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%'}}>
-                                    <AeroText style={{ paddingLeft: 5, fontSize:16, color:'#666' }}  >{this.state.nascimento}</AeroText>
+                                    <AeroText style={{ paddingLeft: 5, fontSize:16, color: blocked }}  >{me.nascimento}</AeroText>
 
                                     <View style={{ paddingHorizontal: 5 }}>
                                     </View>
@@ -187,7 +261,7 @@ class Conta extends Component {
                         </Item>
 
                         <Item picker>
-                            <Input editable={isEditable} placeholder='Preço' value={user.preço}
+                            <Input editable={isEditable} placeholder='Preço' value={me.preço}
                                 style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "preço"
@@ -197,7 +271,7 @@ class Conta extends Component {
                         </Item>
 
                         <Item picker >
-                            <Input editable={isEditable} placeholder='Telefone' value={user.telefone}
+                            <Input editable={isEditable} placeholder='Telefone' value={me.telefone}
                                 style={{ color: blocked, fontFamily: 'Aero' }}
                                 onChangeText={this.handleChangeValue(
                                     "telefone"
@@ -264,6 +338,7 @@ class Conta extends Component {
                 </Modal>
                 <DateTimePickerModal
                     mode="date"
+                    locale='pt_BR'
                     isVisible={this.state.isVisible}
                     onConfirm={this.handlePicker}
                     onCancel={this.hidePicker}
@@ -272,9 +347,13 @@ class Conta extends Component {
         )
     }
 }
-const mapStateToProps = state => ({
-    me: state.meTeacher,
-});
+function mapStateToProps(state) {
+    return{
+        me: state.meTeacher,
+        loading:state.meTeacher.loading,
+        avatarUri: state.meTeacher.meTeacher.avatarUri ? state.meTeacher.meTeacher.avatarUri : null
+    }
+}
 export default connect(mapStateToProps, null)(Conta)
 
 const styles = StyleSheet.create({
@@ -330,6 +409,23 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 2,
         shadowRadius: 9,
+    },
+    avatar:{
+        width: "100%",
+        height: "100%",
+        backgroundColor: '#ffff',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.9,
+        borderRadius: 50,
+        borderRadius: 250,
+        overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonListPress: {
         flex: 1,

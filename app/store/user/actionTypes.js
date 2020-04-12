@@ -1,3 +1,13 @@
 export const USER_LOADING = 'user.USER_LOADING';
 export const USER_LOADED = 'user.USER_LOADED';
 export const USER_CLEARING = 'user.USER_CLEARING';
+export const LOAD_GAME = 'user.LOAD_GAME';
+export const PENDING_GAME = 'user.PENDING_GAME';
+export const LOAD_STATISTIC = 'user.LOAD_STATISTIC';
+export const LOAD_ME = 'user.LOAD_ME';
+export const LOAD_ACCOUNT = 'user.LOAD_ACCOUNT';
+export const LOAD_CLUBS = 'user.LOAD_CLUBS';
+export const LOAD_MYCLUBS = 'user.LOAD_MYCLUBS';
+export const LOAD_MYCAMPS = 'user.LOAD_MYCAMPS';
+export const LOAD_CAMPS = 'user.LOAD_CAMPS';
+export const RELOAD_IMAGE = 'user.RELOAD_IMAGE';

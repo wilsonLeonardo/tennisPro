@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   View,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  ImageBackground
 } from 'react-native';
 import Modal from "react-native-modal";
 import { Divider } from 'react-native-elements';
@@ -35,16 +36,22 @@ export default class  TeacherDetails extends Component {
                         onTouchEnd={this.props.end}
                         >
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <View style={{ height: '35%', width: '80%', backgroundColor: 'white', justifyContent: 'space-between', borderRadius: 20 }}>
+                            <View style={{ height: '50%', width: '80%', backgroundColor: 'white', justifyContent: 'space-between', borderRadius: 20 }}>
                             <View style={{ alignItems: "center" }}>
     
                                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', width: 110, height: 110, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd', marginTop: -40 }}>
-                                <View style={styles.priceView}>
-                                    <AeroText style={styles.price}>R$ {user.preço}</AeroText>
-                                </View>
+                                {user.image ? <ImageBackground source={{uri: user.image}} resizeMode='cover' style={styles.image}>
+                                  <View style={styles.priceView}>
+                                      <AeroText style={styles.price}>R$ {user.preço}</AeroText>
+                                  </View>
+                                  </ImageBackground>:
+                                  <View style={styles.priceView}>
+                                      <AeroText style={styles.price}>R$ {user.preço}</AeroText>
+                                  </View>
+                                  }
                                 </View>
                                 <AeroText style={{ color: 'orange', marginTop:7 }}>
-                                {user.club.name}
+                                {user.clubs.name}
                                 </AeroText>
                             </View>
                             <View style={{paddingHorizontal:20}}>
@@ -84,7 +91,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent:'center',
       height: 25,
-      width: 80
+      width: 80,
+      marginTop:'50%'
     },
     price: {
       color: 'white',
@@ -125,6 +133,23 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       paddingVertical: 10,
       alignItems: 'center'
+    },
+    image: {
+      width: "100%",
+      height: "100%",
+      backgroundColor: '#ffff',
+      shadowColor: '#000000',
+      shadowOffset: {
+          width: 0,
+          height: 5
+      },
+      shadowRadius: 10,
+      shadowOpacity: 0.9,
+      borderRadius: 50,
+      elevation: 5,
+      overflow: 'hidden',
+      alignItems: 'center',
+      justifyContent: 'center',
     }
   
   });

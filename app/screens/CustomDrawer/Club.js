@@ -5,7 +5,8 @@ import {
     StyleSheet,
     ImageBackground,
     TouchableOpacity,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { AeroText } from '../../components/StyledText'
@@ -13,6 +14,14 @@ import { ScrollView } from 'react-native-gesture-handler'
 import IconSVG from '../../components/Icon/IconSVG'
 import {logout} from '../../service/AuthService'
 import HttpService from '../../service/HttpService'
+import {connect} from 'react-redux'
+import * as clubActions from '../../store/club/actions'
+import { NavigationActions, StackActions } from 'react-navigation';
+
+const resetAction = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'SignedOut' })],
+});
 
 class Club extends Component {
     constructor(props){
@@ -21,33 +30,43 @@ class Club extends Component {
             user:{}
         }
     }
-    async componentDidMount(){
-       await HttpService
-            .find('me')
-            .then(user => this.setState({user: user}));
-    }
     SignOut(){
         Alert.alert('Sair', 'Tem certeza que deseja sair?',[
-            {text: 'Sim', onPress: () => logout().then(() => this.props.navigation.navigate('SignedOut'))},
+            {text: 'Sim', onPress: () => this.SignOutConfirm()},
             {text: 'Cancelar', style:'cancel'},
         ])
     }
+    SignOutConfirm(){
+        this.props.dispatch(
+            clubActions.clear(),
+        )
+        logout().then(() => this.props.navigation.dispatch(resetAction))
+    }
+    
 
     render(){
-        const {Username, Email} = this.state.user
+        if(!this.props.me) return null
+        
+        const {Username, Email, loading} = this.props.me;
+
         return (
             <View style={styles.container}>
                 <ImageBackground
                     source={require('../../assets/images/HeaderMenu.png')}
                     style={styles.imageBack}
                 >
-                    <View style={styles.image}></View>
-    
-                    
-                    <View style={{ flex: 1 }}>
-                        <AeroText style={styles.name}>{Username}</AeroText>
-                        <AeroText style={styles.email}>{Email}</AeroText>
+                    <View style={styles.image}>
+                        {loading ? <ActivityIndicator color="black" /> :
+                          null  
+                        }
                     </View>
+                    {!loading ?
+                        <View style={{ flex: 1 }}>
+                            <AeroText style={styles.name}>{Username}</AeroText>
+                            <AeroText style={styles.email}>{Email}</AeroText>
+                        </View>
+                        : null
+                    }
                 </ImageBackground>
                 <ScrollView>
                     <DrawerNavigatorItems {...this.props} />
@@ -64,7 +83,12 @@ class Club extends Component {
     }
 }
 
-export default Club
+const mapStateToProps = state => ({
+    me: state.club.me,
+    loading: state.club.loading
+})
+
+export default connect(mapStateToProps, null)(Club)
 
 const styles = StyleSheet.create({
     container: {

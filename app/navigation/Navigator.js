@@ -15,6 +15,9 @@ import UserDisponibilidade from '../screens/User/Register/UserDisponibilidade'
 import DrawerNavigator from './DrawerNavigator'
 import DrawerTeacher from './DrawerTeacher'
 import DrawerClub from './DrawerClub'
+import Chat from '../screens/User/App/Chat'
+import NewJogo from '../screens/User/App/NewJogo'
+import NewCampeonatos from '../screens/Club/App/NewCampeonatos'
 
 export const SignedOutRoutes = createAppContainer(createStackNavigator({
   Login: {
@@ -64,6 +67,19 @@ export const SignedInUserRoutes = createAppContainer(createStackNavigator({
     navigationOptions:{
       headerShown: false
     }
+  },
+  NewJogo: {
+    screen: NewJogo,
+    navigationOptions:{
+      headerShown: false
+    }
+  },
+  Chat:{
+    screen: Chat,
+    navigationOptions:{
+      headerShown: false,
+      gesturesEnabled: false,
+    }
   }
 }
 ));
@@ -79,6 +95,12 @@ export const SignedInTeacherRoutes = createAppContainer(createStackNavigator({
 export const SignedInClubRoutes = createAppContainer(createStackNavigator({
   homeTeacher:{
     screen: DrawerClub,
+    navigationOptions:{
+      headerShown: false
+    }
+  },
+  newGame: {
+    screen: NewCampeonatos,
     navigationOptions:{
       headerShown: false
     }

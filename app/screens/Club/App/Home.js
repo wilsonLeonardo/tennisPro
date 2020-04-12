@@ -5,10 +5,15 @@ import {
     ImageBackground,
     TouchableOpacity,
     TouchableHighlight,
-    Dimensions
+    Dimensions,
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import { Button, Container, Item, Input,Icon, Picker, Fab } from 'native-base';
 import Modal from "react-native-modal";
+import { connect } from 'react-redux'
+import * as clubActions from '../../../store/club/actions'
+import HttpService from "../../../service/HttpService";
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -34,15 +39,39 @@ class HomeClub extends Component {
     componentDidMount(){
         isCompletedIntro().then(isCompleted => 
             !isCompleted ? this.setState({isModalVisible: true}) : null)
+
+        this.props.dispatch(clubActions.loadCamps());
     }
 
     toggleModal = () => {
         setCompletedIntro(true).then(() => this.setState({ isModalVisible: false }));
     };
+    makeDone = (id) => {
+        Alert.alert('Campeonato', 'Você deseja encerrar esse campeonato?!',[
+            {text: 'Sim', onPress: () => {
+                HttpService
+                    .patch(
+                        'camp/{id}/done',
+                        { id }
+                    ).then(
+                        () => this.props.dispatch(clubActions.loadCamps()),
+                        Alert.alert(
+                            "Campeonato",
+                            "Campeonato encerrado!"
+                        ),
+                        
+                    )
+            }},
+            {text: 'Cancelar', style:'cancel'},
+        ])
+    }
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
+        const {progress, loading, done} = this.props;
+        console.log(done);
+
         return (
             <Container>
                 <View style={styles.header}>
@@ -61,75 +90,103 @@ class HomeClub extends Component {
                     <View style={styles.content}>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', width: '100%' }}>
                             <AeroText style={{ fontSize: 20, color: '#F75400' }}>Campeonatos</AeroText>
-                            <Button style={styles.button} >
+                            <Button style={styles.button} 
+                                onPress={() => this.props.navigation.navigate('newGame')}
+                                >
                                 <IconSVG name="Add" height="15" width="15" fill="white" />
                                 <AeroText style={{ color: 'white', marginLeft: 5 }} >Criar</AeroText>
                             </Button>
                         </View>
 
                         <View style={{ paddingVertical: 20 }}>
+                        {loading ? <ActivityIndicator color="#F75400" /> :
+                        progress && progress.length == 0 ? 
+                            <AeroText style={{fontSize:15}} >Você não possue campeonatos em andamento</AeroText> 
+                            :
+                            progress.map(camp => {
+                                console.log(camp);
+                                return (
 
-                            <View style={styles.buttomCampeonatos}>
-                                <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
-                                    <View style={{ justifyContent: 'space-around', flex: 1 }} >
+                                        <TouchableOpacity style={styles.buttomCampeonatos}
+                                            onPress={() => this.makeDone(camp.id)}
+                                        >
+                                            <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
+                                                <View style={{ justifyContent: 'space-around', flex: 1 }} >
 
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                            <View style={{}}>
-                                                <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
-                                            </View>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                                <View style={styles.andamento}>
-                                                    <AeroText style={styles.andamentoTxt}>Andamento</AeroText>
+                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                        <View style={{}}>
+                                                            <AeroText style={styles.nameCampeonato}>{camp.name}</AeroText>
+                                                        </View>
+                                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                                                            <View style={styles.andamento}>
+                                                                <AeroText style={styles.andamentoTxt}>Andamento</AeroText>
+                                                            </View>
+                                                        </View>
+                                                    </View>
+
+                                                    <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
+                                                        <View style={{ flexDirection: "row", flex:2}}>
+                                                            <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.niveis}</AeroText>
+                                                        </View>
+                                                        <View style={{ flexDirection: "row", flex:2}}>
+                                                            <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.endereco}</AeroText>
+                                                        </View>
+                                                    </View>
                                                 </View>
-                                            </View>
-                                        </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
+                                )
+                            })
+                        
+                    }
 
-                                        <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                            <IconSVG name='Star' width='10' height='10' fill='#F75400' />
-                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
-                                            <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
-                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
-                                        </View>
-                                    </View>
-                                </ImageBackground>
-
-                            </View>
-
-                        </View>
-
+                    </View>
 
                         <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', width: '100%' }}>
                             <AeroText style={{ fontSize: 20, color: '#F75400' }}>Concluídos</AeroText>
                         </View>
 
                         <View style={{ paddingVertical: 20 }}>
+                        {loading ? <ActivityIndicator color="#F75400" /> :
+                        done && done.length == 0 ? 
+                            <AeroText style={{fontSize:15}} >Você não possue campeonatos concluídos</AeroText> 
+                            :
+                            done.map(camp => {
+                                console.log(camp);
+                                return (
 
-                            <TouchableHighlight style={styles.buttomCampeonatos}>
-                                <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
-                                    <View style={{ justifyContent: 'space-around', flex: 1 }} >
+                                        <View style={styles.buttomCampeonatos}>
+                                            <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
+                                                <View style={{ justifyContent: 'space-around', flex: 1 }} >
 
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                            <View style={{}}>
-                                                <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
-                                            </View>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                                <View style={styles.inscrito}>
-                                                    <AeroText style={styles.inscritoTxt}>Concluído</AeroText>
+                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                        <View style={{}}>
+                                                            <AeroText style={styles.nameCampeonato}>{camp.name}</AeroText>
+                                                        </View>
+                                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                                                    <View style={styles.inscrito}>
+                                                            <AeroText style={styles.inscritoTxt}>Concluído</AeroText>
+                                                        </View>
+                                                    </View>
+                                                    </View>
+
+                                                    <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
+                                                        <View style={{ flexDirection: "row", flex:2}}>
+                                                            <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.niveis}</AeroText>
+                                                        </View>
+                                                        <View style={{ flexDirection: "row", flex:2}}>
+                                                            <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.endereco}</AeroText>
+                                                        </View>
+                                                    </View>
                                                 </View>
-                                            </View>
+                                            </ImageBackground>
                                         </View>
-
-                                        <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                            <IconSVG name='Star' width='10' height='10' fill='#F75400' />
-                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
-                                            <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
-                                            <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
-                                        </View>
-                                    </View>
-                                </ImageBackground>
-
-                            </TouchableHighlight>
-
+                                )
+                            })}
                         </View>
 
                     </View>
@@ -174,8 +231,13 @@ class HomeClub extends Component {
 HomeClub.navigationOptions = {
     headerShown: false
 }
+const mapStateToProps = state => ({
+    progress: state.club.progressCamp,
+    loading: state.club.loading,
+    done: state.club.doneCamp
+})
 
-export default HomeClub
+export default connect(mapStateToProps, null)(HomeClub)
 
 const styles = StyleSheet.create({
     container: {

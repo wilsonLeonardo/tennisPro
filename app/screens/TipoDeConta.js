@@ -19,7 +19,8 @@ export default function TipoConta(props) {
     const {navigate} = props.navigation;
     return (
         <Container style={styles.container}>
-            <HeaderTennis/>
+            <View style={{backgroundColor:'yellow'}}/>
+                <HeaderTennis/>
             <TitleTennis placeholder='Tipo de Conta' Icon="Person"/>
             <View style={styles.content}>
                 <View>

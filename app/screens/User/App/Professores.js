@@ -9,7 +9,7 @@ import {
   RefreshControl,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Platform
+  Platform, Image
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer } from 'native-base';
 import Modal from "react-native-modal";
@@ -48,36 +48,10 @@ class Professores extends Component {
   setOpen = (bool) => {
     this.setState({opened: bool})
   }
-  RenderTeacher = () => this.props.teachers.teacher.map(teacher =>{
-    return(
-        <Button key={teacher.id}
-                style={styles.buttonList}
-                onPress={() =>{
-                  this.setCurrentItem(teacher),
-                  this.setOpen(true)
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <View style={styles.bottom} />
-
-                  <View style={{ alignSelf: "center" }}>
-                    <AeroText style={{ paddingBottom: 5, width:'95%' }}>{teacher.name}</AeroText>
-                    <AeroText style={{ fontSize: 12, color: 'red' }}>{teacher.nivel}</AeroText>
-                  </View>
-                </View>
-                <View style={{ paddingRight: 20 }}>
-                  <View style={{ paddingBottom: 10 }}>
-                    <View style={styles.priceView}>
-                        <AeroText style={styles.price}>R$ {teacher.preço}</AeroText>
-                    </View>
-
-                  </View>
-                </View>
-          </Button>
-    )
-  });
   render() {
     const {opened, currentItem} = this.state;
+    const {loading, teachers} = this.props;
+    //console.log(this.props.teachers);
     return (
       <Container style={styles.container}>
         <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
@@ -102,10 +76,43 @@ class Professores extends Component {
           </View>
       </ImageBackground>
         
-        <ScrollView style={{position:'absolute', top:'15%', height:'90%', paddingLeft:'2%'}} refreshControl={<RefreshControl refreshing={this.props.teachers.loading}
-         onRefresh={() => this.props.dispatch(userActions.loadTeacher())}/>}>
+        <ScrollView style={{position:'absolute', top:'15%', height:'90%', paddingLeft:'2%'}} refreshControl={<RefreshControl refreshing={this.props.loading}
+         onRefresh={() => this.props.dispatch(userActions.loadMoreTeacher())}/>}>
           <View style={styles.content}>
-              <this.RenderTeacher/>
+              {!loading ?
+                teachers.map(teacher =>{
+                  return(
+                      <Button key={teacher.meTeacher}
+                              style={styles.buttonList}
+                              onPress={() =>{
+                                this.setCurrentItem(teacher),
+                                this.setOpen(true)
+                              }}
+                            >
+                              <View style={{ flexDirection: "row" }}>
+                              <View style={styles.bottom} >
+                                  {teacher.image && <Image source={{uri: teacher.image}} resizeMode='cover' style={styles.image} />}
+                              </View>
+              
+                                <View style={{ alignSelf: "center", width:'50%' }}>
+                                  <View >
+                                    <AeroText style={{ paddingBottom: 5}}>{teacher.name}</AeroText>
+                                  </View>
+                                  <AeroText style={{ fontSize: 12, color: 'red' }}>{teacher.nivel}</AeroText>
+                                </View>
+                              </View>
+                              <View >
+                                <View style={{ paddingBottom: 10 }}>
+                                  <View style={styles.priceView}>
+                                      <AeroText style={styles.price}>R$ {teacher.preço}</AeroText>
+                                  </View>
+              
+                                </View>
+                              </View>
+                        </Button>
+                  )
+                }) : null
+            }
           </View>
         </ScrollView>
         <Modal
@@ -204,7 +211,8 @@ class Professores extends Component {
   }
 }
 const mapStateToProps = state => ({
-  teachers: state.user,
+  teachers: state.user.teacher,
+  loading: state.user.loading
 });
 
 
@@ -258,9 +266,9 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     marginRight: 10, 
-    elevation:10,
-    position:'relative',
-    opacity:0.89,
+    //elevation:10,
+    //position:'relative',
+    //opacity:0.89,
     left:"-20%"
   },
   priceView: {
@@ -317,6 +325,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 10,
     alignItems: 'center'
-  }
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: '#ffff',
+    shadowColor: '#000000',
+    shadowOffset: {
+        width: 0,
+        height: 5
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.9,
+    borderRadius: 50,
+    elevation: 5,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+},
 
 });

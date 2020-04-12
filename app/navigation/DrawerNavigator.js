@@ -40,22 +40,22 @@ const DrawerNavigator = createDrawerNavigator({
                 <IconSVG name='Boll' fill={tintColor} width='20' height='20' />
         }
     },
-    Ranking: {
-        screen: (props) => <Ranking {...props}/>,
-        navigationOptions: {
-            title: 'Ranking',
-            drawerIcon: ({ tintColor }) =>
-                <IconSVG name='Medal' fill={tintColor} width='20' height='20' />
-        }
-    },
-    Estatisticas: {
-        screen: (props) => <Estatisticas {...props}/>,
-        navigationOptions: {
-            title: 'Estatísticas',
-            drawerIcon: ({ tintColor }) =>
-                <IconSVG name='Statistics' fill={tintColor} width='20' height='20' />
-        }
-    },
+    // Ranking: {
+    //     screen: (props) => <Ranking {...props}/>,
+    //     navigationOptions: {
+    //         title: 'Ranking',
+    //         drawerIcon: ({ tintColor }) =>
+    //             <IconSVG name='Medal' fill={tintColor} width='20' height='20' />
+    //     }
+    // },
+    // Estatisticas: {
+    //     screen: (props) => <Estatisticas {...props}/>,
+    //     navigationOptions: {
+    //         title: 'Estatísticas',
+    //         drawerIcon: ({ tintColor }) =>
+    //             <IconSVG name='Statistics' fill={tintColor} width='20' height='20' />
+    //     }
+    // },
     Campeonatos: {
         screen: (props) => <Campeonatos {...props}/>,
         navigationOptions: {
@@ -79,15 +79,6 @@ const DrawerNavigator = createDrawerNavigator({
             drawerIcon: ({ tintColor }) =>
                 <IconSVG name='Config' fill={tintColor} width='20' height='20' />
         }
-    },
-    NewJogo: {
-        screen: (props) => <NewJogo {...props}/>,
-    },
-    Chat: {
-        screen: (props) => <Chat {...props}/>,
-        drawerIcon: ({ tintColor }) =>
-            <IconSVG name='Edit' fill={tintColor} width='20' height='20' />
-
     }
 }, {
     initialRouteName: "Home",

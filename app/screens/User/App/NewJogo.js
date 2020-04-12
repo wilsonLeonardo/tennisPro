@@ -12,7 +12,7 @@ import { Button, Content, Item, Input, Icon, Picker, Form } from 'native-base';
 import { Divider } from 'react-native-elements';
 import { connect } from 'react-redux'
 import update from "immutability-helper";
-import * as teacherActions from '../../../store/teacher/actions'
+import * as gamesAction from '../../../store/games/actions'
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -30,26 +30,47 @@ class NewJogo extends Component {
                 pessoal: false,
                 clube: false,
             },
-            selected1: '',
-            selected2: '',
+            selected1: '...',
+            selected2: 'key0',
             isModalVisible: false,
             isEditable: false,
             credentials: {
                 email: '',
                 password: ""
             },
-            user: {},
             display: "disabled",
             blocked: 'grey',
-            dataEhora: 'Selecione',
+            data: null,
+            hora: null,
             isVisible: false,
         }
+    }
+    async componentDidMount(){
+        await HttpService
+            .find('users')
+            .then(user => this.setState({user, selected1: user[0].id}))
     }
 
     onValueChange1(value) {
         this.setState({
             selected1: value
         });
+    }
+    insertGame = () => {
+        const {selected1, data, hora} = this.state;
+
+        if(selected1 != '...')
+            HttpService
+                .insert('game', {
+                    foreign_id: selected1,
+                    dia: data,
+                    hora: hora
+                }).then((data) =>{
+                    console.log(data),
+                    this.props.dispatch(gamesAction.loadPendingGame()),
+                    Alert.alert('Novo Jogo!', 
+                    'Solicitação enviada com sucesso, aguarde a confirmação do adversario!')
+                }).catch(data => console.log(data))
     }
 
     onValueChange2(value) {
@@ -61,7 +82,8 @@ class NewJogo extends Component {
     handlePicker = (date) => {
         this.setState({
             isVisible: false,
-            dataEhora: moment(date).format('MMMM Do YYYY, h:mm a'),
+            data: moment(date).format('DD-MM-YYYY'),
+            hora: moment(date).format('H:mm')
         })
     }
 
@@ -77,11 +99,13 @@ class NewJogo extends Component {
         })
     }
     render() {
+        const {data, hora, user, selected1} = this.state;
+        console.log(selected1);
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: "flex-start" }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
+                        <TouchableOpacity onPress={() => this.props.navigation.pop()} style={{ paddingTop: 5 }}>
                             <IconSVG name='Back' height='25' width='25' fill='white' />
                         </TouchableOpacity>
                         <AeroText style={{ fontSize: 22, color: 'white' }}>   Novo Jogo</AeroText>
@@ -90,42 +114,46 @@ class NewJogo extends Component {
                 </ImageBackground>
 
                 <Content padder style={styles.content} >
-                    <Form style={{ height: 600, justifyContent: 'space-between' }}>
-                        <AeroText style={styles.titulo}>Escolha o clube e adversário</AeroText>
-                        <Form>
+                    <View style={{ height: 500, justifyContent: 'space-between' }}>
+                        <AeroText style={styles.titulo}>Escolha o {/*clube e*/} adversário</AeroText>
 
-                            <AeroText style={styles.subTitulo}>Clube</AeroText>
+                            {/* <AeroText style={styles.subTitulo}>Clube</AeroText>
                             <Item picker>
                                 <Picker
-                                    selectedValue={this.state.language}
-                                    style={{ flex: 1, height: 50 }}
+                                    note
+                                    style={{ flex: 1 }}
+                                    style={{color:'black'}}
                                     selectedValue={this.state.selected1}
                                     onValueChange={this.onValueChange1.bind(this)}
+                                    mode="dropdown"
                                 >
-                                    <Picker.Item label="Geral" value="geral" />
+                                    <Picker.Item label="Geral" value={'geral'} />
                                     <Picker.Item label="club1" value="key1" />
                                     <Picker.Item label="club2" value="key2" />
                                 </Picker>
                                 <Divider style={{ backgroundColor: '#ddd', height: 1 }} />
-                            </Item>
-                        </Form>
-                        <Form>
-
+                            </Item> */}
                             <AeroText style={styles.subTitulo}>Desafiante</AeroText>
                             <Item picker>
                                 <Picker
-                                    selectedValue={this.state.language}
-                                    style={{ flex: 1, height: 50 }}
-                                    selectedValue={this.state.selected2}
+                                    note
+                                    style={{ flex: 1, color:'black' }}
+                                    selectedValue={this.state.selected1}
+                                    style={{color:'black'}}
                                     onValueChange={this.onValueChange2.bind(this)}
+                                    mode="dropdown"
                                 >
-                                    <Picker.Item label="Ricardo" value="key0" />
-                                    <Picker.Item label="José" value="key1" />
-                                    <Picker.Item label="Jean" value="key3" />
+                                    {/* <Picker.Item label='Selecine' value='selecione'/> */}
+                                 {
+                                        user ? user.map(item =>{
+                                            return(
+                                                <Picker.Item label={item.name} value={item.id} key={item.id} />
+                                            )
+                                        }) :  <Picker.Item label={'Selecine'} value={'selecione'} />
+                                    } 
                                 </Picker>
                                 <Divider style={{ backgroundColor: '#ddd', height: 1 }} />
                             </Item>
-                        </Form>
 
                         <AeroText style={styles.titulo}>Informe o dia do jogo</AeroText>
                         <Form>
@@ -137,7 +165,7 @@ class NewJogo extends Component {
                                     onPress={this.showPicker}
                                 >
                                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%' }}>
-                                        <AeroText style={{ paddingLeft: 5, fontSize: 16, color: '#666' }}  >{this.state.dataEhora}</AeroText>
+                                        <AeroText style={{ paddingLeft: 5, fontSize: 16, color: '#666' }}  >{!data ? 'Selecione' : `${data} ${hora}`}</AeroText>
 
                                         <View style={{ paddingHorizontal: 5 }}>
                                         </View>
@@ -146,16 +174,17 @@ class NewJogo extends Component {
                                 </Button>
                             </Item>
                         </Form>
-                        <Button block style={{ backgroundColor: '#F75400', marginTop: 30 }}>
+                        <Button block style={{ backgroundColor: '#F75400', marginTop: 30 }} onPress={this.insertGame.bind(this)}>
                             <AeroText style={{ fontSize: 20, color: 'white' }}>Finalizar</AeroText>
                         </Button>
-                    </Form>
+                    </View>
 
 
                 </Content>
 
                 <DateTimePickerModal
                     mode="datetime"
+                    locale={'pt_BR'}
                     isVisible={this.state.isVisible}
                     onConfirm={this.handlePicker}
                     onCancel={this.hidePicker}
@@ -165,7 +194,8 @@ class NewJogo extends Component {
     }
 }
 
-export default NewJogo
+export default connect(() => ({}))(NewJogo)
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

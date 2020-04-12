@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     Dimensions,
     Image,
-    TouchableHighlight
+    TouchableHighlight,
+    ActivityIndicator
 } from 'react-native';
 import { Button, Container, Fab, Item, Input } from 'native-base';
 import {
@@ -30,13 +31,15 @@ class Home extends Component {
         super(props)
         this.state = {
             active: false,
-            isModalVisible: false
+            isModalVisible: false,
+            user:{}
         };
     }
     componentDidMount(){
         isCompletedIntro().then(isCompleted => 
             !isCompleted ? this.setState({isModalVisible: true}) : null)
-        this.props.onLoadTeacher();
+        this.props.onLoadData();
+        getUser().then(me => this.setState({user: me}));
     }
 
     toggleModal = () => {
@@ -45,7 +48,12 @@ class Home extends Component {
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
-        const deviceHeight = Dimensions.get("window").height
+        const deviceHeight = Dimensions.get("window").height;
+        const {games, statistic, loading, camps} = this.props;
+        const winsPercent =  statistic.games == 0 ? 0 : (statistic.win / statistic.games) * 100;
+        const losePercent = statistic.games == 0 ? 0 : 100 - winsPercent;
+        const {id} = this.state.user;
+        console.log(games[0])
         return (
             <Container>
                 <View style={styles.header}>
@@ -59,26 +67,60 @@ class Home extends Component {
                     </TouchableOpacity>
                     <ImageBackground
                         source={require('../../../assets/images/Conta.png')} style={styles.imgUser}
-                    />
+                    >
+                       {loading ?  <ActivityIndicator color="black" style={{        marginLeft:"16%",
+        marginBottom:"25%"}} /> : this.props.avatarUri && <Image resizeMode='cover' source={{uri: this.props.avatarUri}} style={styles.avatar}></Image>} 
+                    </ImageBackground>
                 </View>
+                {
+                    loading ? <ActivityIndicator color="#F75400" />  :
+
                 <ScrollView>
                     <View style={styles.content}>
                         <AeroText style={{ color: '#F75400', paddingBottom: 30, fontSize: 15 }}>Próximos Jogos</AeroText>
                         <View style={{ paddingHorizontal: 20 }}>
-                            <Button style={styles.buttomJogos}>
-                                <View style={{ borderRadius: 100, backgroundColor: 'red', height: 40, width: 40, marginLeft: -15 }} />
-                                <AeroText style={{ padding: 10 }}>Nome</AeroText>
+                            { games.length == 0 ?
+                                    <AeroText style={{ color: 'black',fontSize: 15, paddingLeft:0 }}>Você não possue jogos</AeroText>
+                                :   
 
-                                <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
-                                <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                                <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 40, width: 40, marginRight: -15 }} />
-                            </Button>
+                                    <Button style={styles.buttomJogos} onPress={() => this.props.navigation.navigate('Jogos')}>
+                                        {id == games[0].owner_id &&
+                                        games[0].image_owner ?
+                                         <Image source={{uri:this.props.avatarUri}} 
+                                            style={{ borderRadius: 100, height: 40, width: 40, marginLeft: -15 }} resizeMode='cover' /> :
+                                        id != games[0].owner_id &&
+                                            games[0].image_foreign ? 
+                                            <Image source={{uri:this.props.avatarUri}} 
+                                                style={{ borderRadius: 100, height: 40, width: 40, marginLeft: -15 }} resizeMode='cover' />
+                                            : null
+                                        
+                                        }                  
+                                        <AeroText style={{ padding: 10 }}>{id == games[0].owner_id ? games[0].owner_name : games[0].foreign_name}</AeroText>
+
+                                        <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+                                        <AeroText style={{ padding: 10 }}>{id == games[0].owner_id ? games[0].foreign_name : games[0].owner_name}</AeroText>
+                                        {
+                                        id == games[0].owner_id &&
+                                        games[0].image_foreign ?
+                                         <Image source={{uri:games[0].image_foreign}} 
+                                            style={{ borderRadius: 100, height: 40, width: 40, marginRight: -15 }} resizeMode='cover' /> :
+                                        id != games[0].owner_id &&
+                                            games[0].image_owner? 
+                                            <Image source={{uri:games[0].image_owner}} 
+                                                style={{ borderRadius: 100, height: 40, width: 40, marginRight: -15 }} resizeMode='cover' />
+                                            : null
+                                        
+                                        }  
+
+                                        {/* <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 40, width: 40, marginRight: -15 }} /> */}
+                                    </Button>
+                            }
                         </View>
 
 
                         <Divider style={{ backgroundColor: '#ddd', marginVertical: 20 }} />
 
-                        <View style={styles.buttomRank}>
+                        {/* <View style={styles.buttomRank}>
                             <View style={{ flex: 1, justifyContent: 'space-between' }}>
                                 <View style={{}}>
                                     <AeroText style={{ color: '#F75400' }}>Seu Ranking</AeroText>
@@ -115,15 +157,13 @@ class Home extends Component {
                                     </View>
                                 </View>
                             </View>
-                        </View>
-
-                        <Divider style={{ backgroundColor: '#ddd', marginVertical: 20 }} />
+                        </View> */}
                         <AeroText style={{ color: '#F75400', alignSelf: 'flex-start' }}>Estatísticas</AeroText>
 
                         <View style={{ height:200, flex:1 ,flexDirection: 'row', justifyContent: 'space-between', alignItems:'center' }}>
 
                             <ProgressCircle
-                                percent={73}
+                                percent={winsPercent}
                                 radius={50}
                                 borderWidth={15}
                                 color="#F75400"
@@ -132,23 +172,23 @@ class Home extends Component {
                             >
                             </ProgressCircle>
                             <View>
-                                <AeroText style={{ fontSize: 28, color: "#F75400" }}>73%</AeroText>
+                                <AeroText style={{ fontSize: 28, color: "#F75400" }}>{winsPercent}%</AeroText>
                                 <AeroText style={{ fontSize: 13, color: "#F75400" }}>De Vitórias</AeroText>
                             </View>
 
                             <View>
-                                <AeroText style={{ fontSize: 28, color: "#bbb" }}>27%</AeroText>
+                                <AeroText style={{ fontSize: 28, color: "#bbb" }}>{losePercent}%</AeroText>
                                 <AeroText style={{ fontSize: 13, color: "#bbb" }}>De Derrotas</AeroText>
                             </View>
 
                             <View>
-                                <AeroText style={{ fontSize: 28, color: "#F75400" }}>{'216'}</AeroText>
-                                <AeroText style={{ fontSize: 13, color: "#F75400" }}>Jogos</AeroText>
+                                <AeroText style={{ fontSize: 28, color: "#F75400" }}>{statistic.games}</AeroText>
+                                <AeroText style={{ fontSize: 13, color: "#F75400" }}>{statistic.games == 1 ? 'Jogo' : 'Jogos'}</AeroText>
                             </View>
 
                         </View>
 
-                        <LineChart
+                        {/* <LineChart
                             data={{
                                 labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
                                 datasets: [
@@ -182,40 +222,54 @@ class Home extends Component {
                                 marginVertical: 8,
                                 borderRadius: 16
                             }}
-                        />
+                        /> */}
                         <Divider style={{ backgroundColor: '#ddd', marginVertical: 20 }} />
 
                         <AeroText style={{ color: '#F75400', alignSelf: 'flex-start', paddingBottom: 30 }}>Seus campeonatos</AeroText>
-                        <TouchableHighlight style={styles.buttomCampeonatos}>
-                            <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
-                                <View style={{ justifyContent: 'space-around', flex: 1 }} >
+                        {
+                            camps.length == 0 ? <AeroText style={{ color: 'black',fontSize: 15, paddingLeft:0 }}>Você não está inscrito em nenhum campeonato em andamento</AeroText>
 
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <View style={{}}>
-                                            <AeroText style={styles.nameCampeonato}>Nome do Campeonato</AeroText>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                                            <View style={styles.priceView}>
-                                                <View style={{ paddingRight: 5, justifyContent: "center", alignItems: 'center' }}>
-                                                    <IconSVG name='Done' width='10' height='10' fill='white' />
+                            : camps.map(camps =>{
+                                const {camp} = camps;
+                                return (
+                                    <TouchableHighlight style={styles.buttomCampeonatos}>
+                                        <ImageBackground source={require('../../../assets/images/campeonatoBack.png')} style={{ flex: 1, paddingHorizontal: 10 }}>
+                                            <View style={{ justifyContent: 'space-around', flex: 1 }} >
+
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                    <View style={{}}>
+                                                        <AeroText style={styles.nameCampeonato}>{camp.name}</AeroText>
+                                                    </View>
+                                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                                                        <View style={styles.priceView}>
+                                                            <View style={{ paddingRight: 5, justifyContent: "center", alignItems: 'center' }}>
+                                                                <IconSVG name='Done' width='10' height='10' fill='white' />
+                                                            </View>
+                                                            <AeroText style={styles.price}>Inscrito</AeroText>
+                                                        </View>
+                                                    </View>
                                                 </View>
-                                                <AeroText style={styles.price}>Inscritos</AeroText>
+
+                                                <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
+                                                    <View style={{ flexDirection: "row", flex:2}}>
+                                                        <IconSVG name='Star' width='10' height='10' fill='#F75400' />
+                                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.niveis}</AeroText>
+                                                    </View>
+                                                    <View style={{ flexDirection: "row", flex:2}}>
+                                                        <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
+                                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>{camp.endereco}</AeroText>
+                                                    </View>
+                                                </View>
                                             </View>
-                                        </View>
-                                    </View>
+                                        </ImageBackground>
 
-                                    <View style={{ flexDirection: "row", justifyContent: "space-around", width: 200 }}>
-                                        <IconSVG name='Star' width='10' height='10' fill='#F75400' />
-                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Especial Pro</AeroText>
-                                        <IconSVG name='Maps' width='10' height='10' fill='#F75400' />
-                                        <AeroText style={{ fontSize: 8, color: '#808080' }}>Avenida Raimundo</AeroText>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-
-                        </TouchableHighlight>
+                                    </TouchableHighlight>
+                                )
+                            })
+                        }
                     </View>
                 </ScrollView>
+                }
                 <View style={{ flex: 1 }}>
 
                     <Fab
@@ -224,7 +278,7 @@ class Home extends Component {
                         containerStyle={{}}
                         style={{ backgroundColor: '#F75400' }}
                         position="bottomRight"
-                        onPress={() => this.setState({ active: !this.state.active })}>
+                        onPress={() => this.props.navigation.navigate('Mensagens')}>
                         <IconSVG name='Chat' width='30' height='30' fill='white' />
                     </Fab>
                 </View>
@@ -267,11 +321,16 @@ Home.navigationOptions = {
     headerShown: false
 }
 const mapStateToProps = state => ({
-    teachers: state.user,
+    games: state.user.games,
+    statistic: state.user.statistic,
+    loading: state.user.loading,
+    camps: state.user.myCamps,
+    avatarUri: state.user.me.avatarUri ? state.user.me.avatarUri : null
   });
   
+  
 const mapDispatchToProps = dispatch => ({
-    onLoadTeacher: () => dispatch(userActions.loadTeacher()),
+    onLoadData: () => dispatch(userActions.loadData())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
@@ -280,6 +339,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#ffff",
+    },
+    avatar:{
+        width: 30,
+        height: 30,
+        marginLeft:"16%",
+        marginBottom:"25%",
+        backgroundColor: '#ffff',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.9,
+        borderRadius: 50,
+        overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     content: {
         padding: 20,
@@ -294,6 +371,8 @@ const styles = StyleSheet.create({
     imgUser: {
         width: 70,
         height: 70,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     button: {
         justifyContent: "center",
@@ -370,6 +449,7 @@ const styles = StyleSheet.create({
         color: '#F75400',
     },
     buttomCampeonatos: {
+        marginTop:15,
         justifyContent: "space-around",
         flex: 1,
         height: 110,

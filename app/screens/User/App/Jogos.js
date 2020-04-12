@@ -6,10 +6,20 @@ import {
     Picker,
     Dimensions,
     TouchableWithoutFeedback,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert,
+    Image,
+    ActivityIndicator,
+    RefreshControl
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon, Footer, Fab } from 'native-base';
 import Modal from "react-native-modal";
+import { connect } from 'react-redux'
+import * as gamesActions from '../../../store/games/actions'
+import * as userActions from '../../../store/user/actions'
+
+import { getUser } from "../../../service/AuthService";
+import HttpService from "../../../service/HttpService";
 
 import { AeroText } from '../../../components/StyledText';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -32,12 +42,19 @@ class Jogos extends Component {
             isVisible: false,
             data: 'Selecione a data',
             jogos: {
-                marcados: false,
+                marcados: true,
                 pendentes: false
-            }
+            },
+            user: {},
+            status: false,
+            gameId: '',
+            statusPending: false
         }
     }
-
+    componentDidMount() {
+        getUser().then(user => this.setState({ user: user }))
+        this.props.onLoadPendingGame();
+    }
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
     };
@@ -49,6 +66,109 @@ class Jogos extends Component {
 
         })
     }
+    setWin = (gameId) => {
+        Alert.alert('Vitória', 'Você realmente ganhou a partida?', [
+            {
+                text: 'Sim', onPress: () => {
+                    HttpService
+                        .patch(
+                            'game/{id}/win',
+                            { id: gameId }
+                        ).then(
+
+                            this.props.onUpdate(),
+                            Alert.alert(
+                                "Vitória",
+                                "Parabéns pela vitória"
+                            ),
+                            this.props.updateGame(),
+
+                        )
+                }
+            },
+            { text: 'Cancelar', style: 'cancel' },
+        ])
+
+    }
+    setLose = (gameId) => {
+        Alert.alert('Derrota', 'Você realmente perdeu a partida?', [
+            {
+                text: 'Sim', onPress: () => {
+                    HttpService
+                        .patch(
+                            'game/{id}/lose',
+                            { id: gameId }
+                        ).then(
+
+                            () => this.props.onUpdate(),
+                            Alert.alert(
+                                "Derrota",
+                                "Tente no proximo"
+                            ),
+                            () => this.props.updateGame(),
+
+                        )
+                }
+            },
+            { text: 'Cancelar', style: 'cancel' },
+        ])
+    }
+    publish = (gameId) => {
+        Alert.alert('Jogo', 'Você deseja aceitar esse jogo?!', [
+            {
+                text: 'Sim', onPress: () => {
+                    HttpService
+                        .patch(
+                            'game/{id}/publish',
+                            { id: gameId }
+                        ).then(
+
+                            this.props.onUpdate(),
+                            Alert.alert(
+                                "Jogo",
+                                "Tenha um bom jogo"
+                            ),
+                            this.props.updateGame(),
+
+                        )
+                }
+            },
+            { text: 'Cancelar', style: 'cancel' },
+        ])
+    }
+    reject = (gameId) => {
+        Alert.alert('Jogo', 'Você deseja recusar esse jogo?!', [
+            {
+                text: 'Sim', onPress: () => {
+                    HttpService
+                        .patch(
+                            'game/{id}/game/{id}/reject',
+                            { id: gameId }
+                        ).then(
+
+                            this.props.onUpdate(),
+                            Alert.alert(
+                                "Jogo",
+                                "Jogo recusado com sucesso"
+                            ),
+                            this.props.updateGame(),
+
+                        )
+                }
+            },
+            { text: 'Cancelar', style: 'cancel' },
+        ])
+    }
+    sendMessage(id) {
+		HttpService.insert('messages', {
+			foreign: id
+		}).then((message) => this.props.navigation.push('Chat', {
+			id: message.id,
+			title: message.name,
+            avatar: message.avatar
+		})).catch(error => Alert.alert('Contato', error.response.data.error))
+	}
+
 
     hidePicker = () => {
         this.setState({
@@ -63,6 +183,7 @@ class Jogos extends Component {
     }
 
     render() {
+        const { games, pendingGames, loading } = this.props;
         return (
             <Container style={styles.container}>
                 <ImageBackground source={require('../../../assets/images/headerLaranja.png')} style={styles.header}>
@@ -73,12 +194,12 @@ class Jogos extends Component {
                             </TouchableOpacity>
                             <AeroText style={{ fontSize: 22, color: 'white' }}>   Jogos</AeroText>
                         </View>
-                        <Button
+                        {/* <Button
                             style={styles.buttonFilter}
                             onPress={this.toggleModal}
                         >
                             <IconSVG name='Filter' width='25' height='25' fill='#F75400' />
-                        </Button>
+                        </Button> */}
                     </View>
                     <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around' }}>
                         <Button
@@ -97,45 +218,130 @@ class Jogos extends Component {
                         </Button>
                     </View>
                 </ImageBackground>
-                <ScrollView>
+                <ScrollView refreshControl={<RefreshControl refreshing={loading}
+                    onRefresh={() => this.props.onUpdate()} />} >
                     <View style={styles.content}>
-                        <View style={{ height: 150 }}>
+                        {games.length == 0 && this.state.jogos.marcados ?
+                            <AeroText style={{ marginTop: 10, color: 'black', fontSize: 16 }}>Você ainda não possui jogos marcados</AeroText>
+                            : this.state.jogos.pendentes && pendingGames.length == 0 ?
+                                <AeroText style={{ marginTop: 10, color: 'black', fontSize: 16 }}>Você ainda não possui jogos pendentes</AeroText> :
+                                this.state.jogos.marcados ?
+                                    games.map(game => {
+                                        const { id } = this.state.user;
 
-                            <View style={styles.buttonList}>
-                                <View style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginLeft: -20 }} />
-                                <AeroText style={{ padding: 10 }}>Nome</AeroText>
+                                        const me = id == game.owner_id ? game.owner_name : game.foreign_name;
+                                        const adv = id == game.owner_id ? game.foreign_name : game.owner_name;
+                                        const avatarAdv = id == game.owner_id ? game.image_foreign : game.image_owner;
+                                        const foreignId = id == game.foreign_id ? game.owner_id : game.foreign_id
 
-                                <View style={{ flexDirection: 'row', alignItems: "flex-start", justifyContent: 'space-between' }}>
-                                    <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: -40, marginTop: 40 }}>
-                                        <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'green', justifyContent: "center", alignItems: "center" }}>
-                                            <IconSVG name='Done' height='26' width='26' fill='white' />
-                                        </View>
-                                        <AeroText style={{ marginTop: 5, color: 'green', fontSize: 10 }}>VITÓRIA</AeroText>
-                                    </TouchableOpacity>
+                                        return (
+                                            <TouchableOpacity key={game.id} style={{ height: "55%" }} onPress={() => this.setState({status: this.state.gameId != game.id ? true : !this.state.status, gameId: game.id})}>
 
-                                    <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
-                                    <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: 40, marginTop: 40 }}>
-                                        <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'red', justifyContent: "center", alignItems: "center" }}>
-                                            <IconSVG name='Close' height='23' width='23' fill='white' />
-                                        </View>
-                                        <AeroText style={{ marginTop: 5, color: 'red', fontSize: 10 }}>DERROTA</AeroText>
-                                    </TouchableOpacity>
-                                </View>
+                                                <View style={styles.buttonList}>
+                                                    {this.props.avatarUri && <Image source={{uri: this.props.avatarUri}} style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginLeft: -20 }} />}
+                                                    <AeroText style={{ padding: 10 }}>{me}</AeroText>
+                                                    {
+                                                        this.state.status && this.state.gameId == game.id? 
+                                                        <View style={{ flexDirection: 'row', alignItems: "flex-start", justifyContent: 'space-between' }}>
+                                                            <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: -40, marginTop: 40 }}
+                                                                onPress={() => this.setWin(game.id)}
+                                                            >
+                                                                <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'green', justifyContent: "center", alignItems: "center" }}>
+                                                                    <IconSVG name='Done' height='26' width='26' fill='white' />
+                                                                </View>
+                                                                <AeroText style={{ marginTop: 5, color: 'green', fontSize: 10 }}>VITÓRIA</AeroText>
+                                                            </TouchableOpacity>
 
+                                                            <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+                                                            <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: 40, marginTop: 40 }}
+                                                                onPress={() => this.setLose(game.id)}
+                                                            >
+                                                                <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'red', justifyContent: "center", alignItems: "center" }}>
+                                                                    <IconSVG name='Close' height='23' width='23' fill='white' />
+                                                                </View>
+                                                                <AeroText style={{ marginTop: 5, color: 'red', fontSize: 10 }}>DERROTA</AeroText>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                        : <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+                                                    }
+                                                    <AeroText style={{ padding: 10 }}>{adv}</AeroText>
+                                                    {avatarAdv ? <Image source={{uri: avatarAdv}} style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} /> :
+                                                    <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} />
+                                                        }
+                                                    <View style={{ alignItems: "flex-end", marginRight: -25 }}>
 
-                                <AeroText style={{ padding: 10 }}>Nome</AeroText>
-                                <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} />
-                                <View style={{ alignItems: "flex-end", marginRight: -25 }}>
+                                                        <TouchableOpacity style={{ position: "absolute", width: 40, height: 40, borderRadius: 50, backgroundColor: 'orange', justifyContent: "center", alignItems: "center" }}
+                                                            onPress={() => this.sendMessage(foreignId)}
+                                                        >
+                                                            <ChatIcon />
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
 
-                                    <TouchableOpacity style={{ position: "absolute", width: 40, height: 40, borderRadius: 50, backgroundColor: 'orange', justifyContent: "center", alignItems: "center" }}
-                                        onPress={() => this.props.navigation.navigate('Chat')}
-                                    >
-                                        <ChatIcon />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
+                                        )
+                                    }) :
+                                    pendingGames.map(game => {
+                                        const { id } = this.state.user;
+                                        const me = id == game.owner_id ? game.owner_name : game.foreign_name;
+                                        const adv = id == game.owner_id ? game.foreign_name : game.owner_name;
+                                        const avatarAdv = id == game.owner_id ? game.image_foreign : game.image_owner;
+                                        const foreignId = id == game.foreign_id ? game.owner_id : game.foreign_id
 
+                                        return (
+                                            <TouchableOpacity key={game.id} style={{ height: 150 }} onPress={() => {
+                                                id != game.owner_id ?
+                                                    this.setState({ statusPending: this.state.gameId != game.id ? true : !this.state.statusPending, gameId: game.id })
+                                                    :
+                                                    Alert.alert('Jogo', 'Aguarde a resposta do adversario!')
+                                            }}>
+
+                                                <View style={styles.buttonList}>
+                                                {this.props.avatarUri && <Image source={{uri: this.props.avatarUri}} style={{ borderRadius: 100, backgroundColor: 'red', height: 50, width: 50, marginLeft: -20 }} />}
+                                                    <AeroText style={{ padding: 10 }}>{me}</AeroText>
+                                                    {
+                                                        this.state.statusPending && this.state.gameId == game.id ?
+                                                            <View style={{ flexDirection: 'row', alignItems: "flex-start", justifyContent: 'space-between' }}>
+                                                                <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: -40, marginTop: 40 }}
+                                                                    onPress={() => this.publish(game.id)}
+                                                                >
+                                                                    <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'green', justifyContent: "center", alignItems: "center" }}>
+                                                                        <IconSVG name='Done' height='26' width='26' fill='white' />
+                                                                    </View>
+                                                                    <AeroText style={{ marginTop: 5, color: 'green', fontSize: 10 }}>ACEITAR</AeroText>
+                                                                </TouchableOpacity>
+
+                                                                <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+                                                                <TouchableOpacity style={{ position: "absolute", justifyContent: "center", alignItems: 'center', marginLeft: 40, marginTop: 40 }}
+                                                                    onPress={() => this.reject(game.id)}
+                                                                >
+                                                                    <View style={{ width: 45, height: 45, borderRadius: 50, backgroundColor: 'red', justifyContent: "center", alignItems: "center" }}>
+                                                                        <IconSVG name='Close' height='23' width='23' fill='white' />
+                                                                    </View>
+                                                                    <AeroText style={{ marginTop: 5, color: 'red', fontSize: 10 }}>RECUSAR</AeroText>
+                                                                </TouchableOpacity>
+                                                            </View>
+                                                            : <AeroText style={{ padding: 10, fontSize: 20, color: '#F75400' }}>VS</AeroText>
+                                                    }
+                                                    <AeroText style={{ padding: 10 }}>{adv}</AeroText>
+                                                    {avatarAdv ? <Image source={{uri: avatarAdv}} style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} /> :
+                                                    <View style={{ borderRadius: 100, backgroundColor: 'gray', height: 50, width: 50, marginRight: -20 }} />
+                                                        }
+                                                    <View style={{ alignItems: "flex-end", marginRight: -25 }}>
+
+                                                    <TouchableOpacity style={{ position: "absolute", width: 40, height: 40, borderRadius: 50, backgroundColor: 'orange', justifyContent: "center", alignItems: "center" }}
+                                                        onPress={() => this.sendMessage(foreignId)}
+                                                    >
+                                                        <ChatIcon />
+                                                    </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+
+                                        )
+                                    })
+
+                        }
 
                     </View>
                 </ScrollView>
@@ -145,7 +351,7 @@ class Jogos extends Component {
                         active={this.state.active}
                         direction="up"
                         containerStyle={{}}
-                        style={{ height: 80, width: 80, borderRadius: 50, backgroundColor: '#F75400' }}
+                        style={{ height: "90%", width: "90%", borderRadius: 50, backgroundColor: '#F75400' }}
                         position="bottomRight"
                         onPress={() => [this.setState({ active: !this.state.active }), this.props.navigation.navigate('NewJogo')]}>
                         <IconSVG name='Add' width='30' height='30' fill='white' />
@@ -156,6 +362,8 @@ class Jogos extends Component {
                     isVisible={this.state.isVisible}
                     onConfirm={this.handlePicker}
                     onCancel={this.hidePicker}
+                    minimumDate={moment(new Date()).format()}
+
                 />
                 <Modal
                     isVisible={this.state.isModalVisible}
@@ -224,9 +432,23 @@ class Jogos extends Component {
         )
     }
 }
+const mapStateToProps = state => ({
+    loading: state.games.loading,
+    games: state.games.games,
+    pendingGames: state.games.pendingGames,
+    avatarUri: state.user.me.avatarUri
+});
 
+const mapDispatchToProps = dispatch => ({
+    onLoadGame: () => dispatch(gamesActions.loadGame()),
+    onLoadPendingGame: () => dispatch(gamesActions.loadPendingGame()),
+    updateGame: () => dispatch(userActions.updateGame()),
+    clear: () => dispatch(gamesActions.clear()),
+    onUpdate: () => dispatch(gamesActions.load())
+});
 
-export default Jogos
+export default connect(mapStateToProps, mapDispatchToProps)(Jogos)
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -269,6 +491,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 2,
         shadowRadius: 9,
+        paddingTop: 0
     },
     FiltroButton: {
         width: '100%',

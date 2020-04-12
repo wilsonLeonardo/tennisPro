@@ -1,32 +1,7 @@
 import React from 'react';
-import { getUser } from "./AuthService";
 import * as Permissions from "expo-permissions";
 import HttpService from "./HttpService";
 import {Notifications} from 'expo';
-
-export function canSendMessage() {
-    return getUser().then((user) => (user.profile === 'AGENT'));
-}
-
-export function canRequestContact() {
-    return getUser().then((user) => (user.profile === 'MOBILE'));
-}
-
-export function canViewActivityBranch() {
-    return getUser().then((user) => ['ADMIN', 'AGENT'].indexOf(user.profile) !== -1);
-}
-
-export function canShareOffer() {
-    return getUser().then((user) => ['ADMIN', 'AGENT'].indexOf(user.profile) !== -1);
-}
-
-export function canSendProposal() {
-    return getUser().then((user) => (user.profile === 'AGENT'));
-}
-
-export function hasAgentProfile() {
-    return getUser().then((user) => (user.profile === 'AGENT'));
-}
 
 export async function syncDeviceIdentifier() {
     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);

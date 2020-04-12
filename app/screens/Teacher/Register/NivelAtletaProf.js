@@ -6,6 +6,7 @@ import {
     View,
     KeyboardAvoidingView,
     TouchableOpacity,
+    Alert
     
 } from 'react-native';
 import { Button } from 'native-base';
@@ -27,15 +28,21 @@ class NivelAtletaProf extends Component {
         }
     }
     onAddNivel = () => {
-        this.props.addNivel({ ...this.state })
-    }
+        const {niveis} = this.state;
+        if(!niveis.especialPro && !niveis.especial && !niveis.interA)
+            return Alert.alert('Nível', 'Selecione um nivel antes de prosseguir')
 
+        this.props.onAddNivel(this.state.niveis.especial ? 'Especial' : this.state.niveis.especialPro ? 'Especial Pro' : 'Inter A' )
+        this.props.navigation.navigate('teacherData')
+    }
+    
     render() {
+        console.log(this.props.nivel)
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled style={styles.container}>
                 <HeaderTennis />
-                <TitleTennis placeholder='Qual nível de atleta você ensina?' Icon="Ball" />
+                <TitleTennis placeholder={`Qual nível de atleta você\nensina?`} Icon="Ball" />
                 <View style={styles.content}>
                     <TouchableOpacity
                         style={this.state.niveis.especialPro ? styles.bottomNiveisPress : styles.bottomNiveis}
@@ -61,7 +68,7 @@ class NivelAtletaProf extends Component {
                         <AeroText style={this.state.niveis.interA ? styles.nivelTextPress : styles.nivelText} >Inter A</AeroText>
                     </TouchableOpacity>
                     <View style={styles.viewButton}>
-                        <Button block style={styles.button} onPress={() => navigate('teacherData')}>
+                        <Button block style={styles.button} onPress={() => this.onAddNivel()}>
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>
                         </Button>
                     </View>
@@ -81,8 +88,11 @@ const mapDispatchToProps = (dispatch) => {
         onAddNivel: teacher => dispatch(addNivel(teacher))
     }
 }
+const mapStateToProps = (state) => ({
+    nivel: state.teacherRegister.nivel
+})
 
-export default connect(null, mapDispatchToProps)(NivelAtletaProf)
+export default connect(mapStateToProps, mapDispatchToProps)(NivelAtletaProf)
 
 
 const styles = StyleSheet.create({

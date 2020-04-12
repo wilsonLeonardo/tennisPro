@@ -29,7 +29,6 @@ ADD functions.sh /
 RUN chmod +x /functions.sh
 RUN chmod +x /configurations.sh
 
-
 RUN cd / && ./configurations.sh -d -iall
 RUN apt-get -y install php7.2-pgsql postgresql-9.5
 RUN sed -i 's/;extension=pdo_pgsql/extension=pdo_pgsql/g' /etc/php/7.2/fpm/php.ini

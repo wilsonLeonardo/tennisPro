@@ -19,6 +19,9 @@ import * as permissionService from "../service/PermissionService";
 import * as notificationsActions from "../store/notifications/actions";
 import * as teacherActions from "../store/teacher/actions";
 import * as userActions from "../store/user/actions";
+import * as clubActions from "../store/club/actions";
+import * as messageActions from "../store/messages/actions";
+
 import { isLogged, getUser, logout } from "../service/AuthService";
 import { Notifications, Linking } from "expo";
 
@@ -95,14 +98,18 @@ class HomeScreen extends React.Component {
 			        this.state.credentials.password = ""
 
                 if(data.user.profile == "USER"){
+                  this.props.dispatch(userActions.loadData());
+                  this.props.dispatch(messageActions.fetchMessages());
                   this.props.navigation.navigate("SignedInUser");
                 }
                 else if(data.user.profile == "TEACHER"){
                   this.props.dispatch(teacherActions.loadMeTeacher());
                   this.props.navigation.navigate("SignedInTeacher");
                 }
-                else if(data.user.profile == "CLUB")
+                else if(data.user.profile == "CLUB"){
+                  this.props.dispatch(clubActions.loadCamps());
                   this.props.navigation.navigate("SignedInClub");
+                }
 
                 this.props.dispatch(
                   notificationsActions.fetchNotifications(data.user.id)
@@ -118,8 +125,10 @@ class HomeScreen extends React.Component {
               const { loading, credentials } = this.state;
               return (
                 <Container style={styles.container}>
-                  <ImageBackground source={require('../assets/images/background.jpg')} style={{ resizeMode: 'contain', flex: 3, width: null, height: null }}>
+                  <View style={{flex:1, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
                     <HeaderTennis />
+                  </View>
+                  <ImageBackground source={require('../assets/images/background.jpg')} style={{ resizeMode: 'contain', flex: 3, width: null, height: null }}>
                     <View style={styles.content}>
                       <Form>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>

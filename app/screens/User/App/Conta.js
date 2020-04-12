@@ -7,7 +7,15 @@ import {
     KeyboardAvoidingView,
     Dimensions,
     Platform,
+    Alert,
+    Image,
+    ActivityIndicator,
+    Keyboard
 } from 'react-native';
+import _ from 'lodash';
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+
 import { Form, Button, Item, Header, Container, Content, Icon, Footer, Picker, Input } from 'native-base';
 import { Divider } from 'react-native-elements';
 import Modal from "react-native-modal";
@@ -16,6 +24,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import IconSVG from '../../../components/Icon/IconSVG'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
+import update from 'immutability-helper'
+import HttpService from '../../../service/HttpService'
+import * as userActions from '../../../store/user/actions'
+import {connect} from 'react-redux'
 
 class Conta extends Component {
     constructor(props) {
@@ -25,10 +37,7 @@ class Conta extends Component {
                 pessoal: false,
                 clube: false,
             },
-            language: {
-                itemValue: '',
-                itemIndex: ''
-            },
+            selected: 'Nenhum',
             nascimento: 'Data de Nascimento',
             seg: false,
             ter: false,
@@ -40,14 +49,33 @@ class Conta extends Component {
             entrada: 'Entrada',
             saida: 'Saída',
             isModalVisible: false,
+            isModalVisible2: false,
             isVisible: false,
             isVisible2: false,
             isVisible3: false,
+            isEditable:false,
             editar: 'Editar',
             iconEditar: 'Edit',
-            corIcons: '#ddd'
+            corIcons: '#ddd',
+            credentials: {
+                email: '',
+                password: ""
+            },
+            me: {},
+            display: "disabled",
+            blocked: 'grey',
+            clubs:{},
+            myClubs:{},
+            images: [
+                {id: 1, number: '01'}
+            ],
+            image: null,
 
         }
+    }
+    componentDidMount() {
+        if (!this.props.me) return null
+        this.setState({ me: this.props.me,image:this.props.avatarUri, clubs: this.props.clubs, myClubs:this.props.myClubs, credentials: { email: this.props.me.email },  });
     }
 
     toggleModal = () => {
@@ -60,10 +88,12 @@ class Conta extends Component {
     };
 
     handlePicker = (date) => {
-        this.setState({
-            isVisible: false,
-            nascimento: moment(date).format('L'),
-        })
+        this.setState(update(this.state, {
+            me: {
+                nascimento: { $set: moment(date).format('DD/MM/YYYY')}
+            },
+            isVisible: {$set:false}
+        }))
     }
 
     hidePicker = () => {
@@ -84,7 +114,18 @@ class Conta extends Component {
 
         })
     }
-
+    handleClub = () => {
+        HttpService
+            .insert(
+                'users/{id}/club', 
+                {}, 
+                { id: this.state.selected }
+            ).then(response => {
+                this.setState({isModalVisible2:false, myClubs: response.club })
+            }
+            ).catch(error => Alert.alert('Erro', error.response.data.error))
+            .finally(() => this.props.dispatch(userActions.loadClubs()))
+    }
     hidePicker2 = () => {
         this.setState({
             isVisible2: false,
@@ -104,6 +145,61 @@ class Conta extends Component {
 
         })
     }
+    passwordEnter = () => {
+        this.setState({ isModalVisible: false, isEditable: true, display: "false", blocked: 'black'});
+        this.setState(
+            update(this.state, {
+                credentials: {
+                    password: { $set: '' }
+                }
+            })
+        );
+    };
+
+    handlePassword = name => value =>
+    this.setState(
+        update(this.state, {
+            credentials: {
+                [name]: { $set: value }
+            }
+        })
+    );
+    handleLogin = () => {
+        if (!this.state.credentials.password) {
+            Alert.alert('Editar', 'Insira sua senha')
+        } else {
+            HttpService.login(this.state.credentials)
+                .then(() => this.passwordEnter())
+                .catch(err => {
+                    console.log(err);
+                    return Alert.alert(
+                        "Editar",
+                        err.response.data.error === "Unauthorized"
+                            ? "Senha incorreta"
+                            : err.response.data.error
+                    );
+                })
+                .finally(() => this.setState({ loading: false} ));
+        }
+    };
+    handleSave = () => HttpService
+        .update('meAccount', {}, this.state.me)
+        .then(() => {
+            Alert.alert('Meus dados', 'Seus dados foram alterados com sucesso.', [
+                { text: 'OK' }
+            ]);
+            this.props.dispatch(userActions.loadAccount());
+            this.setState({ isEditable: false, disabled: "false", blocked: 'grey' })
+        }).catch(error => console.log(error, this.state.me));
+
+    handleChangeValue = name => value =>
+        this.setState(
+            update(this.state, {
+                me: {
+                    [name]: { $set: value }
+                }
+            })
+        );
 
     hidePicker3 = () => {
         this.setState({
@@ -116,10 +212,81 @@ class Conta extends Component {
             isVisible3: true
         })
     }
+    onValueChange(value) {
+        this.setState({
+          selected: value
+        });
+      }
+      _hasPermission = async () => {
+        const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
+        const libraryPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+        return cameraPermission.status === 'granted' && libraryPermission.status === 'granted';
+    };
+
+    _pickImage = async () => {
+        Keyboard.dismiss();
+
+        if (this._hasPermission()) {
+
+            let result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+               aspect: [4, 4],
+           });
+
+            if (!result.cancelled) {
+                this.props.dispatch(userActions.loadingUser(true));
+
+                HttpService.uploadImage(result)
+                    .then(() => {
+                        this.props.dispatch(userActions.loadMe())
+                    })
+                    .catch((data) => console.log(data),() => this.props.dispatch(userActions.loadingUser(false)))
+            }
+        }
+    };
+    Avatar = () => {
+        const { avatarUri, loading } = this.props;
+
+        const Avatar = () => (
+            <Image
+                resizeMode="cover"
+                source={{uri: avatarUri}}
+                style={styles.avatar}
+            />
+        );
+
+        if (loading) {
+            return (
+                <View
+                style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 250, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }}
+                >
+                    <ActivityIndicator color="black" />
+                </View>
+            )
+        }
+
+        return (
+            <TouchableOpacity
+            style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 250, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} 
+            onPress={this._pickImage}>
+                {avatarUri ? <Avatar/> : null}
+            </TouchableOpacity>
+        );
+    }
 
     render() {
         const deviceWidth = Dimensions.get("window").width;
         const deviceHeight = Dimensions.get("window").height
+        const {image,me} = this.state;
+        const {clubs} = this.props;
+        const {myClubs, loading, avatarUri} = this.props;
+        
+
+        const {isEditable, blocked, credentials} = this.state;
+        if(image && avatarUri && image != avatarUri)
+            this.setState({image: avatarUri})
+
         return (
             <Container >
                 <KeyboardAvoidingView
@@ -131,55 +298,67 @@ class Conta extends Component {
                                 <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ paddingTop: 5 }}>
                                     <IconSVG name='Back' height='25' width='25' fill='white' />
                                 </TouchableOpacity>
-                                <AeroText style={{ fontSize: 22, color: 'white' }}>   Conta</AeroText>
+                                <AeroText style={{ fontSize: 22, color: 'white' }}> Conta</AeroText>
                             </View>
-                            <Button style={styles.button} onPress={this.toggleModal}>
-                                <IconSVG name={this.state.iconEditar} height="15" width="15" fill="#F75400" />
-                                <AeroText style={{ color: '#F75400', marginLeft: 5 }} >{this.state.editar}</AeroText>
+                            <Button style={[styles.button, { display: blocked == 'grey' ? 'flex' : 'none' }]} onPress={this.toggleModal} >
+                                <IconSVG name="Edit" height="15" width="15" fill="#F75400" />
+                                <AeroText style={{ color: '#F75400', marginLeft: 5 }} >Editar</AeroText>
+                            </Button>
+                            <Button style={[styles.button, { display: blocked == 'grey' ? 'none' : 'flex' }]} onPress={this.handleSave.bind(this)} >
+                                <IconSVG name="Done" height="23" width="18" fill="#F75400" />
+                                <AeroText style={{ color: '#F75400', marginLeft: 5, marginBottom: 3 }} >Salvar</AeroText>
                             </Button>
                         </View>
-                        <View style={{ alignSelf: "center", width: 130, height: 130, borderRadius: 200, backgroundColor: 'white', borderWidth: 2, borderColor: '#ddd' }} />
+                        <this.Avatar/>
                     </ImageBackground>
+                    
                     <Content padder style={styles.content}>
 
                         <Form style={{ height: 800, justifyContent: 'space-between' }}>
-                            <Item picker>
-                                <Input placeholder='Nome' style={{ fontFamily: 'Aero' }} />
-                                <IconSVG name="AccountForm" height="20" width="20" fill={this.state.corIcons} />
-                            </Item>
-                            <Item picker>
+                        <Item picker >
+                            <Input editable={isEditable} placeholder='Nome' value={me.username}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
+                                onChangeText={this.handleChangeValue(
+                                    "username"
+                                ).bind(this)}
+                            />
+                            <IconSVG name="AccountForm" height="20" width="20" fill="#ddd" />
+                        </Item>
 
-                                <Button transparent
-                                    style={{ fontFamily: 'Aero', borderBottomWidth: 0.2, borderBottomColor: '#ddd', height: 45, justifyContent: 'center' }}
-                                    onPress={this.showPicker}
-                                >
-                                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%' }}>
-                                        <AeroText style={{ paddingLeft: 5, fontSize: 16, color: '#666' }}  >{this.state.nascimento}</AeroText>
+                        <Item picker>
 
-                                        <View style={{ paddingHorizontal: 5 }}>
-                                        </View>
-                                        <IconSVG name='Date' width='20' height='20' fill={this.state.corIcons} />
+                            <Button transparent
+                                style={{fontFamily: 'Aero', borderBottomWidth: 0.2, borderBottomColor: '#ddd', height: 45, justifyContent: 'center' }}
+                                value={me.nascimento}
+                                onPress={isEditable ? this.showPicker : null}
+                            >
+                                <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%'}}>
+                                    <AeroText style={{ paddingLeft: 5, fontSize:16, color: blocked }}  >{me.nascimento}</AeroText>
+
+                                    <View style={{ paddingHorizontal: 5 }}>
                                     </View>
-                                </Button>
-                            </Item>
+                                    <IconSVG name='Date' width='20' height='20' fill='#ddd' />
+                                </View>
+                            </Button>
+                        </Item>
+                        <Item picker >
+                            <Input editable={isEditable} placeholder='Telefone' value={me.telefone}
+                                style={{ color: blocked, fontFamily: 'Aero' }}
+                                onChangeText={this.handleChangeValue(
+                                    "telefone"
+                                ).bind(this)}
+                            />
+                            <IconSVG name="Phone" height="20" width="20" fill="#ddd" />
+                        </Item>
 
-                            <Item picker>
-                                <Input placeholder='Email' style={{ fontFamily: 'Aero' }} />
-                                <IconSVG name="Mail" height="20" width="20" fill={this.state.corIcons} />
-                            </Item>
-
-                            <Item picker>
-                                <Input placeholder='Senha' secureTextEntry={true} style={{ fontFamily: 'Aero' }} />
-                                <IconSVG name="Key" height="20" width="20" fill={this.state.corIcons} />
-                            </Item>
-
-                            <Item picker>
+                            {/* <Item picker>
                                 <Picker
-                                    selectedValue={this.state.language}
+                                    note
+                                    //mode="dropdown"
+                                    selectedValue={this.state.selected}
                                     style={{ flex: 1, height: 50 }}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        this.setState({ language: itemValue })
-                                    }
+                                    style={{color:'black'}}
+                                    onValueChange={this.onValueChange.bind(this)}
 
                                 >
                                     <Picker.Item label="Português (Brasil)" value="portugues" />
@@ -187,24 +366,35 @@ class Conta extends Component {
                                     <Picker.Item label="Espanhol" value="espanhol" />
                                 </Picker>
                                 <Divider style={{ backgroundColor: '#ddd', height: 1 }} />
-                            </Item>
-                            <View style={{ paddingVertical: 30 }}>
+                            </Item> */}
+                            <View style={{ paddingBottom: 200 }}>
 
                                 <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                     <AeroText style={{ color: '#F75400', fontSize: 18 }}>Clubes</AeroText>
-                                    <View style={styles.bottonAdd}>
-                                        <IconSVG name="Add" height="15" width="15" fill="#fff" />
+                                    <View style={[styles.bottonAdd, {backgroundColor: isEditable ? '#F75400' : '#ddd'}]}>
+                                        <TouchableOpacity onPress={ isEditable ? () => this.setState({isModalVisible2:true}) : null} >
+                                            <IconSVG name="Add" height="15" width="15" fill='#fff'/>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
-                                    <AeroText style={{ color: "#808080" }}>Alphaville Esporte Clube</AeroText>
-                                    <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
-                                        <IconSVG name="Remove" height="15" width="15" fill="#ddd" />
-                                    </View>
-                                </View>
+                                {me.clubs && me.clubs.length == 0 ? 
+                                    <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>                                      
+                                            <AeroText style={{ color: "#808080" }}>Você ainda não possue clube</AeroText>
+                                    </View>  
+                                : myClubs && myClubs.map(club => {
+                                    return(
+                                        <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 10 }}>
+                                            <AeroText style={{ color: "#808080" }}>{club.club.name}</AeroText>
+                                            {/* <View style={{ borderRadius: 30, height: 30, width: 30, justifyContent: 'center', alignItems: 'center' }}>
+                                                <IconSVG name="Remove" height="15" width="15" fill="#ddd" />
+                                            </View> */}
+                                        </View>
+                                    )
+                                })
+                                }
                             </View>
 
-                            <View>
+                            {/* <View>
                                 <AeroText style={{ color: '#F75400', fontSize: 18 }}>Disponibilidade</AeroText>
                                 <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: "space-around", paddingTop: 40 }}>
                                     <TouchableOpacity style={this.state.seg ? styles.bottomDiasDaSemanaPress : styles.bottomDiasDaSemana}
@@ -243,15 +433,15 @@ class Conta extends Component {
                                         <AeroText style={this.state.dom ? styles.fontDiasDaSemanaPress : styles.fontDiasDaSemana} >Dom</AeroText>
                                     </TouchableOpacity>
                                 </View>
-                                <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
-                                    {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                                {/* <Form style={{ flexDirection: 'row', paddingTop: 40, justifyContent: 'center', alignItems: 'center' }}>
+                                 <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
                                 placeholder='Entrada'
                                 onChangeText={(entrada) => this.setState({ entrada })}
                                 value={this.state.entrada}
                             />
-                        </Item> */}
+                        </Item>
                                     <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker2} >
                                         <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems: 'center' }}>
 
@@ -263,14 +453,14 @@ class Conta extends Component {
                                     <View style={{ justifyContent: "center", height: 40, width: 35 }}>
                                         <AeroText style={{}}> até</AeroText>
                                     </View>
-                                    {/* <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
+                                    <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
                             <Input
                                 style={styles.Input}
                                 placeholder='Saída'
                                 onChangeText={(saida) => this.setState({ saida })}
                                 value={this.state.saida}
                             />
-                        </Item> */}
+                        </Item> 
                                     <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, height: 50, justifyContent: 'center' }]} onPress={this.showPicker3} >
                                         <View style={{ flexDirection: "row", justifyContent: 'space-around', alignItems: 'center' }}>
 
@@ -281,7 +471,7 @@ class Conta extends Component {
                                     </TouchableOpacity>
                                 </Form>
 
-                            </View>
+                            </View> */}
                         </Form>
                     </Content>
                 </KeyboardAvoidingView>
@@ -300,7 +490,12 @@ class Conta extends Component {
                             <AeroText style={{ color: '#F75400', fontSize: 18 }}>Insira a sua senha</AeroText>
 
                             <Item style={{ backgroundColor: '#ddd', borderRadius: 10, paddingHorizontal: 10 }} >
-                                <Input placeholder='Senha' secureTextEntry={true} />
+                                <Input placeholder='Senha' secureTextEntry={true}
+                                    value={credentials.password}
+                                    onChangeText={this.handlePassword(
+                                        "password"
+                                    ).bind(this)}
+                                />
                                 <IconSVG name="Key" height="20" width="20" fill="#F75400" />
                             </Item>
 
@@ -308,7 +503,57 @@ class Conta extends Component {
                                 <Button style={{ backgroundColor: '#ddd', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
                                     <AeroText style={{ color: 'gray' }} >Cancelar</AeroText>
                                 </Button>
-                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.toggleModal} >
+                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} onPress={this.handleLogin.bind(this)} >
+                                    <AeroText style={{ color: 'white' }} >Confirmar</AeroText>
+                                </Button>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    isVisible={this.state.isModalVisible2}
+                    onBackdropPress={() => this.setState({ isModalVisible2: false })}
+                    animationInTiming={300}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutRight"
+                    coverScreen={true}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ height: 250, width: '95%', backgroundColor: 'white', padding: 20, justifyContent: 'space-around', borderRadius: 10 }}>
+                            <AeroText style={{ color: '#F75400', fontSize: 18 }}>Escolha seu clube</AeroText>
+
+                            <Item picker>
+                                <Picker
+                                    note
+                                    //mode="dropdown"
+                                    selectedValue={this.state.selected}
+                                    style={{ flex: 1, height: 50 }}
+                                    style={{color:'black'}}
+                                    onValueChange={this.onValueChange.bind(this)}
+
+                                >
+                                    <Picker.Item label="Nenhum" value={'Nenhum'} />
+                                    { clubs ? clubs.map(club =>{ 
+                                        return (
+                                            <Picker.Item label={club.name} value={club.id} />
+                                        )
+                                    }): null}
+                                </Picker>
+                                <Divider style={{ backgroundColor: '#ddd', height: 1 }} />
+                            </Item>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                <Button style={{ backgroundColor: '#ddd', width: 120, justifyContent: 'center', borderRadius: 10 }} 
+                                    onPress={() =>this.setState({
+                                        isModalVisible2: !this.state.isModalVisible2, selected:'Nenhum'})} >
+                                    <AeroText style={{ color: 'gray' }} >Cancelar</AeroText>
+                                </Button>
+                                <Button style={{ backgroundColor: '#F75400', width: 120, justifyContent: 'center', borderRadius: 10 }} 
+                                    onPress={this.state.selected != 'Nenhum' ? this.handleClub.bind(this) : () => this.setState({
+                                        isModalVisible2: !this.state.isModalVisible2, selected:'Nenhum'})}
+                                >
                                     <AeroText style={{ color: 'white' }} >Confirmar</AeroText>
                                 </Button>
                             </View>
@@ -338,7 +583,14 @@ class Conta extends Component {
     }
 }
 
-export default Conta
+const mapStateToProps = state => ({
+    me: state.user.meAccount,
+    clubs: state.user.clubs,
+    loading: state.user.loading,
+    myClubs: state.user.myClubs,
+    avatarUri: state.user.me.avatarUri ? state.user.me.avatarUri : null
+});
+export default connect(mapStateToProps, null)(Conta)
 
 const styles = StyleSheet.create({
     container: {
@@ -347,6 +599,23 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1
+    },
+    avatar:{
+        width: "100%",
+        height: "100%",
+        backgroundColor: '#ffff',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.9,
+        borderRadius: 50,
+        borderRadius: 250,
+        overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     header: {
         alignItems: 'flex-start',
@@ -412,7 +681,6 @@ const styles = StyleSheet.create({
         shadowRadius: 9,
     },
     bottonAdd: {
-        backgroundColor: "#ddd",
         borderRadius: 30,
         height: 30,
         width: 30,
