@@ -125,10 +125,8 @@ class HomeScreen extends React.Component {
               const { loading, credentials } = this.state;
               return (
                 <Container style={styles.container}>
-                  <View style={{flex:1, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
-                    <HeaderTennis />
-                  </View>
                   <ImageBackground source={require('../assets/images/background.jpg')} style={{ resizeMode: 'contain', flex: 3, width: null, height: null }}>
+                    <HeaderTennis />
                     <View style={styles.content}>
                       <Form>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>

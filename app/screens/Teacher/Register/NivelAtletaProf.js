@@ -7,9 +7,9 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     Alert
-    
+
 } from 'react-native';
-import { Button } from 'native-base';
+import { Button, Content, Form } from 'native-base';
 
 import { AeroText } from '../../../components/StyledText';
 import { HeaderTennis } from '../../../components/Header'
@@ -28,51 +28,53 @@ class NivelAtletaProf extends Component {
         }
     }
     onAddNivel = () => {
-        const {niveis} = this.state;
-        if(!niveis.especialPro && !niveis.especial && !niveis.interA)
+        const { niveis } = this.state;
+        if (!niveis.especialPro && !niveis.especial && !niveis.interA)
             return Alert.alert('Nível', 'Selecione um nivel antes de prosseguir')
 
-        this.props.onAddNivel(this.state.niveis.especial ? 'Especial' : this.state.niveis.especialPro ? 'Especial Pro' : 'Inter A' )
+        this.props.onAddNivel(this.state.niveis.especial ? 'Especial' : this.state.niveis.especialPro ? 'Especial Pro' : 'Inter A')
         this.props.navigation.navigate('teacherData')
     }
-    
+
     render() {
         console.log(this.props.nivel)
         const { navigate } = this.props.navigation;
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled style={styles.container}>
                 <HeaderTennis />
-                <TitleTennis placeholder={`Qual nível de atleta você\nensina?`} Icon="Ball" />
-                <View style={styles.content}>
-                    <TouchableOpacity
-                        style={this.state.niveis.especialPro ? styles.bottomNiveisPress : styles.bottomNiveis}
-                        onPress={this.state.niveis.especialPro ? () => this.setState({ niveis: { especialPro: false } }) : () => this.setState({ niveis: { especialPro: true } })}
-                        value={this.state.niveis.especialPro}
-                    >
-                        <AeroText style={this.state.niveis.especialPro ? styles.nivelTextPress : styles.nivelText}  >Especial Pro</AeroText>
-                    </TouchableOpacity>
+                <TitleTennis placeholder={`Qual nível de atleta você ensina?`} Icon="Ball" />
+                <Content style={styles.content}>
+                    <Form style={{ alignItems: 'center' }}>
+                        <TouchableOpacity
+                            style={this.state.niveis.especialPro ? styles.bottomNiveisPress : styles.bottomNiveis}
+                            onPress={this.state.niveis.especialPro ? () => this.setState({ niveis: { especialPro: false } }) : () => this.setState({ niveis: { especialPro: true } })}
+                            value={this.state.niveis.especialPro}
+                        >
+                            <AeroText style={this.state.niveis.especialPro ? styles.nivelTextPress : styles.nivelText}  >Especial Pro</AeroText>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={this.state.niveis.especial ? styles.bottomNiveisPress : styles.bottomNiveis}
-                        onPress={this.state.niveis.especial ? () => this.setState({ niveis: { especial: false } }) : () => this.setState({ niveis: { especial: true } })}
-                        value={this.state.niveis.especial}
-                    >
-                        <AeroText style={this.state.niveis.especial ? styles.nivelTextPress : styles.nivelText} >Especial</AeroText>
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            style={this.state.niveis.especial ? styles.bottomNiveisPress : styles.bottomNiveis}
+                            onPress={this.state.niveis.especial ? () => this.setState({ niveis: { especial: false } }) : () => this.setState({ niveis: { especial: true } })}
+                            value={this.state.niveis.especial}
+                        >
+                            <AeroText style={this.state.niveis.especial ? styles.nivelTextPress : styles.nivelText} >Especial</AeroText>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={this.state.niveis.interA ? styles.bottomNiveisPress : styles.bottomNiveis}
-                        onPress={this.state.niveis.interA ? () => this.setState({ niveis: { interA: false } }) : () => this.setState({ niveis: { interA: true } })}
-                        value={this.state.niveis.interA}
-                    >
-                        <AeroText style={this.state.niveis.interA ? styles.nivelTextPress : styles.nivelText} >Inter A</AeroText>
-                    </TouchableOpacity>
-                    <View style={styles.viewButton}>
-                        <Button block style={styles.button} onPress={() => this.onAddNivel()}>
-                            <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>
-                        </Button>
-                    </View>
-                </View>
+                        <TouchableOpacity
+                            style={this.state.niveis.interA ? styles.bottomNiveisPress : styles.bottomNiveis}
+                            onPress={this.state.niveis.interA ? () => this.setState({ niveis: { interA: false } }) : () => this.setState({ niveis: { interA: true } })}
+                            value={this.state.niveis.interA}
+                        >
+                            <AeroText style={this.state.niveis.interA ? styles.nivelTextPress : styles.nivelText} >Inter A</AeroText>
+                        </TouchableOpacity>
+                        <View style={styles.viewButton}>
+                            <Button block style={styles.button} onPress={() => this.onAddNivel()}>
+                                <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Proxímo </AeroText>
+                            </Button>
+                        </View>
+                    </Form>
+                </Content>
             </KeyboardAvoidingView>
 
         );
@@ -101,10 +103,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     content: {
-        paddingTop: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
+        padding: 50,
+        paddingBottom: 230
     },
     bottomNiveis: {
         marginTop: 15,

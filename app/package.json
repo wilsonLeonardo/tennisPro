@@ -47,6 +47,7 @@
     "react-redux": "^7.1.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "remask": "0.1.0-alpha.4",
     "rnpm": "^1.9.0",
     "seamless-immutable": "^7.1.4"
   },

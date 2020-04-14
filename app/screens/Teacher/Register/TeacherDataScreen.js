@@ -6,7 +6,8 @@ import {
   View,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Alert
+  Alert,
+  TextInput
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Picker, Content } from 'native-base';
 import update from "immutability-helper";
@@ -22,7 +23,7 @@ import { TitleTennis } from '../../../components/Title'
 import IconSVG from '../../../components/Icon/IconSVG';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
-
+import { TextInputMask } from 'react-native-masked-text'
 
 
 class TeacherDataScreen extends Component {
@@ -30,53 +31,53 @@ class TeacherDataScreen extends Component {
     super(props)
     this.state = {
       credentials: {
-        cep: 0,
+        cep: '',
         clube: '',
-        name:'',
+        name: '',
         nascimento: 'Nascimento',
         email: '',
         password: '',
-        preço:0,
-        telefone:'',
-        profile:'TEACHER'
-			},
+        preço: '',
+        telefone: '',
+        profile: 'TEACHER'
+      },
       isVisible: false,
     }
   }
   addDados = () => {
-      const {nivel} = this.props;
-      const dado = Object.assign(this.state.credentials, nivel)
-      
-      HttpService
-        .insert('register', dado)
-        .then((data) => {
-            Alert.alert('Novo Cadastro', 'Seu cadastro foi realizado com sucesso.');
+    const { nivel } = this.props;
+    const dado = Object.assign(this.state.credentials, nivel)
 
-            this.props.dispatch(teacherActions.loadMeTeacher());
-            this.props.dispatch(
-              notificationsActions.fetchNotifications(data.user.id)
-            );
+    HttpService
+      .insert('register', dado)
+      .then((data) => {
+        Alert.alert('Novo Cadastro', 'Seu cadastro foi realizado com sucesso.');
 
-            permissionService.syncDeviceIdentifier(data.user.id);
+        this.props.dispatch(teacherActions.loadMeTeacher());
+        this.props.dispatch(
+          notificationsActions.fetchNotifications(data.user.id)
+        );
 
-            setAuthUser(data).then(() => this.props.navigation.navigate('SignedInTeacher'));
-        });
+        permissionService.syncDeviceIdentifier(data.user.id);
+
+        setAuthUser(data).then(() => this.props.navigation.navigate('SignedInTeacher'));
+      });
   }
-  componentDidMount(){
+  componentDidMount() {
     HttpService
       .find('clubs')
-      .then(clubs => this.setState({clubs}))
+      .then(clubs => this.setState({ clubs }))
   }
 
   handlePicker = (date) => {
     this.setState(
       update(this.state, {
         credentials: {
-          nascimento: { $set: moment(date).format('L')  }
+          nascimento: { $set: moment(date).format('L') }
         },
-        isVisible: {$set: false}
+        isVisible: { $set: true }
       })
-      );
+    );
   }
 
   hidePicker = () => {
@@ -91,18 +92,18 @@ class TeacherDataScreen extends Component {
     })
   }
   handleChangeValue = name => value =>
-  this.setState(
-    update(this.state, {
-      credentials: {
-        [name]: { $set: value }
-      }
-    })
+    this.setState(
+      update(this.state, {
+        credentials: {
+          [name]: { $set: value }
+        }
+      })
     );
-  
+
   render() {
     const { navigate } = this.props.navigation;
 
-    const {clubs} = this.state;
+    const { clubs } = this.state;
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -110,105 +111,113 @@ class TeacherDataScreen extends Component {
         <TabsProf navegar={navigate} />
         <TitleTennis placeholder='Preencha seus dados' Icon="Check" />
         <Content style={styles.content}>
-        <Form>
+          <Form>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInputMask
+                keyboardType='numeric'
+                type='custom'
+                options={
+                  { mask: '99999-999' }
+                }
                 placeholder='Cep'
                 style={styles.Input}
                 onChangeText={this.handleChangeValue(
                   "cep"
                 ).bind(this)}
-                value={this.state.cep}
+                value={this.state.credentials.cep}
               />
               <View style={{ paddingHorizontal: 5 }}>
                 <IconSVG name='Location' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
-            <Item picker style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flexDirection:'row' }]}>
-            <Picker
+            <Item picker style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flexDirection: 'row', padding:-10 }]}>
+              <Picker
                 note
-                style={[styles.Input, {backgroundColor:'red', flex:1, alignItems:'flex-start'}]}
+                style={[styles.Input, { backgroundColor: 'red', flex: 1, alignItems: 'flex-start' }]}
                 selectedValue={this.state.credentials.clube}
-                style={{color:'black'}}
+                style={{ color: 'black' }}
                 onValueChange={this.handleChangeValue(
                   "clube"
                 ).bind(this)}
                 mode="dropdown"
                 placeholder={'Selecione um clube'}
-            >
-              {clubs && clubs.map(item =>{
-                 return (
+              >
+                {clubs && clubs.map(item => {
+                  return (
                     <Picker.Item label={item.name} value={item.id} key={item.id} />
-                 )
-              })}
-            </Picker>
-              <View style={{ paddingHorizontal: 8, flex:1, alignItems:'flex-end' }}>
+                  )
+                })}
+              </Picker>
+              <View style={{ paddingHorizontal: 8, flex: 1, alignItems: 'flex-end' }}>
                 <IconSVG name='Clothes' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInput
                 placeholder='Nome'
                 style={styles.Input}
                 onChangeText={this.handleChangeValue(
                   "name"
                 ).bind(this)}
-                value={this.state.nome}
+                value={this.state.credentials.name}
               />
               <View style={{ paddingHorizontal: 5 }}>
                 <IconSVG name='AccountForm' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInputMask
+                type='cel-phone'
+                options={{
+                  maskType: 'BRL',
+                  withDDD: true,
+                  dddMask: '(99) '
+                }}
                 placeholder='Telefone'
                 style={styles.Input}
                 onChangeText={this.handleChangeValue(
                   "telefone"
                 ).bind(this)}
-                value={this.state.nome}
+                value={this.state.credentials.telefone}
               />
               <View style={{ paddingHorizontal: 5 }}>
                 <IconSVG name='Phone' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
-            <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', height:40, justifyContent:'center' }]} onPress={this.showPicker}>
-              {/* <Input
-                placeholder='Nascimento'
-                style={styles.Input}
-                onChangeText={(nascimento) => this.setState({ nascimento })}
-                value={this.state.nascimento}
-              /> */}
+            <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', height: 40, justifyContent: 'center' }]} onPress={this.showPicker}>
               <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                <AeroText style={{ paddingLeft: 5,paddingVertical: 5, color:'#555',  fontFamily: 'Aero' }} >{this.state.credentials.nascimento}</AeroText>
-
-               
+                <AeroText style={this.state.isVisible ? { paddingLeft: 5, paddingVertical: 5, color: '#000' } : { paddingLeft: 5, paddingVertical: 5, color: '#ccc' }} >{this.state.credentials.nascimento}</AeroText>
                 <View style={{ paddingHorizontal: 5 }}>
                   <IconSVG name='Date' width='25' height='25' fill='#F75400' />
                 </View>
               </View>
             </TouchableOpacity>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInputMask
+              type='money'
+              options={{ 
+                mask:'R$'
+              }}
                 placeholder='Preço'
                 style={styles.Input}
                 onChangeText={this.handleChangeValue(
                   "preço"
                 ).bind(this)}
-                value={this.state.clube}
+                value={this.state.credentials.preço}
               />
               <View style={{ paddingHorizontal: 0 }}>
                 <IconSVG name='Money' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInput
+              keyboardType='email-address' 
                 placeholder='Email'
                 style={styles.Input}
                 onChangeText={this.handleChangeValue(
                   "email"
                 ).bind(this)}
-                value={this.state.email}
+                value={this.state.credentials.email}
                 keyboardType='email-address'
                 autoCapitalize='none'
               />
@@ -217,20 +226,20 @@ class TeacherDataScreen extends Component {
               </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInput
                 secureTextEntry={true}
                 placeholder='Senha'
                 style={styles.Input}
                 onChangeText={this.handleChangeValue(
                   "password"
                 ).bind(this)}
-                value={this.state.senha}
+                value={this.state.credentials.password}
               />
               <View style={{ paddingHorizontal: 5 }}>
                 <IconSVG name='Key' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
-            <Button onPress={() => this.addDados()}
+            <Button onPress={() => [this.addDados(), navigate('teacherDispo')]}
               block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }} >
               <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText>
             </Button>
@@ -264,14 +273,18 @@ const styles = StyleSheet.create({
   },
   item: {
     elevation: 2,
-    borderRadius: 10
+    borderRadius: 10,
+    padding: 10,
+    justifyContent: 'space-between',
   },
   content: {
-    padding: 40,
-    height:"150%"
+    paddingTop: 0,
+    padding: 50,
+    paddingBottom: 230
   },
   Input: {
     fontSize: 15,
-    fontFamily: 'Aero'
+    fontFamily: 'Aero',
+    flex: 1
   }
 });

@@ -7,7 +7,8 @@ import {
     View,
     TouchableOpacity,
     KeyboardAvoidingView,
-    Alert
+    Alert,
+    TextInput
 } from 'react-native';
 import update from "immutability-helper";
 import { setAuthUser } from "../../../service/AuthService";
@@ -20,6 +21,7 @@ import * as notificationsActions from "../../../store/notifications/actions";
 import { AeroText } from '../../../components/StyledText';
 import { HeaderTennis } from '../../../components/Header'
 import { TitleTennis } from '../../../components/Title'
+import { TextInputMask } from 'react-native-masked-text'
 
 class ClubDisponibilidade extends Component {
 
@@ -35,30 +37,30 @@ class ClubDisponibilidade extends Component {
 
     handleChangeValue = name => value =>
         this.setState(
-        update(this.state, {
-            [name]: { $set: value }
-        })
-    )
+            update(this.state, {
+                [name]: { $set: value }
+            })
+        )
     addDados = () => {
-        const {data} = this.props;
-        const dado = Object.assign({...this.state}, data)
+        const { data } = this.props;
+        const dado = Object.assign({ ...this.state }, data)
         console.log(dado);
-        
-        HttpService
-          .insert('registerClub', dado)
-          .then((data) => {
-              Alert.alert('Novo Cadastro', 'Seu cadastro foi realizado com sucesso.');
-              console.log(data);
-  
-              this.props.dispatch(clubActions.loadCamps());
-              this.props.dispatch(
-                notificationsActions.fetchNotifications(data.user.id)
-              );
 
-              permissionService.syncDeviceIdentifier(data.user.id);
-  
-              setAuthUser(data).then(() => this.props.navigation.navigate('SignedInClub'));
-          });
+        HttpService
+            .insert('registerClub', dado)
+            .then((data) => {
+                Alert.alert('Novo Cadastro', 'Seu cadastro foi realizado com sucesso.');
+                console.log(data);
+
+                this.props.dispatch(clubActions.loadCamps());
+                this.props.dispatch(
+                    notificationsActions.fetchNotifications(data.user.id)
+                );
+
+                permissionService.syncDeviceIdentifier(data.user.id);
+
+                setAuthUser(data).then(() => this.props.navigation.navigate('SignedInClub'));
+            });
     }
 
     render() {
@@ -79,40 +81,49 @@ class ClubDisponibilidade extends Component {
                 <Content style={styles.content}>
                     <Form style={{ paddingTop: 40 }}>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
+                            <TextInput
+                                keyboardType='numeric'
                                 placeholder='Nº de Quadras'
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "quadras"
-                                  ).bind(this)}
-                                value={this.state.num_quadras}
+                                ).bind(this)}
+                                value={this.state.quadras}
                             />
                             <Icon name='tennisball' style={{ color: '#F75400' }} />
                         </Item>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
+                            <TextInputMask
+                                type={'money'}
+                                options={{
+                                    mask: 'R$'
+                                }}
                                 placeholder='Preço do Aluguel'
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "aluguel_price"
-                                  ).bind(this)}
-                                value={this.state.aluguel}
+                                ).bind(this)}
+                                value={this.state.aluguel_price}
                             />
                             <Icon name='logo-usd' style={{ color: '#F75400' }} />
                         </Item>
 
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
+                            <TextInputMask
+                                type={'money'}
+                                options={{
+                                    mask: 'R$'
+                                }}
                                 placeholder='Preço da Mensalidade'
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "mensal_price"
-                                  ).bind(this)}
-                                value={this.state.mensalidade}
+                                ).bind(this)}
+                                value={this.state.mensal_price}
                             />
                             <Icon name='logo-usd' style={{ color: '#F75400' }} />
                         </Item>
-                        <Button 
+                        <Button
                             onPress={this.addDados.bind(this)}
                             block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}>
                             <AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Finalizar </AeroText></Button>
@@ -144,7 +155,9 @@ const styles = StyleSheet.create({
     },
     item: {
         elevation: 2,
-        borderRadius: 10
+        borderRadius: 10, alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 10
     },
     content: {
         paddingTop: 0,
@@ -153,7 +166,8 @@ const styles = StyleSheet.create({
     },
     Input: {
         fontSize: 15,
-        fontFamily: 'Aero'
+        fontFamily: 'Aero',
+        flex: 1
     },
     caixa: {
         justifyContent: 'center',

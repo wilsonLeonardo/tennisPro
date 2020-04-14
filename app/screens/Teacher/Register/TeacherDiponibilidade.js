@@ -16,6 +16,7 @@ import { HeaderTennis } from '../../../components/Header'
 import { TitleTennis } from '../../../components/Title'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
+import { TextInputMask } from 'react-native-masked-text'
 
 class TeacherDisponibilidade extends Component {
     constructor(props) {
@@ -167,9 +168,11 @@ class TeacherDisponibilidade extends Component {
                         </TouchableOpacity>
                     </Form>
                     <Form style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1 }]}>
-                            <Input
-                                style={styles.Input}
+                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', flex: 1, padding:10 }]}>
+                            <TextInputMask
+                            type='money'
+                            options={{ mask:'R$'}}
+                                style={[styles.Input, {flex: 1}]}
                                 placeholder='Preço'
                                 onChangeText={(preço) => this.setState({ preço })}
                                 value={this.state.preço}

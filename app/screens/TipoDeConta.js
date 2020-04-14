@@ -7,24 +7,24 @@ import {
     Text,
     TouchableOpacity,
     View,
+    KeyboardAvoidingView
 } from 'react-native';
 import { Container, Form, Item, Input, Button, Content } from 'native-base';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 import { AeroText } from '../components/StyledText';
 import { HeaderTennis } from '../components/Header'
 import { TitleTennis } from '../components/Title'
 
 export default function TipoConta(props) {
-    const {navigate} = props.navigation;
+    const { navigate } = props.navigation;
     return (
-        <Container style={styles.container}>
-            <View style={{backgroundColor:'yellow'}}/>
-                <HeaderTennis/>
-            <TitleTennis placeholder='Tipo de Conta' Icon="Person"/>
-            <View style={styles.content}>
-                <View>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivel')}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled keyboardVerticalOffset={0}>
+            <HeaderTennis />
+            <TitleTennis placeholder='Tipo de Conta' Icon="Person" />
+            <Content style={styles.content}>
+                <Form style={{ alignItems: 'center' }}>
+                    <TouchableOpacity style={{ elevation: 5 }} onPress={() => navigate('userNivel')}>
                         <Image
                             source={
                                 require('../assets/images/imgPraticante.png')
@@ -32,26 +32,25 @@ export default function TipoConta(props) {
                             style={styles.modeloimg2}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('userNivelProf')}>     
+                    <TouchableOpacity style={{ elevation: 5 }} onPress={() => navigate('userNivelProf')}>
                         <Image
                             source={
                                 require('../assets/images/imgProfessor.png')
                             }
-                            style={styles.modeloimg3}
+                            style={styles.modeloimg2}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity style={{elevation:5}}onPress={()=>navigate('clubeData')}>
+                    <TouchableOpacity style={{ elevation: 5 }} onPress={() => navigate('clubeData')}>
                         <Image
                             source={
                                 require('../assets/images/imgClube.png')
                             }
-                            style={[styles.modeloimg3, {paddingBottom: 0}]}
+                            style={styles.modeloimg2}
                         />
                     </TouchableOpacity>
-                </View>
-            </View>
-        </Container>
-
+                </Form>
+            </Content>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -66,22 +65,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     content: {
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#fff',
+        paddingTop: 0,
+        padding: 50,
+        paddingBottom: 260
     },
     modeloimg2: {
         width: 250,
         height: 150,
         resizeMode: 'contain',
-        marginTop: 10,
         borderRadius: 10
-    },
-    modeloimg3: {
-        width: 250,
-        height: 150,
-        resizeMode: 'contain',
-        marginTop: -10,
-        borderRadius: 10,
     },
 });

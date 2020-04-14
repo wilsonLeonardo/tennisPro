@@ -6,7 +6,8 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    TextInput
 } from 'react-native';
 import update from "immutability-helper";
 import { Form, Button, Item, Input, Header, Content, Container, Icon } from 'native-base';
@@ -17,6 +18,7 @@ import { TitleTennis } from '../../../components/Title'
 import { bindActionCreators } from 'redux';
 import { render } from 'react-dom';
 import IconSVG from '../../../components/Icon/IconSVG';
+import { TextInputMask } from 'react-native-masked-text'
 
 class ClubDataScreen extends Component {
     constructor(props) {
@@ -30,16 +32,17 @@ class ClubDataScreen extends Component {
         }
     }
 
+
     addDados = () => {
-        this.props.dispatch(clubAction.addDados({...this.state}))
+        this.props.dispatch(clubAction.addDados({ ...this.state }))
         this.props.navigation.navigate('clubeDispo')
     }
     handleChangeValue = name => value =>
         this.setState(
-        update(this.state, {
-            [name]: { $set: value }
-        })
-    );
+            update(this.state, {
+                [name]: { $set: value }
+            })
+        );
     render() {
 
         return (
@@ -49,51 +52,70 @@ class ClubDataScreen extends Component {
                 <Content style={styles.content}>
                     <Form>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
+                            <TextInputMask
+                                keyboardType='numeric'
+                                type='custom'
+                                options={
+                                    { mask: "99999-999" }
+                                }
                                 placeholder='Cep'
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "cep"
-                                  ).bind(this)}
+                                ).bind(this)}
                                 value={this.state.cep}
                             />
                             <View style={{ paddingHorizontal: 5 }}>
                                 <IconSVG name='Location' width='25' height='25' fill='#F75400' />
                             </View>
                         </Item>
-                        <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
-                                placeholder='Nome'
+                        <Item regular style={{
+                            marginBottom: 15, backgroundColor: '#f7f7f7', elevation: 2,
+                            borderRadius: 10,
+                            justifyContent: 'space-between', padding: 10
+                        }}>
+                            <TextInput
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "nome"
-                                  ).bind(this)}
+                                ).bind(this)}
                                 value={this.state.nome}
-                            />
+                                placeholder='Nome'
+                            >
+                            </TextInput>
                             <View style={{ paddingHorizontal: 5 }}>
                                 <IconSVG name='AccountForm' width='25' height='25' fill='#F75400' />
                             </View>
                         </Item>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
+                            <TextInputMask
+                                type={'cel-phone'}
+                                options={{
+                                    maskType: 'BRL',
+                                    withDDD: true,
+                                    dddMask: '(99) '
+                                }}
                                 placeholder='Telefone'
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "telefone"
-                                  ).bind(this)}
+                                ).bind(this)}
                                 value={this.state.telefone}
                             />
                             <View style={{ paddingHorizontal: 5 }}>
                                 <IconSVG name='Phone' width='25' height='25' fill='#F75400' />
                             </View>
                         </Item>
+
+
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
+                            <TextInput
+                                keyboardType='email-address'
                                 placeholder='Email'
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "email"
-                                  ).bind(this)}
+                                ).bind(this)}
                                 value={this.state.email}
                                 autoCapitalize='none'
                             />
@@ -102,13 +124,13 @@ class ClubDataScreen extends Component {
                             </View>
                         </Item>
                         <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-                            <Input
+                            <TextInput
                                 secureTextEntry={true}
                                 placeholder='Senha'
                                 style={styles.Input}
                                 onChangeText={this.handleChangeValue(
                                     "senha"
-                                  ).bind(this)}
+                                ).bind(this)}
                                 value={this.state.senha}
                             />
                             <View style={{ paddingHorizontal: 5 }}>
@@ -133,7 +155,7 @@ ClubDataScreen.navigationOptions = {
 }
 
 
-export default connect(()=>({}))(ClubDataScreen)
+export default connect(() => ({}))(ClubDataScreen)
 
 const styles = StyleSheet.create({
     container: {
@@ -142,7 +164,9 @@ const styles = StyleSheet.create({
     },
     item: {
         elevation: 2,
-        borderRadius: 10
+        borderRadius: 10,
+        justifyContent: 'space-between',
+        padding: 10
     },
     content: {
         paddingTop: 30,
@@ -150,7 +174,8 @@ const styles = StyleSheet.create({
         paddingBottom: 250
     },
     Input: {
+        flex: 1,
         fontSize: 15,
-        fontFamily: 'Aero'
+        fontFamily: 'Aero',
     }
 });

@@ -99,7 +99,7 @@ class UserDisponibilidade extends Component {
                 </AeroText>
                     <AeroText style={{ fontSize: 18, fontWeight: 'normal', alignItems: 'center', color: '#f75400' }}>
                         disponibilidade
-                </AeroText>
+                </AeroText> 
 
                 </View>
                 <Content style={styles.content}>

@@ -5,7 +5,8 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TextInput
 } from 'react-native';
 import { Form, Button, Item, Input, Header, Container, Content, Icon } from 'native-base';
 
@@ -15,6 +16,7 @@ import { TitleTennis } from '../../../components/Title'
 import IconSVG from '../../../components/Icon/IconSVG';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment'
+import { TextInputMask } from 'react-native-masked-text'
 
 class UserDataScreen extends Component {
   constructor(props) {
@@ -38,7 +40,7 @@ class UserDataScreen extends Component {
 
   handlePicker = (date) => {
     this.setState({
-      isVisible: false,
+      isVisible: true,
       nascimento: moment(date).format('L'),
     })
   }
@@ -67,7 +69,12 @@ class UserDataScreen extends Component {
         <Content style={styles.content}>
           <Form>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInputMask
+                keyboardType='numeric'
+                type='custom'
+                options={
+                  { mask: "99999-999" }
+                }
                 placeholder='Cep'
                 style={styles.Input}
                 onChangeText={(cep) => this.setState({ cep })}
@@ -78,7 +85,7 @@ class UserDataScreen extends Component {
               </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInput
                 placeholder='Clube'
                 style={styles.Input}
                 onChangeText={(clube) => this.setState({ clube })}
@@ -89,7 +96,7 @@ class UserDataScreen extends Component {
               </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInput
                 placeholder='Nome'
                 style={styles.Input}
                 onChangeText={(nome) => this.setState({ nome })}
@@ -99,24 +106,17 @@ class UserDataScreen extends Component {
                 <IconSVG name='AccountForm' width='25' height='25' fill='#F75400' />
               </View>
             </Item>
-            <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', height:40, justifyContent:'center' }]} onPress={this.showPicker}>
-              {/* <Input
-                placeholder='Nascimento'
-                style={styles.Input}
-                onChangeText={(nascimento) => this.setState({ nascimento })}
-                value={this.state.nascimento}
-              /> */}
+            <TouchableOpacity style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7', height: 40, justifyContent: 'center' }]} onPress={this.showPicker}>
               <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                <AeroText style={{ paddingLeft: 5,paddingVertical: 5, color:'#555' }} >{this.state.nascimento}</AeroText>
-
-               
+                <AeroText style={this.state.isVisible ? { paddingLeft: 5, paddingVertical: 5, color: '#000' } : { paddingLeft: 5, paddingVertical: 5, color: '#ccc' }} >{this.state.nascimento}</AeroText>
                 <View style={{ paddingHorizontal: 5 }}>
                   <IconSVG name='Date' width='25' height='25' fill='#F75400' />
                 </View>
               </View>
             </TouchableOpacity>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInput
+                keyboardType='email-address'
                 placeholder='Email'
                 style={styles.Input}
                 onChangeText={(email) => this.setState({ email })}
@@ -127,7 +127,7 @@ class UserDataScreen extends Component {
               </View>
             </Item>
             <Item regular style={[styles.item, { marginBottom: 15, backgroundColor: '#f7f7f7' }]}>
-              <Input
+              <TextInput
                 secureTextEntry={true}
                 placeholder='Senha'
                 style={styles.Input}
@@ -171,17 +171,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(UserDataScreen)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffff"
+    backgroundColor: "#ffff",
   },
   item: {
     elevation: 2,
-    borderRadius: 10
+    borderRadius: 10,
+    padding: 10
   },
   content: {
     padding: 50,
   },
   Input: {
     fontSize: 15,
-    fontFamily: 'Aero'
+    fontFamily: 'Aero',
+    flex: 1
   }
 });
