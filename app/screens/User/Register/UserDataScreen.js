@@ -139,7 +139,7 @@ class UserDataScreen extends Component {
               </View>
             </Item>
             <Button onPress={() => this.addDados()}
-              block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
+              block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginBottom: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
           </Form>
           <DateTimePickerModal
             mode="date"

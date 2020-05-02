@@ -11,10 +11,12 @@ public class BasePackageList {
         new expo.modules.errorrecovery.ErrorRecoveryPackage(),
         new expo.modules.filesystem.FileSystemPackage(),
         new expo.modules.font.FontLoaderPackage(),
+        new expo.modules.haptics.HapticsPackage(),
+        new expo.modules.permissions.PermissionsPackage(),
+        new expo.modules.imagepicker.ImagePickerPackage(),
         new expo.modules.keepawake.KeepAwakePackage(),
         new expo.modules.lineargradient.LinearGradientPackage(),
         new expo.modules.location.LocationPackage(),
-        new expo.modules.permissions.PermissionsPackage(),
         new expo.modules.sqlite.SQLitePackage(),
         new expo.modules.webbrowser.WebBrowserPackage()
     );

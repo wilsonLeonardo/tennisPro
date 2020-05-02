@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Permissions from "expo-permissions";
 import HttpService from "./HttpService";
-import * as Notifications from 'expo-notifications';
 
 export async function syncDeviceIdentifier() {
     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -21,11 +20,4 @@ export async function syncDeviceIdentifier() {
     if (finalStatus !== 'granted') {
         return;
     }
-    
-    // Get the token that uniquely identifies this device
-    let deviceIdentifier = await Notifications.getExpoPushTokenAsync();
-    console.log('Our token', deviceIdentifier);
-
-    HttpService
-        .patch('users/device-identifier', {}, {deviceIdentifier});
 }

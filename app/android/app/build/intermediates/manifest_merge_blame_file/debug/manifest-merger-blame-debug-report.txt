@@ -1,0 +1,454 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.tennispro"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="27" />
+9-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:4:5-67
+11-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+12-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:5:5-77
+12-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:5:22-75
+13
+14    <!-- OPTIONAL PERMISSIONS, REMOVE WHATEVER YOU DO NOT NEED -->
+15    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+15-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:8:5-75
+15-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:8:22-72
+16    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+16-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:9:5-80
+16-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:9:22-77
+17    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+17-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:10:5-75
+17-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:10:22-72
+18    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+18-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:11:5-74
+18-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:11:22-71
+19    <uses-permission android:name="android.permission.VIBRATE" />
+19-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:12:5-66
+19-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:12:22-63
+20    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+20-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:13:5-80
+20-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:13:22-77
+21
+22    <!-- These require runtime permissions on M -->
+23    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+23-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:16:5-81
+23-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:16:22-78
+24    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+24-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:17:5-79
+24-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:17:22-76
+25    <uses-permission android:name="android.permission.CAMERA" />
+25-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:18:5-65
+25-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:18:22-62
+26    <uses-permission android:name="android.permission.READ_CONTACTS" />
+26-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:19:5-72
+26-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:19:22-69
+27    <uses-permission android:name="android.permission.READ_CALENDAR" />
+27-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:20:5-72
+27-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:20:22-69
+28    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+28-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:21:5-73
+28-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:21:22-70
+29    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+29-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:22:5-80
+29-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:22:22-77
+30    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+30-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:23:5-71
+30-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:23:22-68
+31    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+31-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:24:5-81
+31-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:24:22-78
+32    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+32-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:25:5-73
+32-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:25:22-70
+33    <uses-permission android:name="android.permission.STORAGE" />
+33-->[:expo-file-system] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:5-66
+33-->[:expo-file-system] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:22-63
+34    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+34-->[:expo-location] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-77
+34-->[:expo-location] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:22-74
+35    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+35-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
+35-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:22-78
+36    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+36-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:22:5-79
+36-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:22:22-76
+37    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+37-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:24:5-68
+37-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:24:22-65
+38    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+38-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:26:5-82
+38-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:26:22-79
+39    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+39-->[com.android.installreferrer:installreferrer:1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/7385270bad357707db664c56409d26b8/jetified-installreferrer-1.0/AndroidManifest.xml:9:5-110
+39-->[com.android.installreferrer:installreferrer:1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/7385270bad357707db664c56409d26b8/jetified-installreferrer-1.0/AndroidManifest.xml:9:22-107
+40    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+40-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:15:5-98
+40-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:15:22-95
+41    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" /> <!-- for android -->
+41-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:16:5-94
+41-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:16:22-91
+42    <!-- <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/> -->
+43    <!-- <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS"/> -->
+44    <!-- <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> -->
+45    <!-- <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" /> -->
+46    <!-- for Samsung -->
+47    <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
+47-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:19:5-86
+47-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:19:22-83
+48    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" /> <!-- for htc -->
+48-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:20:5-87
+48-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:20:22-84
+49    <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />
+49-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:23:5-81
+49-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:23:22-78
+50    <uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT" /> <!-- for sony -->
+50-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:24:5-83
+50-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:24:22-80
+51    <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" />
+51-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:27:5-88
+51-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:27:22-85
+52    <uses-permission android:name="com.sonymobile.home.permission.PROVIDER_INSERT_BADGE" /> <!-- for apex -->
+52-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:28:5-92
+52-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:28:22-89
+53    <uses-permission android:name="com.anddoes.launcher.permission.UPDATE_COUNT" /> <!-- for solid -->
+53-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:31:5-84
+53-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:31:22-81
+54    <uses-permission android:name="com.majeur.launcher.permission.UPDATE_BADGE" /> <!-- for huawei -->
+54-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:34:5-83
+54-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:34:22-80
+55    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
+55-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:37:5-91
+55-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:37:22-88
+56    <uses-permission android:name="com.huawei.android.launcher.permission.READ_SETTINGS" />
+56-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:38:5-92
+56-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:38:22-89
+57    <uses-permission android:name="com.huawei.android.launcher.permission.WRITE_SETTINGS" /> <!-- for ZUK -->
+57-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:39:5-93
+57-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:39:22-90
+58    <uses-permission android:name="android.permission.READ_APP_BADGE" /> <!-- for OPPO -->
+58-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:42:5-73
+58-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:42:22-70
+59    <uses-permission android:name="com.oppo.launcher.permission.READ_SETTINGS" />
+59-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:45:5-82
+59-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:45:22-79
+60    <uses-permission android:name="com.oppo.launcher.permission.WRITE_SETTINGS" /> <!-- for EvMe -->
+60-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:46:5-83
+60-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:46:22-80
+61    <uses-permission android:name="me.everything.badger.permission.BADGE_COUNT_READ" />
+61-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:49:5-88
+61-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:49:22-85
+62    <uses-permission android:name="me.everything.badger.permission.BADGE_COUNT_WRITE" /> <!-- END OPTIONAL PERMISSIONS -->
+62-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:50:5-89
+62-->[me.leolin:ShortcutBadger:1.1.22] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/addaa74cefb3e58f114236330c2b29c1/jetified-ShortcutBadger-1.1.22/AndroidManifest.xml:50:22-86
+63    <application
+63-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:28:5-46:19
+64        android:name="com.tennispro.MainApplication"
+64-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:29:7-38
+65        android:allowBackup="false"
+65-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:33:7-34
+66        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+66-->[androidx.core:core:1.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/f4976fdf66a867c7fc93ada653134a06/core-1.2.0/AndroidManifest.xml:24:18-86
+67        android:debuggable="true"
+68        android:icon="@mipmap/ic_launcher"
+68-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:31:7-41
+69        android:label="@string/app_name"
+69-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:30:7-39
+70        android:roundIcon="@mipmap/ic_launcher_round"
+70-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:32:7-52
+71        android:testOnly="true"
+72        android:theme="@style/AppTheme" >
+72-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:34:7-38
+73        <activity
+73-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:35:7-44:18
+74            android:name="com.tennispro.MainActivity"
+74-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:36:9-37
+75            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+75-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:38:9-79
+76            android:label="@string/app_name"
+76-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:37:9-41
+77            android:windowSoftInputMode="adjustResize" >
+77-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:39:9-51
+78            <intent-filter>
+78-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:40:9-43:25
+79                <action android:name="android.intent.action.MAIN" />
+79-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:41:13-65
+79-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:41:21-62
+80
+81                <category android:name="android.intent.category.LAUNCHER" />
+81-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:42:13-73
+81-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:42:23-70
+82            </intent-filter>
+83        </activity>
+84        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+84-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:45:7-84
+84-->/Users/wilsonleonardo/Documents/tennisPro/app/android/app/src/main/AndroidManifest.xml:45:17-81
+85        <!-- https://developer.android.com/guide/topics/manifest/provider-element.html -->
+86        <provider
+86-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:9-22:20
+87            android:name="expo.modules.imagepicker.ImagePickerFileProvider"
+87-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-76
+88            android:authorities="com.tennispro.ImagePickerFileProvider"
+88-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:13-75
+89            android:exported="false"
+89-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-37
+90            android:grantUriPermissions="true" >
+90-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-47
+91            <meta-data
+91-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-21:71
+92                android:name="android.support.FILE_PROVIDER_PATHS"
+92-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:17-67
+93                android:resource="@xml/image_picker_provider_paths" />
+93-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-68
+94        </provider>
+95        <provider
+95-->[:expo-file-system] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:9-27:20
+96            android:name="expo.modules.filesystem.FileSystemFileProvider"
+96-->[:expo-file-system] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-74
+97            android:authorities="com.tennispro.FileSystemFileProvider"
+97-->[:expo-file-system] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-74
+98            android:exported="false"
+98-->[:expo-file-system] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:13-37
+99            android:grantUriPermissions="true" >
+99-->[:expo-file-system] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:13-47
+100            <meta-data
+100-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-21:71
+101                android:name="android.support.FILE_PROVIDER_PATHS"
+101-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:17-67
+102                android:resource="@xml/file_system_provider_paths" />
+102-->[:expo-image-picker] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-image-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-68
+103        </provider>
+104
+105        <service
+105-->[:expo-location] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:9-18:40
+106            android:name="expo.modules.location.services.LocationTaskService"
+106-->[:expo-location] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-78
+107            android:exported="false" />
+107-->[:expo-location] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-37
+108        <service
+108-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:9-20:19
+109            android:name="expo.modules.notifications.FirebaseListenerService"
+109-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-78
+110            android:exported="false" >
+110-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:13-37
+111            <intent-filter>
+111-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-19:29
+112                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+112-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:17-78
+112-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:25-75
+113            </intent-filter>
+114        </service>
+115        <service
+115-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:9-28:19
+116            android:name="expo.modules.notifications.notifications.service.ExpoNotificationsService"
+116-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:13-101
+117            android:exported="false"
+117-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:13-37
+118            android:permission="android.permission.BIND_JOB_SERVICE" >
+118-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:13-69
+119            <intent-filter android:order="-1" >
+119-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:13-27:29
+119-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:28-46
+120                <action android:name="expo.modules.notifications.NOTIFICATION_EVENT" />
+120-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:17-88
+120-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:25-85
+121            </intent-filter>
+122        </service>
+123        <service
+123-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:9-32:72
+124            android:name="expo.modules.notifications.notifications.service.ExpoNotificationSchedulerService"
+124-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:13-109
+125            android:exported="false"
+125-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:31:13-37
+126            android:permission="android.permission.BIND_JOB_SERVICE" />
+126-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:32:13-69
+127
+128        <receiver
+128-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:34:9-44:20
+129            android:name="expo.modules.notifications.notifications.service.ScheduledAlarmReceiver"
+129-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:35:13-99
+130            android:enabled="true"
+130-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:36:13-35
+131            android:exported="false" >
+131-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:37:13-37
+132            <intent-filter>
+132-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:38:13-43:29
+133                <action android:name="expo.modules.notifications.TRIGGER_EVENT" />
+133-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:17-83
+133-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:25-80
+134                <action android:name="android.intent.action.BOOT_COMPLETED" />
+134-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:17-79
+134-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:25-76
+135                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+135-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:17-82
+135-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:25-79
+136                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+136-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:42:17-82
+136-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:42:25-79
+137            </intent-filter>
+138        </receiver>
+139        <receiver
+139-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:45:9-48:40
+140            android:name="expo.modules.notifications.notifications.service.NotificationResponseReceiver"
+140-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:46:13-105
+141            android:enabled="true"
+141-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:47:13-35
+142            android:exported="false" />
+142-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:48:13-37
+143        <!--
+144             FirebaseMessagingService performs security checks at runtime,
+145             but set to not exported to explicitly avoid allowing another app to call it.
+146        -->
+147        <service
+147-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:28:9-34:19
+148            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+148-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:29:13-82
+149            android:exported="false" >
+149-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:30:13-37
+150            <intent-filter android:priority="-500" >
+150-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-19:29
+151                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+151-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:17-78
+151-->[:expo-notifications] /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/expo-notifications/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:25-75
+152            </intent-filter>
+153        </service>
+154        <service
+154-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:35:9-41:19
+155            android:name="com.google.firebase.components.ComponentDiscoveryService"
+155-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:36:13-84
+156            android:directBootAware="true"
+156-->[com.google.firebase:firebase-common:19.3.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/bc3627d4700ed2048a5fa15e91fee23d/jetified-firebase-common-19.3.0/AndroidManifest.xml:34:13-43
+157            android:exported="false" >
+157-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:37:13-37
+158            <meta-data
+158-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:38:13-40:85
+159                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+159-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:39:17-119
+160                android:value="com.google.firebase.components.ComponentRegistrar" />
+160-->[com.google.firebase:firebase-messaging:20.1.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e85f34e4a672a87b732f39b72e6fdc50/jetified-firebase-messaging-20.1.0/AndroidManifest.xml:40:17-82
+161            <meta-data
+161-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:32:13-34:85
+162                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+162-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:33:17-96
+163                android:value="com.google.firebase.components.ComponentRegistrar" />
+163-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:34:17-82
+164            <meta-data
+164-->[com.google.firebase:firebase-datatransport:17.0.3] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e19be5bd8b9ffc7be873a74f068133cd/jetified-firebase-datatransport-17.0.3/AndroidManifest.xml:28:13-30:85
+165                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+165-->[com.google.firebase:firebase-datatransport:17.0.3] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e19be5bd8b9ffc7be873a74f068133cd/jetified-firebase-datatransport-17.0.3/AndroidManifest.xml:29:17-115
+166                android:value="com.google.firebase.components.ComponentRegistrar" />
+166-->[com.google.firebase:firebase-datatransport:17.0.3] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e19be5bd8b9ffc7be873a74f068133cd/jetified-firebase-datatransport-17.0.3/AndroidManifest.xml:30:17-82
+167        </service>
+168
+169        <receiver
+169-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:37:9-44:20
+170            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+170-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:38:13-78
+171            android:exported="true"
+171-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:39:13-36
+172            android:permission="com.google.android.c2dm.permission.SEND" >
+172-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:40:13-73
+173            <intent-filter>
+173-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:41:13-43:29
+174                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+174-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:42:17-81
+174-->[com.google.firebase:firebase-iid:20.0.2] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/1efacb5dea6f36b9ec59c2f75ec0f0bb/jetified-firebase-iid-20.0.2/AndroidManifest.xml:42:25-78
+175            </intent-filter>
+176        </receiver>
+177
+178        <provider
+178-->[com.google.firebase:firebase-common:19.3.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/bc3627d4700ed2048a5fa15e91fee23d/jetified-firebase-common-19.3.0/AndroidManifest.xml:26:9-30:39
+179            android:name="com.google.firebase.provider.FirebaseInitProvider"
+179-->[com.google.firebase:firebase-common:19.3.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/bc3627d4700ed2048a5fa15e91fee23d/jetified-firebase-common-19.3.0/AndroidManifest.xml:27:13-77
+180            android:authorities="com.tennispro.firebaseinitprovider"
+180-->[com.google.firebase:firebase-common:19.3.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/bc3627d4700ed2048a5fa15e91fee23d/jetified-firebase-common-19.3.0/AndroidManifest.xml:28:13-72
+181            android:exported="false"
+181-->[com.google.firebase:firebase-common:19.3.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/bc3627d4700ed2048a5fa15e91fee23d/jetified-firebase-common-19.3.0/AndroidManifest.xml:29:13-37
+182            android:initOrder="100" />
+182-->[com.google.firebase:firebase-common:19.3.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/bc3627d4700ed2048a5fa15e91fee23d/jetified-firebase-common-19.3.0/AndroidManifest.xml:30:13-36
+183
+184        <activity
+184-->[com.google.android.gms:play-services-base:17.0.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/6fb3f6cd2b75dfe7dd10f87d94351f9e/jetified-play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+185            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+185-->[com.google.android.gms:play-services-base:17.0.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/6fb3f6cd2b75dfe7dd10f87d94351f9e/jetified-play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+186            android:exported="false"
+186-->[com.google.android.gms:play-services-base:17.0.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/6fb3f6cd2b75dfe7dd10f87d94351f9e/jetified-play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+187            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+187-->[com.google.android.gms:play-services-base:17.0.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/6fb3f6cd2b75dfe7dd10f87d94351f9e/jetified-play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+188
+189        <meta-data
+189-->[com.google.android.gms:play-services-basement:17.0.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/c39f27975e2128f358c90a3c3f9b8fee/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+190            android:name="com.google.android.gms.version"
+190-->[com.google.android.gms:play-services-basement:17.0.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/c39f27975e2128f358c90a3c3f9b8fee/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+191            android:value="@integer/google_play_services_version" />
+191-->[com.google.android.gms:play-services-basement:17.0.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/c39f27975e2128f358c90a3c3f9b8fee/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+192
+193        <provider
+193-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/133d3390c58c70ac7467dd72c7251bfe/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:25:9-29:43
+194            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+194-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/133d3390c58c70ac7467dd72c7251bfe/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:26:13-79
+195            android:authorities="com.tennispro.lifecycle-process"
+195-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/133d3390c58c70ac7467dd72c7251bfe/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:27:13-69
+196            android:exported="false"
+196-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/133d3390c58c70ac7467dd72c7251bfe/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:28:13-37
+197            android:multiprocess="true" />
+197-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/133d3390c58c70ac7467dd72c7251bfe/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:29:13-40
+198
+199        <service
+199-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/ba347b79ecd9aff9a5a5cd14a0cafe82/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:29:9-35:19
+200            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+200-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/ba347b79ecd9aff9a5a5cd14a0cafe82/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:30:13-103
+201            android:exported="false" >
+201-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/ba347b79ecd9aff9a5a5cd14a0cafe82/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:31:13-37
+202            <meta-data
+202-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/ba347b79ecd9aff9a5a5cd14a0cafe82/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:32:13-34:39
+203                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+203-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/ba347b79ecd9aff9a5a5cd14a0cafe82/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:33:17-94
+204                android:value="cct" />
+204-->[com.google.android.datatransport:transport-backend-cct:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/ba347b79ecd9aff9a5a5cd14a0cafe82/jetified-transport-backend-cct-2.2.0/AndroidManifest.xml:34:17-36
+205        </service>
+206        <service
+206-->[com.google.android.datatransport:transport-runtime:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e36bbaf0ac948f483a18157a8fc1157d/jetified-transport-runtime-2.2.0/AndroidManifest.xml:26:9-30:19
+207            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+207-->[com.google.android.datatransport:transport-runtime:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e36bbaf0ac948f483a18157a8fc1157d/jetified-transport-runtime-2.2.0/AndroidManifest.xml:27:13-117
+208            android:exported="false"
+208-->[com.google.android.datatransport:transport-runtime:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e36bbaf0ac948f483a18157a8fc1157d/jetified-transport-runtime-2.2.0/AndroidManifest.xml:28:13-37
+209            android:permission="android.permission.BIND_JOB_SERVICE" >
+209-->[com.google.android.datatransport:transport-runtime:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e36bbaf0ac948f483a18157a8fc1157d/jetified-transport-runtime-2.2.0/AndroidManifest.xml:29:13-69
+210        </service>
+211
+212        <receiver
+212-->[com.google.android.datatransport:transport-runtime:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e36bbaf0ac948f483a18157a8fc1157d/jetified-transport-runtime-2.2.0/AndroidManifest.xml:32:9-34:40
+213            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+213-->[com.google.android.datatransport:transport-runtime:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e36bbaf0ac948f483a18157a8fc1157d/jetified-transport-runtime-2.2.0/AndroidManifest.xml:33:13-132
+214            android:exported="false" />
+214-->[com.google.android.datatransport:transport-runtime:2.2.0] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/e36bbaf0ac948f483a18157a8fc1157d/jetified-transport-runtime-2.2.0/AndroidManifest.xml:34:13-37
+215
+216        <service
+216-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:19:9-21:40
+217            android:name="io.nlopez.smartlocation.activity.providers.ActivityGooglePlayServicesProvider$ActivityRecognitionService"
+217-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:20:13-132
+218            android:exported="false" />
+218-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:21:13-37
+219        <service
+219-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:22:9-24:40
+220            android:name="io.nlopez.smartlocation.geofencing.providers.GeofencingGooglePlayServicesProvider$GeofencingService"
+220-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:23:13-127
+221            android:exported="false" />
+221-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:24:13-37
+222        <service
+222-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:25:9-27:40
+223            android:name="io.nlopez.smartlocation.geocoding.providers.AndroidGeocodingProvider$AndroidGeocodingService"
+223-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:26:13-120
+224            android:exported="false" />
+224-->[io.nlopez.smartlocation:library:3.2.11] /Users/wilsonleonardo/.gradle/caches/transforms-2/files-2.1/aec036b72481a3671ba7b96c9ac75dab/jetified-library-3.2.11/AndroidManifest.xml:27:13-37
+225    </application>
+226
+227</manifest>

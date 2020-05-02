@@ -1,7 +1,5 @@
 import React from 'react';
-import * as Notifications from 'expo-notifications';
 import * as Font from 'expo-font';
-import {Platform} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from 'react-redux'
 import thunk from "redux-thunk";
@@ -26,10 +24,6 @@ export default class App extends React.Component {
               this.setState({ userProfile: user.profile }
             );
         })
-
-      if (Platform.OS === "ios") {
-        Notifications.setBadgeCountAsync(0);
-      }
       this.appLoading();
   }
   appLoading = async () => {

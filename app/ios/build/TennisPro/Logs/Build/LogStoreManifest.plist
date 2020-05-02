@@ -40,40 +40,6 @@
 			<key>uniqueIdentifier</key>
 			<string>F0FF9B5D-89EF-4EBF-A402-EC00FBA61C53</string>
 		</dict>
-		<key>F5F9C940-4EC1-4069-81FC-D96042C927A6</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>F5F9C940-4EC1-4069-81FC-D96042C927A6.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>TennisPro project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>TennisPro</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Building workspace TennisPro with scheme TennisPro and configuration Debug</string>
-			<key>timeStartedRecording</key>
-			<real>610088539.11640894</real>
-			<key>timeStoppedRecording</key>
-			<real>610088541.17332697</real>
-			<key>title</key>
-			<string>Building workspace TennisPro with scheme TennisPro and configuration Debug</string>
-			<key>uniqueIdentifier</key>
-			<string>F5F9C940-4EC1-4069-81FC-D96042C927A6</string>
-		</dict>
 	</dict>
 </dict>
 </plist>

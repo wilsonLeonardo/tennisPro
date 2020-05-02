@@ -14,11 +14,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>EXApplication.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>EXConstants.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -60,11 +55,6 @@
 			<false/>
 		</dict>
 		<key>EXLocation.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>EXNotifications.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
