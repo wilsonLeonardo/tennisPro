@@ -3,13 +3,10 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import Home from '../screens/Teacher/App/Home'
-//import Mensagens from '../screens/Teacher/App/Mensagens'
 import Conta from '../screens/Teacher/App/Conta'
 
 import Teacher from '../screens/CustomDrawer/Teacher'
-import { Dimensions } from 'react-native';
 import IconSVG from '../components/Icon/IconSVG'
-//const {width} = Dimensions.get('window')
 
 const DrawerTeacher = createDrawerNavigator({
     Home: {

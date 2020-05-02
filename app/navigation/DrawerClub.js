@@ -4,7 +4,6 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import NewCampeonatos from '../screens/Club/App/NewCampeonatos'
 import Home from '../screens/Club/App/Home'
-import Mensagens from '../screens/Club/App/Mensagens'
 import Conta from '../screens/Club/App/Conta'
  
 import Club from '../screens/CustomDrawer/Club'

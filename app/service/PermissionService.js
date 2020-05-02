@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Permissions from "expo-permissions";
 import HttpService from "./HttpService";
-import {Notifications} from 'expo';
+import * as Notifications from 'expo-notifications';
 
 export async function syncDeviceIdentifier() {
     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);

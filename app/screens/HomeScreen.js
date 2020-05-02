@@ -22,16 +22,11 @@ import * as userActions from "../store/user/actions";
 import * as clubActions from "../store/club/actions";
 import * as messageActions from "../store/messages/actions";
 
-import { isLogged, getUser, logout } from "../service/AuthService";
-import { Notifications, Linking } from "expo";
-
 import { AeroText } from '../components/StyledText';
 import { HeaderTennis } from '../components/HomeHeader'
 import { PersonFullIcon, KeyIcon } from '../components/Icon/Icon'
 import { connect } from 'react-redux';
 import { setAuthUser } from "../service/AuthService";
-import axios from "axios";
-import * as Expo from "expo";
 
 class HomeScreen extends React.Component {
   constructor(props) {

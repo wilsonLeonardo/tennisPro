@@ -1,0 +1,42 @@
+dependencies: \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Text/RNSVGGlyphContext.m \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Target\ Support\ Files/RNSVG/RNSVG-prefix.pch \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Text/RNSVGGlyphContext.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/UIView+React.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTComponent.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/Yoga/yoga/YGEnums.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/Yoga/yoga/YGMacros.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Text/RNSVGFontData.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Text/RNSVGTextProperties.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Text/RNSVGPropHelper.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Utils/RNSVGLength.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTFont.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTConvert.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTAnimationType.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTBorderStyle.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTDefines.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTInspectorDevServerHelper.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTPackagerConnection.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTLog.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTAssert.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTUtils.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTPointerEvents.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/React-Core/React/RCTTextDecorationLineType.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/Yoga/yoga/Yoga.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/Yoga/yoga/YGValue.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/RNSVGNode.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Utils/RNSVGCGFCRule.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Elements/RNSVGSvgView.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Brushes/RNSVGPainter.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Utils/RCTConvert+RNSVG.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Utils/RNSVGVBMOS.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Utils/RNSVGUnits.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Utils/RNSVGPathParser.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Brushes/RNSVGBrushType.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/RNSVGContainer.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Text/RNSVGText.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Elements/RNSVGGroup.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Elements/RNSVGPath.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/RNSVGRenderable.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Brushes/RNSVGBrush.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/node_modules/react-native-svg/ios/Utils/RNSVGVectorEffect.h

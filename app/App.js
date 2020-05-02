@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppLoading, Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import * as Font from 'expo-font';
 import {Platform} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
@@ -7,13 +7,9 @@ import { Provider } from 'react-redux'
 import thunk from "redux-thunk";
 import * as reducers from "./store/reducers";
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { isLogged, getUser, logout } from "./service/AuthService";
-import * as notificationsActions from "./store/notifications/actions";
-import * as permissionService from "./service/PermissionService";
+import { isLogged, getUser } from "./service/AuthService";
 
-import { createRootNavigator, SignedOutRoutes, SignedInRoutes } from './navigation/Navigator';
-
-//import AppNavigator from './navigation/Navigator'
+import { createRootNavigator } from './navigation/Navigator';
 
 const store = createStore(combineReducers(reducers), applyMiddleware(thunk));
 
@@ -26,40 +22,34 @@ export default class App extends React.Component {
       .then(res => {
         this.setState({ signed: res, signLoaded: true })})
           getUser().then(user => {
-            this.setState({ userProfile: user.profile }
+            if(user)
+              this.setState({ userProfile: user.profile }
             );
         })
 
       if (Platform.OS === "ios") {
-        Notifications.setBadgeNumberAsync(0);
+        Notifications.setBadgeCountAsync(0);
       }
+      this.appLoading();
+  }
+  appLoading = async () => {
+    try{
+      await Font.loadAsync({
+        Roboto: require('native-base/Fonts/Roboto.ttf'),
+        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+        'Aero': require('./assets/fonts/Aero.ttf'),
+        ...Ionicons.font})
+        this.setState({ isReady: true })
+    }catch(error){
+      console.log(error);
+    }
+
   }
   
   render() {
-    const { isReady, userProfile } = this.state;
-
-    if (!isReady) {
-      return(
-        <AppLoading
-            startAsync={async () =>
-              await Font.loadAsync({
-                Roboto: require('native-base/Fonts/Roboto.ttf'),
-                Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-                'Aero': require('./assets/fonts/Aero.ttf'),
-                ...Ionicons.font,
-              })
-            }
-            onFinish={() => this.setState({ isReady: true })}
-            onError={console.warn}
-          />
-      )
-    }
-    const { signLoaded, signed } = this.state;
-
-    if (!signLoaded) {
-      return null;
-    }else{
-      
+    const { isReady, signLoaded, signed, userProfile} = this.state;
+    if (!isReady || !signLoaded) {
+        return null
     }
 
     const Layout = createRootNavigator(signed, userProfile);

@@ -1,0 +1,42 @@
+dependencies: \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Conv.cpp \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Target\ Support\ Files/Folly/Folly-prefix.pch \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Conv.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/DoubleConversion/double-conversion/double-conversion.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/DoubleConversion/double-conversion/utils.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Demangle.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/FBString.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/CppAttributes.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Portability.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/portability/Config.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/CPortability.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Traits.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/hash/Hash.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Utility.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/functional/ApplyTuple.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/functional/Invoke.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Preprocessor.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/hash/SpookyHashV1.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/hash/SpookyHashV2.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/lang/Bits.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/ConstexprMath.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/lang/Assume.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/portability/Builtins.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/lang/Exception.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/memory/Malloc.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/memory/detail/MallocImpl.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Expected.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Likely.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Optional.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Unit.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/lang/ColdClass.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/Range.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/portability/Constexpr.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/portability/String.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/CpuId.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/detail/RangeCommon.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/glog/glog/logging.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/glog/glog/log_severity.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Headers/Public/glog/glog/vlog_is_on.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/detail/RangeSse42.h \
+  /Users/wilsonleonardo/Documents/tennisPro/app/ios/Pods/Folly/folly/portability/Math.h
