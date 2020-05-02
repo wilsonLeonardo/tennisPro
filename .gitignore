@@ -1,4 +1,5 @@
 app/node_modules/**/*
+app/android/local.properties
 app/.expo/*
 app/npm-debug.*
 app/*.jks
