@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-large-v4/values-large-v4.xml",
+            "outputFile": "/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-large-v4/values-large-v4.xml",
             "map": [
                 {
-                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/material-1.0.0.aar/84dd6c02028b34af04fe11d68f06b332/res/values-large-v4/values-large-v4.xml",
+                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/material-1.0.0.aar/324c1e6917b841f0695a5e0f737bd0dc/res/values-large-v4/values-large-v4.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/16ff84c81a70ab10c37e2f0ad3ad2c0d/res/values-large-v4/values-large-v4.xml",
+                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/0ccd51208509c9e70a91e753ae2493d9/res/values-large-v4/values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

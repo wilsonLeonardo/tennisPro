@@ -1,7 +1,7 @@
-#Sat May 02 13:10:11 BRT 2020
-base.1=/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/transforms/dexMerger/debug/0
+#Sat May 02 14:00:52 BRT 2020
+base.0=/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/transforms/dexMerger/debug/0
 path.1=classes.dex
-base.0=/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/transforms/dexMerger/debug/1
 renamed.1=classes2.dex
-renamed.0=classes.dex
 path.0=classes.dex
+renamed.0=classes.dex
+base.1=/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/transforms/dexMerger/debug/1

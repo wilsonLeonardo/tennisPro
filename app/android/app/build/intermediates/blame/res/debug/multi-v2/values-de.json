@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml",
+            "outputFile": "/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml",
             "map": [
                 {
-                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/f12834afc8c8ac27ddf5d8f6c40afdd1/res/values-de/values.xml",
+                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/508662e62251580c1be1a16b131a57ac/res/values-de/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -21,41 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/dae33f3893a3545d19ac994d1fab1482/res/values-de/values-de.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "57",
-                        "startColumns": "4",
-                        "startOffsets": "6440",
-                        "endColumns": "100",
-                        "endOffsets": "6536"
-                    }
-                },
-                {
-                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/jetified-android-image-cropper-2.7.0.aar/b3cf7709adde47515534871cde1437bd/res/values-de/values-de.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10",
-                        "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,191,238,299,357,439,517,604,668",
-                        "endColumns": "135,46,60,57,81,77,86,63,73",
-                        "endOffsets": "186,233,294,352,434,512,599,663,737"
-                    },
-                    "to": {
-                        "startLines": "47,48,49,50,51,52,53,54,55",
-                        "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "5672,5808,5855,5916,5974,6056,6134,6221,6285",
-                        "endColumns": "135,46,60,57,81,77,86,63,73",
-                        "endOffsets": "5803,5850,5911,5969,6051,6129,6216,6280,6354"
-                    }
-                },
-                {
-                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/015842bb393bac0181f0487213ac6c81/res/values-de/values.xml",
+                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/fb5f3b850e5def94390b78026506063a/res/values-de/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -72,7 +38,41 @@
                     }
                 },
                 {
-                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/16ff84c81a70ab10c37e2f0ad3ad2c0d/res/values-de/values-de.xml",
+                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/0254e7611b3a1d3614058538fd28a548/res/values-de/values-de.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "57",
+                        "startColumns": "4",
+                        "startOffsets": "6440",
+                        "endColumns": "100",
+                        "endOffsets": "6536"
+                    }
+                },
+                {
+                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/jetified-android-image-cropper-2.7.0.aar/5ff6fc8bf38b360cdabfb525200eb312/res/values-de/values-de.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,191,238,299,357,439,517,604,668",
+                        "endColumns": "135,46,60,57,81,77,86,63,73",
+                        "endOffsets": "186,233,294,352,434,512,599,663,737"
+                    },
+                    "to": {
+                        "startLines": "47,48,49,50,51,52,53,54,55",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "5672,5808,5855,5916,5974,6056,6134,6221,6285",
+                        "endColumns": "135,46,60,57,81,77,86,63,73",
+                        "endOffsets": "5803,5850,5911,5969,6051,6129,6216,6280,6354"
+                    }
+                },
+                {
+                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/0ccd51208509c9e70a91e753ae2493d9/res/values-de/values-de.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

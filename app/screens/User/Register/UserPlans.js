@@ -28,17 +28,19 @@ const itemSubs = Platform.select({
         'com.example.coins100'
       ],
       android: [
-        'com.example.coins100'
+        'android.test.purchased',
+        'android.test.canceled'
       ]
 });
 
-const defaultProductId = 'ios.test.purchased';
+const defaultProductId = 'android.test.purchased';
 
 function UserPlans(props) {
     const [isModalVisible, setModalVisible] = useState(false);
     const [bronze, setBronze] = useState(false);
     const [gold, setGold] = useState(false);
     const [silver, setSilver] = useState(false);
+    const [payment, setPayment] = useState(false);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -49,16 +51,15 @@ function UserPlans(props) {
             console.warn('comprado')
         }else{
             requestPurschase(defaultProductId);
+            setPayment(true)
         }
     }
 
-   useEffect(() =>{
+    useEffect(() =>{
         fetchAvailableProducts(itemSubs);
+        purchaseUpdateSubscription();
     }, [])
 
-    useEffect(() =>{
-        purchaseUpdateSubscription(itemSubs);
-    }, [])
 
     const deviceWidth = Dimensions.get("window").width;
     const deviceHeight = Dimensions.get("window").height
@@ -134,8 +135,14 @@ function UserPlans(props) {
                         </View>
                     </TouchableHighlight>
                 </View>
-                <Button
-                    block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
+                {
+                    payment ? 
+                    <Button
+                        block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
+                    :
+                    <Button disabled
+                        block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: 'grey', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
+                }
                 <View style={{ flex: 1 }}>
                     <Modal
                         isVisible={isModalVisible}
