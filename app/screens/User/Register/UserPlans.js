@@ -135,14 +135,6 @@ function UserPlans(props) {
                         </View>
                     </TouchableHighlight>
                 </View>
-                {
-                    payment ? 
-                    <Button
-                        block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: '#F75400', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
-                    :
-                    <Button disabled
-                        block style={{ borderRadius: 10, alignItems: 'center', backgroundColor: 'grey', marginTop: 20, elevation: 5 }}><AeroText style={{ fontSize: 18, alignItems: 'center', color: '#fff' }}> Próximo </AeroText></Button>
-                }
                 <View style={{ flex: 1 }}>
                     <Modal
                         isVisible={isModalVisible}

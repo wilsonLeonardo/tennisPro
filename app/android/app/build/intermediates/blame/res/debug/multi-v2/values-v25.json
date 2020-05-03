@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v25/values-v25.xml",
+            "outputFile": "/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v25/values-v25.xml",
             "map": [
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/0ccd51208509c9e70a91e753ae2493d9/res/values-v25/values-v25.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/16ff84c81a70ab10c37e2f0ad3ad2c0d/res/values-v25/values-v25.xml",
                     "from": {
                         "startLines": "2,3,4,6",
                         "startColumns": "4,4,4,4",

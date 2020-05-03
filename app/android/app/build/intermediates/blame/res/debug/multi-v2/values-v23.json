@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v23/values-v23.xml",
+            "outputFile": "/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/0ccd51208509c9e70a91e753ae2493d9/res/values-v23/values-v23.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/16ff84c81a70ab10c37e2f0ad3ad2c0d/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,37,41,42,43,44",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -15,7 +15,7 @@
                     }
                 },
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/cardview-1.0.0.aar/7f7c87fcb5c8e553c5e0adf132f88a04/res/values-v23/values-v23.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/cardview-1.0.0.aar/1bcdebcc0c3e44372dab4d629b3eec18/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

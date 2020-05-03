@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hy/values-hy.xml",
+            "outputFile": "/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hy/values-hy.xml",
             "map": [
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/0ccd51208509c9e70a91e753ae2493d9/res/values-hy/values-hy.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/16ff84c81a70ab10c37e2f0ad3ad2c0d/res/values-hy/values-hy.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/508662e62251580c1be1a16b131a57ac/res/values-hy/values.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/f12834afc8c8ac27ddf5d8f6c40afdd1/res/values-hy/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/fb5f3b850e5def94390b78026506063a/res/values-hy/values.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/015842bb393bac0181f0487213ac6c81/res/values-hy/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/0254e7611b3a1d3614058538fd28a548/res/values-hy/values-hy.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/dae33f3893a3545d19ac994d1fab1482/res/values-hy/values-hy.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

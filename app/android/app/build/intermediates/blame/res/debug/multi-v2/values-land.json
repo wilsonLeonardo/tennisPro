@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/wilson/Documentos/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
+            "outputFile": "/Users/wilsonleonardo/Documents/tennisPro/app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
             "map": [
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/0ccd51208509c9e70a91e753ae2493d9/res/values-land/values-land.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/16ff84c81a70ab10c37e2f0ad3ad2c0d/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/home/wilson/.gradle/caches/transforms-1/files-1.1/material-1.0.0.aar/324c1e6917b841f0695a5e0f737bd0dc/res/values-land/values-land.xml",
+                    "source": "/Users/wilsonleonardo/.gradle/caches/transforms-1/files-1.1/material-1.0.0.aar/84dd6c02028b34af04fe11d68f06b332/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
